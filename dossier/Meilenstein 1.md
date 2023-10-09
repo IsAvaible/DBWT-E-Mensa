@@ -18,3 +18,13 @@ Beispielsweise so:
 |---------|------------------|----------------|
 | Henning | 5 min            | 7min           |
 | Simon   | 3 min            | 4min           |
+
+### Aufgabe 4
+
+|         | geschätzten Zeit | benötigte Zeit |
+|---------|------------------|----------------|
+| Henning | 30 min            | 0min           |
+| Simon   | 0 min            | 4min           |
+
+a) jedes mal mit google erster Treffer gelöst.
+b) mit Hilfe vom [Tabellen Generator](https://www.tablesgenerator.com/html_tables) erledigt
