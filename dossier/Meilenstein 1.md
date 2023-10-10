@@ -109,4 +109,9 @@ Henning
 | Henning | x min           | x min          |
 | Simon   | 30 min          | 20 min         |
 
+### Aufgabe 10
 
+|         | Geschätzte Zeit | Benötigte Zeit |
+|---------|-----------------|----------------|
+| Henning | x min           | x min          |
+| Simon   | 30 min          | 40 min         | 

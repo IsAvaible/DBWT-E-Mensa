@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--
+- Praktikum DBWT. Autoren:
+- Simon, Conrad, 3597903
+- Henning, Schreiber, 3568055
+-->
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="base-layout">
+
+<header class="full-bleed">
+    <img src="logo.svg" alt="E-Mensa Logo">
+    <nav>
+        <a href="#announcements">Ankündigungen</a>
+        <a href='#menu'>Speisen</a>
+        <a href='#stats'>Zahlen</a>
+        <a href='#contact'>Kontakt</a>
+        <a href='#important'>Wichtig für uns</a>
+    </nav>
+</header>
+<div class="carousel"></div>
+<h2 id="announcements">Bald gibt es Essen auch online ;)</h2>
+<div class="description">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur cupiditate delectus dolor esse eum fuga
+    ipsam, minima molestiae quam rerum, ut velit vero! A alias amet animi autem commodi debitis, doloribus ea earum
+    illum natus necessitatibus, perferendis placeat quae quasi vero, vitae voluptate voluptatibus. Ducimus et eveniet,
+    expedita facilis ipsum quae voluptas. Amet assumenda deserunt ea eaque eveniet illo inventore, magni nisi nulla,
+    pariatur, quia quisquam ratione veritatis. Asperiores at, beatae blanditiis eius facere illo ipsam ipsum modi
+    mollitia neque numquam odio perferendis quae quam quas voluptatem voluptatibus! Blanditiis eos illo inventore
+    necessitatibus nostrum obcaecati possimus quod quos ratione!
+</div>
+<h2 id="menu">Köstlichkeiten die sie erwarten</h2>
+<table class="food-menu">
+    <thead>
+    <tr>
+        <td></td>
+        <td>Preis intern</td>
+        <td>Preis extern</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Rindfle6ch BamloJ6, vo+em Paprika, dazu Five Nudeln</td>
+        <td>3,50</td>
+        <td>6,20</td>
+    </tr>
+    <tr>
+        <td>Spinatrisotto mit kleinen Samosateigecken und gemischten Salat</td>
+        <td>2,90</td>
+        <td>5,30</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">Alle Preise in Euro</td>
+    </tr>
+    </tfoot>
+</table>
+
+<h2 id="stats">E-Mensa in Zahlen</h2>
+<div class="mensa-stats">
+    <p>x Besuche</p>
+    <p>y Anmeldungen zum Newsletter</p>
+    <p>z Speisen</p>
+</div>
+
+<h2 id="contact">Interesse geweckt? Wir informieren Sie!</h2>
+<form class="newsletter" action="" method="post">
+    <div>
+        <div>
+            <label for="name">Ihr Name:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="mail">Ihre E-Mail:</label>
+            <input type="email" id="mail" name="mail">
+        </div>
+        <div>
+            <label for="lang">Newsletter bitte in:</label>
+            <select id="lang" name="lang">
+                <option value="de">Deutsch</option>
+                <option value="en">Englisch</option>
+            </select>
+        </div>
+    </div>
+    <div>
+        <input type="checkbox" id="datenschutz" name="datenschutz">
+        <label for="datenschutz">Den Datenschutzbestimmungens stimme ich zu</label>
+        <button type="submit" disabled>Zum Newsletter anmelden</button>
+    </div>
+</form>
+
+<h2 id="important">Das ist uns wichtig</h2>
+<div class="important-to-us">
+    <ul>
+        <li>Beste frische saisonale Zutaten</li>
+        <li>Ausgewogene abwechslungsreiche Gerichte</li>
+        <li>Sauberkeit</li>
+    </ul>
+</div>
+
+<h2 style="text-align: center">Wir freuen uns auf ihren Besuch!</h2>
+
+<footer class="full-bleed">
+    <ul>
+        <li>(c) E-Mensa GmbH</li>
+        <li>Henning Schreiber & Simon Conrad</li>
+        <li><a href="">Impressum</a></li>
+    </ul>
+</footer>
+</body>
+</html>
+
+
+<style>
+    /* From: https://www.joshwcomeau.com/css/full-bleed/ */
+    .base-layout {
+        display: grid;
+        grid-template-columns:
+            1fr
+            min(70ch, 100%)
+            1fr;
+    }
+
+    .base-layout > * {
+        grid-column: 2;
+    }
+
+    .base-layout > .full-bleed {
+        grid-column: 1 / -1;
+    }
+
+    header {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns:
+            1fr
+            min(70ch, 100%)
+            1fr;
+        border-bottom: #000000 1px solid;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    header > * {
+        border: 1px solid black;
+    }
+
+    header > img {
+        grid-column: 1;
+        justify-self: end;
+    }
+
+    header > nav {
+        grid-column: 2;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    nav > a {
+        color: #00b5ad;
+        text-decoration: underline;
+    }
+
+    .carousel {
+        aspect-ratio: 21/6;
+        margin-top: 0.5rem;
+        border: #000000 1px solid;
+    }
+
+    .description {
+        border: #000000 1px solid;
+        padding: 1rem 0.5rem;
+    }
+
+    .food-menu {
+        border: #000000 1px solid;
+        border-collapse: collapse;
+    }
+
+    .food-menu td {
+        border: #bebebe 1px solid;
+    }
+
+    .mensa-stats {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-evenly;
+    }
+
+    .mensa-stats > p {
+        font-weight: bold;
+    }
+
+    .newsletter > div {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .newsletter > label, input, select {
+        display: block;
+    }
+
+    .important-to-us {
+        display: flex;
+        justify-content: center;
+    }
+
+    footer {
+        border-top: #000000 1px solid;
+    }
+
+    footer > ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    footer > ul > li {
+        display: inline;
+    }
+
+    footer > ul > li:not(:first-child):before {
+        content: "";
+        border-left: 1px solid #989898;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+</style>
