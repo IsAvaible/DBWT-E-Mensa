@@ -24,9 +24,21 @@ Beispielsweise so:
 ### Aufgabe 4
 
 |         | Geschätzten Zeit | Benötigte Zeit |
-| ------- | ---------------- | -------------- |
-| Henning | 30 min           | 0min           |
-| Simon   | 0 min            | 4min           |
+|---------|------------------|----------------|
+| Henning | 30 min           | 0 min          |
+| Simon   | 10 min           | 15 min         | 
 
-a) Jedes Mal mit google erster Treffer gelöst.
+a) Jedes Mal mit Google erster Treffer gelöst.
 b) Mithilfe vom [Tabellen Generator](https://www.tablesgenerator.com/html_tables) erledigt
+e) Länger gedauert wegen styling
+
+### Aufgabe 5
+
+|         | Geschätzten Zeit | Benötigte Zeit |
+|---------|------------------|----------------|
+| Henning | x min            | x min          |
+| Simon   | 25 min           | 23 min         | 
+
+Mithilfe von [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) gelöst.
+
+

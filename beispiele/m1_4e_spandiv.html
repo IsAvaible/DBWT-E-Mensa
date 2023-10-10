@@ -7,9 +7,76 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>spandiv</title>
+    <title>Unterschied zwischen span und div</title>
 </head>
 <body>
+<div class="wrapper">
+    <h1>Unterschied zwischen span und div</h1>
+
+    <p>
+        &lt;div&gt; (Division) ist ein Blockelement, das verwendet wird, um größere Abschnitte einer Webseite zu
+        gruppieren.
+        Es
+        wird
+        normalerweise verwendet, um Layoutstrukturen zu erstellen und den Inhalt in verschiedene Abschnitte zu
+        unterteilen.
+        &lt;div&gt;-Elemente haben standardmäßig eine Breite von 100% und beginnen immer auf einer neuen Zeile. Sie
+        können
+        mit CSS
+        gestaltet und positioniert werden.
+    </p>
+    <br>
+    <div class="example-wrapper">
+        <h3>Beispiel</h3>
+        <pre>
+&lt;div&gt;
+    &lt;h4&gt;Überschrift&lt;/h4&gt;
+    &lt;p&gt;Dies ist ein Absatz&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+        <div>
+            <h4>Überschrift</h4>
+            <p>Dies ist ein Absatz.</p>
+        </div>
+    </div>
+
+    <p>
+        &lt;span&gt; ist ein Inline-Element, das verwendet wird, um Text innerhalb eines Absatzes oder eines anderen
+        Textelements zu markieren oder zu stylen. Es wird normalerweise verwendet, um einen Teil des Textes zu
+        formatieren oder mit CSS zu gestalten. &lt;span&gt;-Elemente haben standardm&auml;&szlig;ig keine Breite und
+        nehmen nur so viel Platz ein, wie der Inhalt ben&ouml;tigt.
+    </p>
+
+    <div class="example-wrapper">
+        <h3>Beispiel</h3>
+        <pre>
+&lt;p&gt;Dieser Text enth&auml;lt ein &lt;span style=&quot;color: red;&quot;&gt;hervorgehobenes Wort&lt;/span&gt;.&lt;/p&gt;
+</pre>
+        <p>Dieser Text enthält ein <span style="color: red;">hervorgehobenes Wort</span>.</p>
+    </div>
+</div>
+
 
 </body>
 </html>
+
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns:
+    1fr
+    min(65ch, 100%)
+    1fr;
+    }
+
+    .wrapper > * {
+        grid-column: 2;
+    }
+
+    .example-wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border: dotted;
+        overflow-x: auto;
+    }
+</style>
