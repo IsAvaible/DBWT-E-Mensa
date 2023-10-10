@@ -11,20 +11,22 @@ In jede `.html` Datei soll auf die Zeile `<!DOCTYPE html>` folgender Kommentar f
 
 ### Aufgabe 3
 
-Jede Aufgabe soll eine Tabelle beinhalten in der die geschätzten so wie die benötigte Zeit eingetragen werden soll. ([Tabellen Generator](https://www.tablesgenerator.com/markdown_tables))
+Jede Aufgabe soll eine Tabelle beinhalten in der die geschätzten so wie die benötigte Zeit
+eingetragen werden soll.
 Beispielsweise so: 
 
-|         | geschätzten Zeit | benötigte Zeit |
-|---------|------------------|----------------|
-| Henning | 5 min            | 7min           |
-| Simon   | 3 min            | 4min           |
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | 5 min           | 7 min           |
+| Simon   | 3 min           | 4 min           |
+
 
 ### Aufgabe 4
 
-|         | geschätzten Zeit | benötigte Zeit |
-|---------|------------------|----------------|
-| Henning | 30 min            | 0min           |
+|         | Geschätzten Zeit | Benötigte Zeit |
+| ------- | ---------------- | -------------- |
+| Henning | 30 min           | 0min           |
 | Simon   | 0 min            | 4min           |
 
-a) jedes mal mit google erster Treffer gelöst.
-b) mit Hilfe vom [Tabellen Generator](https://www.tablesgenerator.com/html_tables) erledigt
+a) Jedes Mal mit google erster Treffer gelöst.
+b) Mithilfe vom [Tabellen Generator](https://www.tablesgenerator.com/html_tables) erledigt
