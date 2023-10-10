@@ -23,21 +23,21 @@ Beispielsweise so:
 
 ### Aufgabe 4
 
-|         | Geschätzten Zeit | Benötigte Zeit |
-|---------|------------------|----------------|
-| Henning | 30 min           | 0 min          |
-| Simon   | 10 min           | 15 min         | 
+|         | Geschätzte Zeit | Benötigte Zeit |
+|---------|-----------------|----------------|
+| Henning | 30 min          | 0 min          |
+| Simon   | 10 min          | 15 min         | 
 
 a) Jedes Mal mit Google erster Treffer gelöst.
 b) Mithilfe vom [Tabellen Generator](https://www.tablesgenerator.com/html_tables) erledigt
-e) Länger gedauert wegen styling
+e) Länger gedauert wegen Styling.
 
 ### Aufgabe 5
 
-|         | Geschätzten Zeit | Benötigte Zeit |
-|---------|------------------|----------------|
-| Henning | x min            | x min          |
-| Simon   | 25 min           | 23 min         | 
+|         | Geschätzte Zeit | Benötigte Zeit |
+|---------|-----------------|----------------|
+| Henning | x min           | x min          |
+| Simon   | 25 min          | 23 min         | 
 
 Mithilfe von [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) gelöst.
 
@@ -90,3 +90,16 @@ HTTP/1.1 200 OK content-type: text/html server: PhpStorm 2023.2.2 date: Tue, 10 
 - Referer: Die Adresse der vorherigen Webseite, von der aus ein Link zu der angeforderten Ressource gefolgt wurde.
 - Upgrade-Insecure-Requests: Ein Header, der angibt, dass der Client lieber eine verschlüsselte und authentifizierte Antwort erhalten möchte.
 - User-Agent: Ein Header, der den Client identifiziert, d.h. den Browser oder das Gerät des Benutzers.
+
+### Aufgabe 7
+
+Henning
+
+### Aufgabe 8
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|---------|-----------------|----------------|
+| Henning | x min           | x min          |
+| Simon   | 10 min          | 15 min         |
+
+

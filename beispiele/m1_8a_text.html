@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+- Praktikum DBWT. Autoren:
+- Simon, Conrad, 3597903
+- Henning, Schreiber, 3568055
+-->
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Text</title>
+</head>
+<body>
+<div style="display: flex; justify-content: space-around">
+    <div>
+        <h2>Vorher (ohne CSS)</h2>
+
+        <h1>Currywurst mit Pommes</h1>
+        <h3 class="untertitel">Der Klassiker</h3>
+        <ul class="haupt">
+            <li>Bratwurst</li>
+            <li class="beilage">Fritten</li>
+            <li>Currysauce</li>
+        </ul>
+    </div>
+    <div class="modified">
+        <h2>Nachher (mit CSS)</h2>
+
+        <h1>Currywurst mit Pommes</h1>
+        <h3 class="untertitel">Der Klassiker</h3>
+        <ul class="haupt">
+            <li>Bratwurst</li>
+            <li class="beilage">Fritten</li>
+            <li>Currysauce</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+    .modified > h1 {
+        text-decoration: underline;
+        margin-bottom: 0;
+    }
+
+    .modified {
+        .untertitel {
+            font-style: italic;
+            font-size: medium;
+            margin-top: 0;
+        }
+
+        .haupt > .beilage {
+            color: green;
+        }
+
+        .haupt > li:not(.beilage) {
+            font-weight: bold;
+        }
+    }
+
+
+</style>

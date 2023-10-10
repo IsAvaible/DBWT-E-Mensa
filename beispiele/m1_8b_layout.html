@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+- Praktikum DBWT. Autoren:
+- Simon, Conrad, 3597903
+- Henning, Schreiber, 3568055
+-->
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Layout</title>
+</head>
+<body>
+
+<div class="outer-layout">
+    <div>
+        <h3>Drei Elemente untereinander</h3>
+        <div class="grid-column">
+            <div class="block" style="background-color: #569ff7"></div>
+            <div class="block" style="background-color: #f75656"></div>
+            <div class="block" style="background-color: #f7f756"></div>
+        </div>
+    </div>
+
+    <div>
+        <h3>Drei Elemente nebeneinander</h3>
+        <div class="grid-row">
+            <div class="block" style="background-color: #569ff7"></div>
+            <div class="block" style="background-color: #f75656"></div>
+            <div class="block" style="background-color: #f7f756"></div>
+        </div>
+    </div>
+
+    <div>
+        <h3>Ein Element zentriert</h3>
+        <div class="grid-center">
+            <div class="block" style="background-color: #97f295"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+    .outer-layout {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        flex-wrap: wrap;
+    }
+
+    .outer-layout > * {
+        flex-basis: 301px;
+    }
+
+    .grid-column {
+        display: grid;
+        grid-auto-flow: row;
+        gap: 10px;
+    }
+
+    .grid-row {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 10px;
+    }
+
+    .grid-center {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        height: 301px;
+    }
+
+    .grid-center:hover {
+        background-color: #e5e5f7;
+        opacity: 0.8;
+        background-image: linear-gradient(#444cf7 1px, transparent 1px), linear-gradient(to right, #444cf7 1px, #e5e5f7 1px);
+        background-size: 20px 20px;
+    }
+
+    .block {
+        width: 80px;
+        height: 80px;
+    }
+</style>
