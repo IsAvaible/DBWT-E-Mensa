@@ -93,7 +93,10 @@ HTTP/1.1 200 OK content-type: text/html server: PhpStorm 2023.2.2 date: Tue, 10 
 
 ### Aufgabe 7
 
-Henning
+|         | Geschätzte Zeit | Benötigte Zeit |
+|---------|-----------------|----------------|
+| Henning | 5 min           | 10 min          |
+| Simon   | x min          | x min         |
 
 ### Aufgabe 8
 
