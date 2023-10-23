@@ -17,8 +17,8 @@ Beispielsweise so:
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 | ------- | --------------- | -------------- |
-| Henning | 5 min           | 7 min           |
-| Simon   | 3 min           | 4 min           |
+| Henning | 5 min           | 7 min          |
+| Simon   | 3 min           | 4 min          |        |                 |                |
 
 
 ### Aufgabe 4
