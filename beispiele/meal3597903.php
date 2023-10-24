@@ -41,7 +41,7 @@ $trans = [
         'rating_text' => 'Text',
         'rating_stars' => 'Stars'
     ]
-][$_GET[GET_PARAM_LANG] ?? 'de'];
+][$selectedLang = $_GET[GET_PARAM_LANG] ?? 'de'];
 
 /**
  * List of all allergens.
@@ -117,7 +117,7 @@ function calcMeanStars(array $ratings): float
 
 ?>
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?php echo $selectedLang ?>">
 <head>
     <meta charset="UTF-8"/>
     <title><?php echo $trans['meal_name'] ?>: <?php echo $meal['name']; ?></title>

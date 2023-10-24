@@ -54,3 +54,22 @@ b)
 c) Ersetze ```stripos()``` mit ```stripos()```.
 d) Teilen durch die Anzahl der Elemente darf erst nach der Addition erfolgen.
 e)
+
+### 4)
+
+```php
+<?php
+/**
+* Praktikum DBWT. Autoren:
+* Simon, Conrad, 3597903
+* Henning, Schreiber, 3568055
+*/
+?>
+```
+
+### 5)
+
+|         | Geschätzte Zeit | Benötigte Zeit     |
+|---------|-----------------|--------------------|
+| Henning | x min           | x min              |
+| Simon   | 25 min          | 3+3+12+16 = 34 min | 
