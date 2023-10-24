@@ -1,9 +1,14 @@
+<?php
+/**
+ * Praktikum DBWT. Autoren:
+ * Simon, Conrad, 3597903
+ * Henning, Schreiber, 3568055
+ */
+
+include("meals.php");
+?>
+
 <!DOCTYPE html>
-<!--
-- Praktikum DBWT. Autoren:
-- Simon, Conrad, 3597903
-- Henning, Schreiber, 3568055
--->
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +18,7 @@
 <body class="base-layout">
 
 <header class="full-bleed">
-    <img src="assets/logo.png" alt="E-Mensa Logo">
+    <img src="img/logo.png" alt="E-Mensa Logo">
     <nav>
         <a href="#announcements">Ankündigungen</a>
         <a href='#menu'>Speisen</a>
@@ -23,7 +28,7 @@
     </nav>
 </header>
 <div class="carousel">
-    <img src="assets/salad.jpg" alt="Bild des Salatbuffets der Mensa">
+    <img src="img/salad.jpg" alt="Bild des Salatbuffets der Mensa">
 </div>
 <h2 id="announcements">Bald gibt es Essen auch online ;)</h2>
 <div class="description">
@@ -39,26 +44,28 @@
 <table class="food-menu">
     <thead>
     <tr>
-        <td></td>
+        <td>Beschreibung</td>
         <td>Preis intern</td>
         <td>Preis extern</td>
+        <td></td>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Rindfle6ch BamloJ6, vo+em Paprika, dazu Five Nudeln</td>
-        <td>3,50</td>
-        <td>6,20</td>
-    </tr>
-    <tr>
-        <td>Spinatrisotto mit kleinen Samosateigecken und gemischten Salat</td>
-        <td>2,90</td>
-        <td>5,30</td>
-    </tr>
+    <?php
+    if (isset($meals)) { // meals.php included
+        foreach ($meals as $meal) {
+            echo "<tr><td>{$meal['description']}</td>
+                          <td>" . number_format($meal['price_intern'], 2) . "</td>
+                          <td>" . number_format($meal['price_extern'], 2) . "</td>
+                          <td><img src='img/{$meal['img']}' alt='{$meal['description']}'></td>
+                      </tr>";
+        }
+    }
+    ?>
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="3">Alle Preise in Euro</td>
+        <td style="text-align: center" colspan="4">Alle Preise in Euro</td>
     </tr>
     </tfoot>
 </table>
