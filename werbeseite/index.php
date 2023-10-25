@@ -13,6 +13,7 @@ include("meals.php");
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="preflight.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body class="base-layout">
@@ -27,48 +28,41 @@ include("meals.php");
         <a href='#important'>Wichtig für uns</a>
     </nav>
 </header>
-<div class="carousel">
+<div id="intro">
     <img src="img/salad.jpg" alt="Bild des Salatbuffets der Mensa">
+    <h2 id="announcements">Willkommen auf der E-Mensa!</h2>
+    <div class="description">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur cupiditate delectus dolor esse eum fuga
+        ipsam, minima molestiae quam rerum, ut velit vero! A alias amet animi autem commodi debitis, doloribus ea earum
+        illum natus necessitatibus, perferendis placeat quae quasi vero, vitae voluptate voluptatibus. Ducimus et
+        eveniet,
+        expedita facilis ipsum quae voluptas. Amet assumenda deserunt ea eaque eveniet illo inventore, magni nisi nulla,
+        pariatur, quia quisquam ratione veritatis. Asperiores at, beatae blanditiis eius facere illo ipsam ipsum modi
+        mollitia neque numquam odio perferendis quae quam quas voluptatem voluptatibus! Blanditiis eos illo inventore
+        necessitatibus nostrum obcaecati possimus quod quos ratione!
+    </div>
 </div>
-<h2 id="announcements">Bald gibt es Essen auch online ;)</h2>
-<div class="description">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur cupiditate delectus dolor esse eum fuga
-    ipsam, minima molestiae quam rerum, ut velit vero! A alias amet animi autem commodi debitis, doloribus ea earum
-    illum natus necessitatibus, perferendis placeat quae quasi vero, vitae voluptate voluptatibus. Ducimus et eveniet,
-    expedita facilis ipsum quae voluptas. Amet assumenda deserunt ea eaque eveniet illo inventore, magni nisi nulla,
-    pariatur, quia quisquam ratione veritatis. Asperiores at, beatae blanditiis eius facere illo ipsam ipsum modi
-    mollitia neque numquam odio perferendis quae quam quas voluptatem voluptatibus! Blanditiis eos illo inventore
-    necessitatibus nostrum obcaecati possimus quod quos ratione!
-</div>
-<h2 id="menu">Köstlichkeiten die sie erwarten</h2>
-<table class="food-menu">
-    <thead>
-    <tr>
-        <td>Beschreibung</td>
-        <td>Preis intern</td>
-        <td>Preis extern</td>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
+<h2 id="menu">Köstlichkeiten die Sie erwarten</h2>
+<div class="food-menu">
     <?php
     if (isset($meals)) { // meals.php included
         foreach ($meals as $meal) {
-            echo "<tr><td>{$meal['description']}</td>
-                          <td>" . number_format($meal['price_intern'], 2) . "</td>
-                          <td>" . number_format($meal['price_extern'], 2) . "</td>
-                          <td><img src='img/{$meal['img']}' alt='{$meal['description']}'></td>
-                      </tr>";
+            echo "<div class='food-card'>
+                    <img src='img/{$meal['img']}' alt='{$meal['description']}'>
+                    <div>
+                        <h3>{$meal['name']}</h3>
+                        <p>{$meal['description']}</p>
+                        <div class='food-properties'>
+                            <p>Preis: " . number_format($meal['price_intern'], 2) . "€ (intern) / " . number_format($meal['price_extern'], 2) . "€ (extern)</p>
+                            <p>Allergene: " . implode(',', $meal['allergens']) . "</p>
+                        </div>
+                    </div>
+                </div>";
         }
     }
     ?>
-    </tbody>
-    <tfoot>
-    <tr>
-        <td style="text-align: center" colspan="4">Alle Preise in Euro</td>
-    </tr>
-    </tfoot>
-</table>
+
+</div>
 
 <h2 id="stats">E-Mensa in Zahlen</h2>
 <div class="mensa-stats">
