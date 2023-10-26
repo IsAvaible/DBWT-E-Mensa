@@ -27,7 +27,7 @@ $meals = [
     ],
     [
         'name' => 'Jägerschnitzel',
-        'description' => 'Ein saftiges Schweineschnitzel in einer knusprigen Panade, bedeckt mit einer aromatischen Pilzsauce, serviert mit Kartoffelpüree oder Bratkartoffeln und einem grünen Salat.',
+        'description' => 'Ein saftiges Schweineschnitzel in einer knusprigen Panade, bedeckt mit einer aromatischen Pilzsauce, serviert mit Spätzle oder Bratkartoffeln und einem grünen Salat.',
         'price_intern' => 4.5,
         'price_extern' => 6.5,
         'img' => 'jaegerschnitzel.jpg',

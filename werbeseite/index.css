@@ -4,7 +4,7 @@
     --accent-color: #AF2BBF;
 
     --fg-color: #1B1B1E;
-    --bg-color: #f4f4f9;
+    --bg-color: #faf9ff;
 
     --box-shadow: 20px 20px 60px #d5d5d5,
     -20px -20px 60px #ebebeb
@@ -32,7 +32,7 @@ body > h2 {
     display: grid;
     grid-template-columns:
             1fr
-            min(70ch, 100%)
+            min(80ch, 100%)
             1fr;
 }
 
@@ -49,7 +49,7 @@ header {
     gap: 1rem;
     grid-template-columns:
             1fr
-            min(70ch, calc(100% - 6rem))
+            min(80ch, calc(100% - 6rem))
             1fr;
     padding: 1rem 0;
     border-bottom: color-mix(in srgb, var(--fg-color), var(--bg-color)) 1px solid;
@@ -90,7 +90,7 @@ nav > a {
 }
 
 #intro > img {
-    border-radius: 2rem;
+    border-radius: 0.5rem;
     border: color-mix(in srgb, var(--fg-color), var(--bg-color)) 1px solid;
     aspect-ratio: 21/6;
     width: 100%;
@@ -101,12 +101,6 @@ nav > a {
 #announcements {
     font-weight: bold;
     font-size: xx-large;
-    line-height: 1;
-}
-
-.description {
-    border: #000000 1px solid;
-    padding: 1rem 0.5rem;
 }
 
 .food-menu {

@@ -31,7 +31,7 @@ include("meals.php");
 <div id="intro">
     <img src="img/salad.jpg" alt="Bild des Salatbuffets der Mensa">
     <h2 id="announcements">Willkommen auf der E-Mensa!</h2>
-    <div class="description">
+    <div id="description">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur cupiditate delectus dolor esse eum fuga
         ipsam, minima molestiae quam rerum, ut velit vero! A alias amet animi autem commodi debitis, doloribus ea earum
         illum natus necessitatibus, perferendis placeat quae quasi vero, vitae voluptate voluptatibus. Ducimus et
