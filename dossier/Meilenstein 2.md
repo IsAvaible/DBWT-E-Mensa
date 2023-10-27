@@ -82,3 +82,8 @@ e)
 | Simon   | 20 min          | 2+6+1+10 = 19 min | 
 
 ### 7)
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|---------|-----------------|----------------|
+| Henning | x min           | x min          |
+| Simon   | 20 min          | 18min          | 
