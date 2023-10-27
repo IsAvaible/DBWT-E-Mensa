@@ -183,7 +183,7 @@ if (($_GET[GET_PARAM_SHOW_DESCRIPTION] ?? 1) != 0) {
 <h1><?php echo $trans['rating'] ?> (<?php echo $trans['rating_total'] ?>: <?php echo calcMeanStars($ratings); ?>)</h1>
 <form method="get">
     <label for="rating_sort"><?php echo $trans['rating_sort'] ?>:</label>
-    <select id="rating_sort" name="rating_sort">
+    <select id="rating_sort" name="<?php echo GET_PARAM_RATING_SORT ?>">
         <option value="TOP" <?php if (($_GET[GET_PARAM_RATING_SORT] ?? 'TOP') == 'TOP') {
             echo 'selected';
         } ?>>Top
@@ -194,7 +194,8 @@ if (($_GET[GET_PARAM_SHOW_DESCRIPTION] ?? 1) != 0) {
         </option>
     </select>
     <label for="search_text"><?php echo $trans['search_filter'] ?>:</label>
-    <input id="search_text" type="text" name="search_text" value="<?php echo $_GET['search_text'] ?? '' ?>">
+    <input id="search_text" type="text" name="<?php echo GET_PARAM_SEARCH_TEXT ?>"
+           value="<?php echo $_GET['search_text'] ?? '' ?>">
     <input type="submit" value="<?php echo $trans['search_submit'] ?>">
 </form>
 <table class="rating">

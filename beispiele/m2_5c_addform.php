@@ -48,12 +48,12 @@ $res = isset($_GET['op_mult']) ? multiplizieren($a, $b) : addieren($a, $b);
 <form method="GET">
     <span>
         <label for="a">a:</label>
-        <input type="number" name="a" id="a" value="<?php echo $a ?>">
+        <input type="number" name="<?php echo GET_PARAM_A ?>" id="a" value="<?php echo $a ?>">
     </span>
 
     <span>
         <label for="b">b:</label>
-        <input type="number" name="b" id="b" value="<?php echo $b ?>">
+        <input type="number" name="<?php echo GET_PARAM_B ?>" id="b" value="<?php echo $b ?>">
     </span>
 
     <span>
