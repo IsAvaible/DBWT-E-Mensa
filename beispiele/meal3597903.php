@@ -126,10 +126,28 @@ function calcMeanStars(array $ratings): float
             font-family: Arial, serif;
         }
 
+        body {
+            padding: 1rem;
+        }
+
         nav {
             display: flex;
             justify-content: flex-end;
-            gap: 0 0.5rem;
+            gap: 0 1rem;
+        }
+
+        nav > a {
+            text-decoration: none;
+            color: rgb(128, 128, 128);
+        }
+
+        nav > a:hover {
+            text-decoration: underline;
+        }
+
+        nav > a[aria-selected="1"] {
+            color: black;
+            font-weight: bolder;
         }
 
         .rating {
@@ -154,10 +172,10 @@ function calcMeanStars(array $ratings): float
 </head>
 <body>
 <nav>
-    <form>
-        <a href="?<?php echo http_build_query($_GET) . "&" . GET_PARAM_LANG; ?>=de">Deutsch</a>
-        <a href="?<?php echo http_build_query($_GET) . "&" . GET_PARAM_LANG; ?>=en">Englisch</a>
-    </form>
+    <a aria-selected="<?php echo $selectedLang === 'de' ? 1 : 0 ?>"
+       href="?<?php echo http_build_query($_GET) . "&" . GET_PARAM_LANG; ?>=de"><?php echo $trans['lang_de'] ?></a>
+    <a aria-selected="<?php echo $selectedLang === 'en' ? 1 : 0 ?>"
+       href="?<?php echo http_build_query($_GET) . "&" . GET_PARAM_LANG; ?>=en"><?php echo $trans['lang_en'] ?></a>
 </nav>
 <h1><?php echo $trans['meal_name'] ?>: <?php echo $meal['name']; ?></h1>
 <?php
