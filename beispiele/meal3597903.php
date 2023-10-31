@@ -193,6 +193,9 @@ if (($_GET[GET_PARAM_SHOW_DESCRIPTION] ?? 1) != 0) {
     <ul>
         <?php
         foreach ($allergens as $allergenId => $allergen) {
+            if ($meal['allergens'] !== null && !in_array($allergenId, $meal['allergens'])) {
+                continue;
+            }
             echo '<li>' . $allergen . ' (' . $allergenId . ')' . '</li>';
         }
         ?>
