@@ -16,7 +16,7 @@
 
 |         | Geschätzte Zeit | Benötigte Zeit                       |
 |---------|-----------------|--------------------------------------|
-| Henning | 120 min         | 30 min                               |
+| Henning | 120 min         | 65 min                               |
 | Simon   | >60 min         | 2+3+0+(1+8+1+1+2+3+17+3+15+7)=63 min |
 
 #### 1)
@@ -53,9 +53,9 @@ b)
 ```
 c) Ersetze ```stripos()``` mit ```stripos()```.
 d) Teilen durch die Anzahl der Elemente darf erst nach der Addition erfolgen.
-e)
 
-### 4)
+
+### Aufgabe 4
 
 ```php
 <?php
@@ -67,23 +67,30 @@ e)
 ?>
 ```
 
-### 5)
+### Aufgabe 5
 
 |         | Geschätzte Zeit | Benötigte Zeit     |
 |---------|-----------------|--------------------|
 | Henning | x min           | x min              |
 | Simon   | 25 min          | 3+3+12+16 = 34 min | 
 
-### 6)
+### Aufgabe 6
 
 |         | Geschätzte Zeit | Benötigte Zeit    |
 |---------|-----------------|-------------------|
 | Henning | x min           | x min             |
 | Simon   | 20 min          | 2+6+1+10 = 19 min | 
 
-### 7)
+### Aufgabe 7
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | x min           | x min          |
+| Simon   | 20 min          | 18min          |
+
+### Aufgabe 8
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |---------|-----------------|----------------|
-| Henning | x min           | x min          |
-| Simon   | 20 min          | 18min          | 
+| Henning | 60 min           | 50 min          |
+| Simon   | x min          | x min          | 

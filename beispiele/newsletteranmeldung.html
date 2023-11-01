@@ -10,7 +10,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="" method="post" style="font-family: 'Comic Sans MS'">
+<form action="newsletterbackend.php" method="post" style="font-family: 'Comic Sans MS'">
     <fieldset>
         <legend>Anmeldung</legend>
         <label>Anrede</label><br/>
@@ -21,22 +21,22 @@
         <input id="divers" type="radio" name="anrede" value="divers"/><label for="divers">Divers</label>
         <br/>
         <label for="vorname">Vorname<sup>*</sup></label><br/>
-        <input required id="vorname" type="text" placeholder="Bitte geben sie ihren Vornamen ein"/>
+        <input required id="vorname" name="vorname" type="text" placeholder="Bitte geben sie ihren Vornamen ein"/>
         <br/>
         <label for="nachname">Nachname<sup>*</sup></label><br/>
-        <input required id="nachname" type="text" placeholder="Bitte geben sie ihren Nachnamen ein"/>
+        <input required id="nachname" name="nachname" type="text" placeholder="Bitte geben sie ihren Nachnamen ein"/>
         <br/>
         <label for="email">E-Mail<sup>*</sup></label><br/>
-        <input required id="email" type="email" placeholder="Bitte geben sie ihre E-Mail ein"/>
+        <input required id="email" name="email" type="email" placeholder="Bitte geben sie ihre E-Mail ein"/>
         <br/>
         <label for="benint">Benachrichtigungsinterval</label><br/>
-        <select id="benint">
+        <select id="benint" name="benint">
             <option value="täglich">täglich</option>
             <option value="wöchentlich">wöchentlich</option>
             <option value="monatlich">monatlich</option>
         </select>
         <br/>
-        <input id="datenschutz" type="checkbox"/>
+        <input id="datenschutz" name="datenschutz" type="checkbox"/>
         <label for="datenschutz">Datenschutzbestimmungen gelesen</label>
         <br/>
         <br/>
