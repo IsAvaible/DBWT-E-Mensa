@@ -91,6 +91,14 @@ d) Teilen durch die Anzahl der Elemente darf erst nach der Addition erfolgen.
 ### Aufgabe 8
 
 |         | Geschätzte Zeit | Benötigte Zeit |
-|---------|-----------------|----------------|
-| Henning | 60 min           | 50 min          |
-| Simon   | x min          | x min          | 
+| ------- | --------------- | -------------- |
+| Henning | 60 min          | 50 min         |
+| Simon   | x min           | x min          |
+
+### Aufgabe 9
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | 45 min          | 25 min          |
+| Simon   | x min           | x min          |
+

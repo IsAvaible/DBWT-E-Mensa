@@ -6,6 +6,38 @@
  */
 
 include("meals.php");
+
+/*
+ * Besucher Zahlen
+ */
+$besucherzahlen = 0;
+if ($fbesucherzahlen = fopen("besucherzahlen.txt", "r")) {
+    $besucherzahlen = fgets($fbesucherzahlen) + 1;
+    //fwrite($fbesucherzahlen, $besucherzahlen);
+    fclose($fbesucherzahlen);
+    if ($fbesucherzahlen = fopen("besucherzahlen.txt", "w")) {
+        fwrite($fbesucherzahlen, $besucherzahlen);
+        fclose($fbesucherzahlen);
+    }
+
+} else {
+    $besucherzahlen = 'x';
+}
+
+/*
+ * Newsletter Anmeldungen
+ */
+$newsletteranmeldung = 0;
+if ($fnewsletteranmeldung = fopen("newsletter.csv", "r")) {
+    while (!feof($fnewsletteranmeldung)) {
+        $line = fgets($fnewsletteranmeldung);
+        $newsletteranmeldung++;
+    }
+    fclose($fnewsletteranmeldung);
+} else {
+    $newsletteranmeldung = 'x';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -66,13 +98,13 @@ include("meals.php");
 
 <h2 id="stats">E-Mensa in Zahlen</h2>
 <div class="mensa-stats">
-    <p>x Besuche</p>
-    <p>y Anmeldungen zum Newsletter</p>
-    <p>z Speisen</p>
+    <p><?php echo $besucherzahlen ?> Besuche</p>
+    <p><?php echo $newsletteranmeldung ?> Anmeldungen zum Newsletter</p>
+    <p><?php echo count($meal) ?> Speisen</p>
 </div>
 
 <h2 id="contact">Interesse geweckt? Wir informieren Sie!</h2>
-<form class="newsletter" action="" method="post">
+<form class="newsletter" action="newsletterbackend.php" method="post">
     <div>
         <div>
             <label for="name">Ihr Name:</label>
@@ -93,7 +125,7 @@ include("meals.php");
     <div>
         <input type="checkbox" id="datenschutz" name="datenschutz">
         <label for="datenschutz">Den Datenschutzbestimmungens stimme ich zu</label>
-        <button type="submit" disabled>Zum Newsletter anmelden</button>
+        <button type="submit">Zum Newsletter anmelden</button>
     </div>
 </form>
 
