@@ -1,6 +1,7 @@
 <?php
 const GET_PARAM_MIN_STARS = 'search_min_stars';
 const GET_PARAM_SEARCH_TEXT = 'search_text';
+const GET_PARAM_SHOW_DESCRIPTION = 1;
 
 /**
  * List of all allergens.
@@ -83,7 +84,9 @@ function calcMeanStars(array $ratings): float
 </head>
 <body>
 <h1>Gericht: <?php echo $meal['name']; ?></h1>
-<p><?php echo $meal['description']; ?></p>
+<p><?php if (GET_PARAM_SHOW_DESCRIPTION != 0) {
+        echo $meal['description'];
+    } ?></p>
 <p>
     <?php echo "Allergen: ";
     foreach ($meal['allergens'] as $allergen) {
@@ -94,7 +97,9 @@ function calcMeanStars(array $ratings): float
 <h1>Bewertungen (Insgesamt: <?php echo calcMeanStars($ratings); ?>)</h1>
 <form method="get">
     <label for="search_text">Filter:</label>
-    <input id="search_text" type="text" name="search_text">
+    <input id="search_text" type="text" name="search_text" value="<?php if (!empty($_GET[GET_PARAM_SEARCH_TEXT])) {
+        echo $_GET[GET_PARAM_SEARCH_TEXT];
+    } ?>">
     <input type="submit" value="Suchen">
 </form>
 <table class="rating">

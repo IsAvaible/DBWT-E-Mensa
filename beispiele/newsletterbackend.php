@@ -9,9 +9,10 @@
  * datenschutz
  */
 
+
 $anrede = $_POST['anrede'] ?? NULL;
-$vorname = $_POST['vorname'] ?? NULL;
-$nachname = $_POST['nachname'] ?? NULL;
+$vorname = preg_replace('/[^A-Za-z]+/', '', $_POST['vorname'] ?? NULL);
+$nachname = preg_replace('/[^A-Za-z]+/', '', $_POST['nachname'] ?? NULL);
 $email = $_POST['email'] ?? NULL;
 $benint = $_POST['benint'] ?? NULL;
 $datenschutz = $_POST['datenschutz'] ?? NULL;
@@ -36,6 +37,10 @@ if ($nachname == NULL) {
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     array_push($fehler, "Ihre E-Mail entspricht nicht den Vorgaben.");
+}
+
+if (str_contains($email, 'rcpt.at') or str_contains($email, 'damnthespam.at') or str_contains($email, 'wegwerfmail.de') or str_contains($email, 'trashmail.')) {
+    array_push($fehler, "Ihre E-Mail ist auf unsere Blogliste, bitte Wählen sie eine andere.");
 }
 
 if ($benint != "täglich" and $benint != "wöchentlich" and $benint != "monatlich") {
