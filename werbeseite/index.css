@@ -166,13 +166,27 @@ nav > a {
     justify-content: space-evenly;
 }
 
-.mensa-stats > p {
+.mensa-stats > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mensa-stats > div > span {
     font-weight: bold;
+    font-size: xx-large;
+    color: var(--main-color);
+}
+
+.mensa-stats > div > p {
+    text-align: center;
 }
 
 .newsletter > div {
     display: flex;
     gap: 0.5rem;
+    justify-content: center;
 }
 
 .newsletter {
@@ -183,6 +197,27 @@ nav > a {
 
 .newsletter > label, input, select {
     display: block;
+}
+
+.newsletter > button[type="submit"] {
+    width: fit-content;
+    margin: 0 auto;
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: large;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.newsletter > button[type="submit"]:hover {
+    background-color: color-mix(in srgb, var(--main-color), var(--fg-color) 20%);
+}
+
+.newsletter > button[type="submit"]:active {
+    background-color: color-mix(in srgb, var(--main-color), var(--fg-color) 40%);
 }
 
 .important-to-us {

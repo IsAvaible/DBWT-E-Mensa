@@ -11,30 +11,41 @@ include("meals.php");
  * Besucher Zahlen
  */
 $besucherzahlen = 0;
-if ($fbesucherzahlen = fopen("besucherzahlen.txt", "r")) {
+if (is_file("besucherzahlen.txt")) {
+    // Read file and increment value
+    $fbesucherzahlen = fopen("besucherzahlen.txt", "r");
     $besucherzahlen = fgets($fbesucherzahlen) + 1;
-    //fwrite($fbesucherzahlen, $besucherzahlen);
     fclose($fbesucherzahlen);
+    // Write incremented value to file
+    $fbesucherzahlen = fopen("besucherzahlen.txt", "w");
+    fwrite($fbesucherzahlen, $besucherzahlen);
+    fclose($fbesucherzahlen);
+} else {
+    // Create a new file with default value of 0
     if ($fbesucherzahlen = fopen("besucherzahlen.txt", "w")) {
-        fwrite($fbesucherzahlen, $besucherzahlen);
+        fwrite($fbesucherzahlen, "0");
         fclose($fbesucherzahlen);
     }
-
-} else {
     $besucherzahlen = 'x';
 }
 
 /*
  * Newsletter Anmeldungen
  */
-$newsletteranmeldung = 0;
-if ($fnewsletteranmeldung = fopen("newsletter.csv", "r")) {
+
+if (is_file("newsletter.csv")) {
+    $fnewsletteranmeldung = fopen("newsletter.csv", "r");
+    $newsletteranmeldung = 0;
     while (!feof($fnewsletteranmeldung)) {
         $line = fgets($fnewsletteranmeldung);
-        $newsletteranmeldung++;
+        if (trim($line) != "") {
+            $newsletteranmeldung++;
+        }
     }
     fclose($fnewsletteranmeldung);
 } else {
+    $fnewsletteranmeldung = fopen("newsletter.csv", "c");
+    fclose($fnewsletteranmeldung);
     $newsletteranmeldung = 'x';
 }
 
@@ -98,9 +109,12 @@ if ($fnewsletteranmeldung = fopen("newsletter.csv", "r")) {
 
 <h2 id="stats">E-Mensa in Zahlen</h2>
 <div class="mensa-stats">
-    <p><?php echo $besucherzahlen ?> Besuche</p>
-    <p><?php echo $newsletteranmeldung ?> Anmeldungen zum Newsletter</p>
-    <p><?php echo count($meal) ?> Speisen</p>
+    <div><span><?php echo $besucherzahlen ?></span>
+        <p>Besuche</p></div>
+    <div><span><?php echo $newsletteranmeldung ?></span>
+        <p>Anmeldungen zum Newsletter</p></div>
+    <div><span><?php echo count($meal) ?></span>
+        <p>Speisen</p></div>
 </div>
 
 <h2 id="contact">Interesse geweckt? Wir informieren Sie!</h2>
@@ -108,11 +122,11 @@ if ($fnewsletteranmeldung = fopen("newsletter.csv", "r")) {
     <div>
         <div>
             <label for="name">Ihr Name:</label>
-            <input type="text" id="name" name="name">
+            <input type="text" id="name" name="name" required>
         </div>
         <div>
             <label for="mail">Ihre E-Mail:</label>
-            <input type="email" id="mail" name="mail">
+            <input type="email" id="mail" name="mail" required>
         </div>
         <div>
             <label for="lang">Newsletter bitte in:</label>
@@ -123,10 +137,10 @@ if ($fnewsletteranmeldung = fopen("newsletter.csv", "r")) {
         </div>
     </div>
     <div>
-        <input type="checkbox" id="datenschutz" name="datenschutz">
+        <input type="checkbox" id="datenschutz" name="datenschutz" required>
         <label for="datenschutz">Den Datenschutzbestimmungens stimme ich zu</label>
-        <button type="submit">Zum Newsletter anmelden</button>
     </div>
+    <button type="submit">Zum Newsletter anmelden</button>
 </form>
 
 <h2 id="important">Das ist uns wichtig</h2>
