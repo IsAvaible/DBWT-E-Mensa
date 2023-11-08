@@ -99,6 +99,14 @@ d) Teilen durch die Anzahl der Elemente darf erst nach der Addition erfolgen.
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 | ------- | --------------- | -------------- |
-| Henning | 45 min          | 25 min          |
+| Henning | 45 min          | 25 min         | 
 | Simon   | x min           | x min          |
 
+### Gesamt Aufwand
+
+|         | Benötigte Zeit    |
+| ------- | ----------------- |
+| Henning | 174 min           |
+| Simon   | 170 min           |
+|         |                   |
+| Gesamt  | 344 min = 5.73std | 
