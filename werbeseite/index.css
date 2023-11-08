@@ -104,15 +104,18 @@ nav > a {
 }
 
 .food-menu {
-    width: 100%;
+    width: min(88rem, 100%);
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     gap: 2rem;
 }
 
 .food-card {
     background-color: white;
+    max-width: 20rem;
     width: calc(50% - 1rem);
     border-radius: 0.5rem;
     aspect-ratio: 4/3;
@@ -131,7 +134,7 @@ nav > a {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
     padding: 1rem;
 }
 

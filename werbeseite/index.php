@@ -86,7 +86,7 @@ if (is_file("newsletter.csv")) {
     </div>
 </div>
 <h2 id="menu">Köstlichkeiten die Sie erwarten</h2>
-<div class="food-menu">
+<div class="food-menu full-bleed">
     <?php
     if (isset($meals)) { // meals.php included
         foreach ($meals as $meal) {
@@ -96,8 +96,8 @@ if (is_file("newsletter.csv")) {
                         <h3>{$meal['name']}</h3>
                         <p>{$meal['description']}</p>
                         <div class='food-properties'>
-                            <p>Preis: " . number_format($meal['price_intern'], 2) . "€ (intern) / " . number_format($meal['price_extern'], 2) . "€ (extern)</p>
-                            <p>Allergene: " . implode(',', $meal['allergens']) . "</p>
+                            <p><strong>Preis</strong>: " . number_format($meal['price_intern'], 2) . "€ (intern) / " . number_format($meal['price_extern'], 2) . "€ (extern)</p>
+                            <p><strong>Allergene</strong>: " . implode(',', $meal['allergens']) . "</p>
                         </div>
                     </div>
                 </div>";
