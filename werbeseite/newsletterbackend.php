@@ -9,7 +9,6 @@
  * datenschutz
  */
 
-
 $name = preg_replace('/[^A-Za-z ]+/', '', $_POST['name'] ?? NULL);
 $email = $_POST['mail'] ?? NULL;
 $lang = $_POST['lang'] ?? NULL;
@@ -59,7 +58,7 @@ if (count($fehler) == 0) {
     <meta charset="UTF-8"/>
     <title>Verarbeitung Newsletter Anmeldung</title>
 </head>
-<body style="font-family: 'Comic Sans MS'">
+<body style="font-family: 'Comic Sans', sans-serif;">
 <?php
 
 if (count($fehler) == 0) {
@@ -74,5 +73,8 @@ if (count($fehler) == 0) {
         echo $meldung . "<br>";
     }
 }
+
+// Return to index.php after 3 seconds
+header("Refresh: 3; url=index.php");
 ?>
 </body>

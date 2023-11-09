@@ -239,6 +239,7 @@ footer > ul {
 
 footer > ul > li {
     display: inline;
+    text-align: center;
 }
 
 footer > ul > li:not(:first-child):before {

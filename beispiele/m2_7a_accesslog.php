@@ -13,7 +13,7 @@ const ACCESSLOG_PATH = "accesslog.txt";
  */
 function logAppend(string $content): void
 {
-    $file = fopen(ACCESSLOG_PATH, "a");
+    $file = fopen(ACCESSLOG_PATH, "a+");
     fwrite($file, "$content\n");
     fclose($file);
 }

@@ -24,7 +24,7 @@ $famousMeals = [
  */
 function years_without_winners(array $meals, int $since): array
 {
-    $result = range(2000, date('Y'));
+    $result = range($since, date('Y'));
     foreach ($meals as $number => $meal) {
         $result = array_diff($result, is_iterable($meal['winner']) ? $meal['winner'] : [$meal['winner']]);
     }

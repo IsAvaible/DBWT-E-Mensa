@@ -55,7 +55,7 @@ if (is_file("newsletter.csv")) {
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>E-Mensa</title>
     <link rel="stylesheet" href="preflight.css">
     <link rel="stylesheet" href="index.css">
 </head>
