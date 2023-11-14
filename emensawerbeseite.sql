@@ -1,0 +1,214 @@
+-- MariaDB dump 10.19-11.1.2-MariaDB, for osx10.19 (arm64)
+--
+-- Host: localhost    Database: emensawerbeseite
+-- ------------------------------------------------------
+-- Server version	11.1.2-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `allergen`
+--
+
+DROP TABLE IF EXISTS `allergen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `allergen` (
+  `code` char(4) NOT NULL,
+  `name` varchar(300) NOT NULL,
+  `typ` varchar(20) NOT NULL DEFAULT 'allergen',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `allergen`
+--
+
+LOCK TABLES `allergen` WRITE;
+/*!40000 ALTER TABLE `allergen` DISABLE KEYS */;
+INSERT INTO `allergen` VALUES
+('a','Getreideprodukte','Getreide (Gluten)'),
+('a1','Weizen','Allergen'),
+('a2','Roggen','Allergen'),
+('a3','Gerste','Allergen'),
+('a4','Dinkel','Allergen'),
+('a5','Hafer','Allergen'),
+('a6','Dinkel','Allergen'),
+('b','Fisch','Allergen'),
+('c','Krebstiere','Allergen'),
+('d','Schwefeldioxid/Sulfit','Allergen'),
+('e','Sellerie','Allergen'),
+('f','Milch und Laktose','Allergen'),
+('f1','Butter','Allergen'),
+('f2','Käse','Allergen'),
+('f3','Margarine','Allergen'),
+('g','Sesam','Allergen'),
+('h','Nüsse','Allergen'),
+('h1','Mandeln','Allergen'),
+('h2','Haselnüsse','Allergen'),
+('h3','Walnüsse','Allergen'),
+('i','Erdnüsse','Allergen');
+/*!40000 ALTER TABLE `allergen` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gericht`
+--
+
+DROP TABLE IF EXISTS `gericht`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gericht` (
+  `id` int(11) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  `beschreibung` varchar(800) NOT NULL,
+  `erfasst_am` date NOT NULL,
+  `vegetarisch` tinyint(1) NOT NULL DEFAULT 0,
+  `vegan` tinyint(1) NOT NULL DEFAULT 0,
+  `preisintern` double unsigned NOT NULL,
+  `preisextern` double unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `CONSTRAINT_1` CHECK (`preisintern` <= `preisextern`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gericht`
+--
+
+LOCK TABLES `gericht` WRITE;
+/*!40000 ALTER TABLE `gericht` DISABLE KEYS */;
+INSERT INTO `gericht` VALUES
+(1,'Bratkartoffeln mit Speck und Zwiebeln','Kartoffeln mit Zwiebeln und gut Speck','2020-08-25',0,0,2.3,4),
+(3,'Bratkartoffeln mit Zwiebeln','Kartoffeln mit Zwiebeln und ohne Speck','2020-08-25',1,1,2.3,4),
+(4,'Grilltofu','Fein gewürzt und mariniert','2020-08-25',1,1,2.5,4.5),
+(5,'Lasagne','Klassisch mit Bolognesesoße und Creme Fraiche','2020-08-24',0,0,2.5,4.5),
+(6,'Lasagne vegetarisch','Klassisch mit Sojagranulatsoße und Creme Fraiche','2020-08-24',1,0,2.5,4.5),
+(7,'Hackbraten','Nicht nur für Hacker','2020-08-25',0,0,2.5,4),
+(8,'Gemüsepfanne','Gesundes aus der Region, deftig angebraten','2020-08-25',1,1,2.3,4),
+(9,'Hühnersuppe','Suppenhuhn trifft Petersilie','2020-08-25',0,0,2,3.5),
+(10,'Forellenfilet','mit Kartoffeln und Dilldip','2020-08-22',0,0,3.8,5),
+(11,'Kartoffel-Lauch-Suppe','der klassische Bauchwärmer mit frischen Kräutern','2020-08-22',1,0,2,3),
+(12,'Kassler mit Rosmarinkartoffeln','dazu Salat und Senf','2020-08-23',0,0,3.8,5.2),
+(13,'Drei Reibekuchen mit Apfelmus','grob geriebene Kartoffeln aus der Region','2020-08-23',1,0,2.5,4.5),
+(14,'Pilzpfanne','die legendäre Pfanne aus Pilzen der Saison','2020-08-23',1,0,3,5),
+(15,'Pilzpfanne vegan','die legendäre Pfanne aus Pilzen der Saison ohne Käse','2020-08-24',1,1,3,5),
+(16,'Käsebrötchen','schmeckt vor und nach dem Essen','2020-08-24',1,0,1,1.5),
+(17,'Schinkenbrötchen','schmeckt auch ohne Hunger','2020-08-25',0,0,1.25,1.75),
+(18,'Tomatenbrötchen','mit Schnittlauch und Zwiebeln','2020-08-25',1,1,1,1.5),
+(19,'Mousse au Chocolat','sahnige schweizer Schokolade rundet jedes Essen ab','2020-08-26',1,0,1.25,1.75),
+(20,'Suppenkreation á la Chef','was verschafft werden muss, gut und günstig','2020-08-26',0,0,0.5,0.9);
+/*!40000 ALTER TABLE `gericht` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gericht_hat_allergen`
+--
+
+DROP TABLE IF EXISTS `gericht_hat_allergen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gericht_hat_allergen` (
+  `code` char(4) DEFAULT NULL,
+  `gericht_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gericht_hat_allergen`
+--
+
+LOCK TABLES `gericht_hat_allergen` WRITE;
+/*!40000 ALTER TABLE `gericht_hat_allergen` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gericht_hat_allergen` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gericht_hat_kategorie`
+--
+
+DROP TABLE IF EXISTS `gericht_hat_kategorie`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gericht_hat_kategorie` (
+  `gericht_id` int(11) NOT NULL,
+  `kategorie_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gericht_hat_kategorie`
+--
+
+LOCK TABLES `gericht_hat_kategorie` WRITE;
+/*!40000 ALTER TABLE `gericht_hat_kategorie` DISABLE KEYS */;
+INSERT INTO `gericht_hat_kategorie` VALUES
+(1,3),
+(3,3),
+(4,3),
+(5,3),
+(6,3),
+(7,3),
+(9,3),
+(16,4),
+(17,4),
+(18,4),
+(16,5),
+(17,5),
+(18,5);
+/*!40000 ALTER TABLE `gericht_hat_kategorie` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `kategorie`
+--
+
+DROP TABLE IF EXISTS `kategorie`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kategorie` (
+  `id` int(11) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  `eltern_id` int(11) DEFAULT NULL,
+  `bildname` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `kategorie`
+--
+
+LOCK TABLES `kategorie` WRITE;
+/*!40000 ALTER TABLE `kategorie` DISABLE KEYS */;
+INSERT INTO `kategorie` VALUES
+(1,'Aktionen',NULL,'kat_aktionen.png'),
+(2,'Menus',NULL,'kat_menu.gif'),
+(3,'Hauptspeisen',2,'kat_menu_haupt.bmp'),
+(4,'Vorspeisen',2,'kat_menu_vor.svg'),
+(5,'Desserts',2,'kat_menu_dessert.pic'),
+(6,'Mensastars',1,'kat_stars.tif'),
+(7,'Erstiewoche',1,'kat_erties.jpg');
+/*!40000 ALTER TABLE `kategorie` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-11-14 19:39:50
