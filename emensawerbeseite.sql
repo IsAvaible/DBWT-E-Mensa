@@ -131,6 +131,38 @@ CREATE TABLE `gericht_hat_allergen` (
 
 LOCK TABLES `gericht_hat_allergen` WRITE;
 /*!40000 ALTER TABLE `gericht_hat_allergen` DISABLE KEYS */;
+INSERT INTO `gericht_hat_allergen` VALUES
+('h',1),
+('a3',1),
+('a4',1),
+('f1',3),
+('a6',3),
+('i',3),
+('a3',4),
+('f1',4),
+('a4',4),
+('h3',4),
+('d',6),
+('h1',7),
+('a2',7),
+('h3',7),
+('c',7),
+('a3',8),
+('h3',10),
+('d',10),
+('f',10),
+('f2',12),
+('h1',12),
+('a5',12),
+('c',1),
+('a2',9),
+('i',14),
+('f1',1),
+('a1',15),
+('a4',15),
+('i',15),
+('f3',15),
+('h3',15);
 /*!40000 ALTER TABLE `gericht_hat_allergen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,4 +245,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-16 13:04:27
+-- Dump completed on 2023-11-16 14:56:11

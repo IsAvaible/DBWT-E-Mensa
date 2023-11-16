@@ -269,3 +269,183 @@ INSERT INTO gericht_hat_kategorie (gericht_id, kategorie_id) VALUE (21,3);
 | Henning | 30 min           | 30 min          |
 | Simon   | x min          | x min         |
 
+### Aufgabe 5)
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | x min           | x min          |
+| Simon   | x min          | x min         |
+
+### Aufgabe 6)
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | 30 min           | 20 min          |
+| Simon   | x min          | x min         |
+
+#### 1)
+```sql
+SELECT gericht.name, gha.code FROM gericht
+JOIN emensawerbeseite.gericht_hat_allergen gha on gericht.id = gha.gericht_id;
+```
+
+| name | code |
+| :--- | :--- |
+| Bratkartoffeln mit Speck und Zwiebeln | h |
+| Bratkartoffeln mit Speck und Zwiebeln | a3 |
+| Bratkartoffeln mit Speck und Zwiebeln | a4 |
+| Bratkartoffeln mit Zwiebeln | f1 |
+| Bratkartoffeln mit Zwiebeln | a6 |
+| Bratkartoffeln mit Zwiebeln | i |
+| Grilltofu | a3 |
+| Grilltofu | f1 |
+| Grilltofu | a4 |
+| Grilltofu | h3 |
+| Lasagne vegetarisch | d |
+| Hackbraten | h1 |
+| Hackbraten | a2 |
+| Hackbraten | h3 |
+| Hackbraten | c |
+| Gemüsepfanne | a3 |
+| Forellenfilet | h3 |
+| Forellenfilet | d |
+| Forellenfilet | f |
+| Kassler mit Rosmarinkartoffeln | f2 |
+| Kassler mit Rosmarinkartoffeln | h1 |
+| Kassler mit Rosmarinkartoffeln | a5 |
+| Bratkartoffeln mit Speck und Zwiebeln | c |
+| Hühnersuppe | a2 |
+| Pilzpfanne | i |
+| Bratkartoffeln mit Speck und Zwiebeln | f1 |
+| Pilzpfanne vegan | a1 |
+| Pilzpfanne vegan | a4 |
+| Pilzpfanne vegan | i |
+| Pilzpfanne vegan | f3 |
+| Pilzpfanne vegan | h3 |
+
+
+#### 2)
+```sql
+SELECT gericht.name, gha.code FROM gericht
+LEFT JOIN emensawerbeseite.gericht_hat_allergen gha on gericht.id = gha.gericht_id;
+```
+
+| name | code |
+| :--- | :--- |
+| Bratkartoffeln mit Speck und Zwiebeln | h |
+| Bratkartoffeln mit Speck und Zwiebeln | a3 |
+| Bratkartoffeln mit Speck und Zwiebeln | a4 |
+| Bratkartoffeln mit Zwiebeln | f1 |
+| Bratkartoffeln mit Zwiebeln | a6 |
+| Bratkartoffeln mit Zwiebeln | i |
+| Grilltofu | a3 |
+| Grilltofu | f1 |
+| Grilltofu | a4 |
+| Grilltofu | h3 |
+| Lasagne vegetarisch | d |
+| Hackbraten | h1 |
+| Hackbraten | a2 |
+| Hackbraten | h3 |
+| Hackbraten | c |
+| Gemüsepfanne | a3 |
+| Forellenfilet | h3 |
+| Forellenfilet | d |
+| Forellenfilet | f |
+| Kassler mit Rosmarinkartoffeln | f2 |
+| Kassler mit Rosmarinkartoffeln | h1 |
+| Kassler mit Rosmarinkartoffeln | a5 |
+| Bratkartoffeln mit Speck und Zwiebeln | c |
+| Hühnersuppe | a2 |
+| Pilzpfanne | i |
+| Bratkartoffeln mit Speck und Zwiebeln | f1 |
+| Pilzpfanne vegan | a1 |
+| Pilzpfanne vegan | a4 |
+| Pilzpfanne vegan | i |
+| Pilzpfanne vegan | f3 |
+| Pilzpfanne vegan | h3 |
+| Lasagne | null |
+| Kartoffel-Lauch-Suppe | null |
+| Drei Reibekuchen mit Apfelmus | null |
+| Käsebrötchen | null |
+| Schinkenbrötchen | null |
+| Tomatenbrötchen | null |
+| Mousse au Chocolat | null |
+| Suppenkreation á la Chef | null |
+| Currywurst mit Pommes | null |
+
+#### 3)
+```sql
+SELECT gericht.name, gha.code FROM gericht
+RIGHT JOIN emensawerbeseite.gericht_hat_allergen gha on gericht.id = gha.gericht_id;
+```
+
+| name | code |
+| :--- | :--- |
+| Bratkartoffeln mit Speck und Zwiebeln | h |
+| Bratkartoffeln mit Speck und Zwiebeln | a3 |
+| Bratkartoffeln mit Speck und Zwiebeln | a4 |
+| Bratkartoffeln mit Zwiebeln | f1 |
+| Bratkartoffeln mit Zwiebeln | a6 |
+| Bratkartoffeln mit Zwiebeln | i |
+| Grilltofu | a3 |
+| Grilltofu | f1 |
+| Grilltofu | a4 |
+| Grilltofu | h3 |
+| Lasagne vegetarisch | d |
+| Hackbraten | h1 |
+| Hackbraten | a2 |
+| Hackbraten | h3 |
+| Hackbraten | c |
+| Gemüsepfanne | a3 |
+| Forellenfilet | h3 |
+| Forellenfilet | d |
+| Forellenfilet | f |
+| Kassler mit Rosmarinkartoffeln | f2 |
+| Kassler mit Rosmarinkartoffeln | h1 |
+| Kassler mit Rosmarinkartoffeln | a5 |
+| Bratkartoffeln mit Speck und Zwiebeln | c |
+| Hühnersuppe | a2 |
+| Pilzpfanne | i |
+| Bratkartoffeln mit Speck und Zwiebeln | f1 |
+| Pilzpfanne vegan | a1 |
+| Pilzpfanne vegan | a4 |
+| Pilzpfanne vegan | i |
+| Pilzpfanne vegan | f3 |
+| Pilzpfanne vegan | h3 |
+
+#### 4)
+```sql
+SELECT kategorie.name, count(gericht_id) AS anzahl_gerichte FROM kategorie
+LEFT JOIN emensawerbeseite.gericht_hat_kategorie ghk on kategorie.id = ghk.kategorie_id
+GROUP BY kategorie.name ASC;
+```
+
+| name | anzahl_gerichte |
+| :--- | :--- |
+| Aktionen | 0 |
+| Desserts | 3 |
+| Erstiewoche | 0 |
+| Hauptspeisen | 8 |
+| Mensastars | 0 |
+| Menus | 0 |
+| Vorspeisen | 3 |
+
+#### 5)
+```sql
+SELECT kategorie.name, count(gericht_id) AS anzahl_gerichte FROM kategorie
+LEFT JOIN emensawerbeseite.gericht_hat_kategorie ghk on kategorie.id = ghk.kategorie_id
+GROUP BY kategorie.name ASC
+HAVING anzahl_gerichte > 2;
+```
+
+| name | anzahl\_gerichte |
+| :--- | :--- |
+| Desserts | 3 |
+| Hauptspeisen | 8 |
+| Vorspeisen | 3 |
+
+#### 6)
+```sql
+SELECT gericht.name FROM gericht
+JOIN emensawerbeseite.gericht_hat_allergen gha on gericht.id = gha.gericht_id
+GROUP BY gericht.name ASC
+HAVING count(gha.gericht_id) > 3;
+```
