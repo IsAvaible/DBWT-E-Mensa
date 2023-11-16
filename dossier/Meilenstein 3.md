@@ -482,3 +482,11 @@ gericht anpassen:
 ```sql
 ALTER TABLE gericht ADD UNIQUE (name);
 ```
+
+### Aufgabe 8
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | 10 min           | 10 min          |
+| Simon   | x min          | x min         |
+
+![[m3_aufgabe8.drawio.png]]
