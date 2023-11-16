@@ -43,7 +43,7 @@ INSERT INTO `allergen` VALUES
 ('a3','Gerste','Allergen'),
 ('a4','Dinkel','Allergen'),
 ('a5','Hafer','Allergen'),
-('a6','Dinkel','Allergen'),
+('a6','Kamut','Allergen'),
 ('b','Fisch','Allergen'),
 ('c','Krebstiere','Allergen'),
 ('d','Schwefeldioxid/Sulfit','Allergen'),
@@ -107,7 +107,8 @@ INSERT INTO `gericht` VALUES
 (17,'Schinkenbrötchen','schmeckt auch ohne Hunger','2020-08-25',0,0,1.25,1.75),
 (18,'Tomatenbrötchen','mit Schnittlauch und Zwiebeln','2020-08-25',1,1,1,1.5),
 (19,'Mousse au Chocolat','sahnige schweizer Schokolade rundet jedes Essen ab','2020-08-26',1,0,1.25,1.75),
-(20,'Suppenkreation á la Chef','was verschafft werden muss, gut und günstig','2020-08-26',0,0,0.5,0.9);
+(20,'Suppenkreation á la Chef','was verschafft werden muss, gut und günstig','2020-08-26',0,0,0.5,0.9),
+(21,'Currywurst mit Pommes','Würzige Wurst in süßer Sauce mit knusprigen Kartoffeln','2023-11-16',0,0,2.3,4);
 /*!40000 ALTER TABLE `gericht` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +166,8 @@ INSERT INTO `gericht_hat_kategorie` VALUES
 (18,4),
 (16,5),
 (17,5),
-(18,5);
+(18,5),
+(21,3);
 /*!40000 ALTER TABLE `gericht_hat_kategorie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,4 +213,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-14 19:39:50
+-- Dump completed on 2023-11-16 13:04:27

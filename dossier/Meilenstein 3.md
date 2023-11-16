@@ -97,3 +97,168 @@ mysqldump -u root -p emensawerbeseite > emensawerbeseite.sql
 ```sql
 mysqldump -u root -p emensawerbeseite < emensawerbeseite.sql
 ```
+
+### Aufgabe 3
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | 30 min           | 40 min          |
+| Simon   | x min          | x min         |
+
+#### 1)
+```sql
+SELECT * FROM gericht;
+```
+
+| id  | name                                  | beschreibung                                         | erfasst\_am | vegetarisch | vegan | preisintern | preisextern |
+|:--- |:------------------------------------- |:---------------------------------------------------- |:----------- |:----------- |:----- |:----------- |:----------- |
+| 1   | Bratkartoffeln mit Speck und Zwiebeln | Kartoffeln mit Zwiebeln und gut Speck                | 2020-08-25  | 0           | 0     | 2.3         | 4           |
+| 3   | Bratkartoffeln mit Zwiebeln           | Kartoffeln mit Zwiebeln und ohne Speck               | 2020-08-25  | 1           | 1     | 2.3         | 4           |
+| 4   | Grilltofu                             | Fein gewürzt und mariniert                           | 2020-08-25  | 1           | 1     | 2.5         | 4.5         |
+| 5   | Lasagne                               | Klassisch mit Bolognesesoße und Creme Fraiche        | 2020-08-24  | 0           | 0     | 2.5         | 4.5         |
+| 6   | Lasagne vegetarisch                   | Klassisch mit Sojagranulatsoße und Creme Fraiche     | 2020-08-24  | 1           | 0     | 2.5         | 4.5         |
+| 7   | Hackbraten                            | Nicht nur für Hacker                                 | 2020-08-25  | 0           | 0     | 2.5         | 4           |
+| 8   | Gemüsepfanne                          | Gesundes aus der Region, deftig angebraten           | 2020-08-25  | 1           | 1     | 2.3         | 4           |
+| 9   | Hühnersuppe                           | Suppenhuhn trifft Petersilie                         | 2020-08-25  | 0           | 0     | 2           | 3.5         |
+| 10  | Forellenfilet                         | mit Kartoffeln und Dilldip                           | 2020-08-22  | 0           | 0     | 3.8         | 5           |
+| 11  | Kartoffel-Lauch-Suppe                 | der klassische Bauchwärmer mit frischen Kräutern     | 2020-08-22  | 1           | 0     | 2           | 3           |
+| 12  | Kassler mit Rosmarinkartoffeln        | dazu Salat und Senf                                  | 2020-08-23  | 0           | 0     | 3.8         | 5.2         |
+| 13  | Drei Reibekuchen mit Apfelmus         | grob geriebene Kartoffeln aus der Region             | 2020-08-23  | 1           | 0     | 2.5         | 4.5         |
+| 14  | Pilzpfanne                            | die legendäre Pfanne aus Pilzen der Saison           | 2020-08-23  | 1           | 0     | 3           | 5           |
+| 15  | Pilzpfanne vegan                      | die legendäre Pfanne aus Pilzen der Saison ohne Käse | 2020-08-24  | 1           | 1     | 3           | 5           |
+| 16  | Käsebrötchen                          | schmeckt vor und nach dem Essen                      | 2020-08-24  | 1           | 0     | 1           | 1.5         |
+| 17  | Schinkenbrötchen                      | schmeckt auch ohne Hunger                            | 2020-08-25  | 0           | 0     | 1.25        | 1.75        |
+| 18  | Tomatenbrötchen                       | mit Schnittlauch und Zwiebeln                        | 2020-08-25  | 1           | 1     | 1           | 1.5         |
+| 19  | Mousse au Chocolat                    | sahnige schweizer Schokolade rundet jedes Essen ab   | 2020-08-26  | 1           | 0     | 1.25        | 1.75        |
+| 20  | Suppenkreation á la Chef              | was verschafft werden muss, gut und günstig          | 2020-08-26  | 0           | 0     | 0.5         | 0.9         |
+
+#### 2)
+```sql
+SELECT erfasst_am FROM gericht;
+```
+
+| erfasst\_am |
+|:----------- |
+| 2020-08-25  |
+| 2020-08-25  |
+| 2020-08-25  |
+| 2020-08-24  |
+| 2020-08-24  |
+| 2020-08-25  |
+| 2020-08-25  |
+| 2020-08-25  |
+| 2020-08-22  |
+| 2020-08-22  |
+| 2020-08-23  |
+| 2020-08-23  |
+| 2020-08-23  |
+| 2020-08-24  |
+| 2020-08-24  |
+| 2020-08-25  |
+| 2020-08-25  |
+| 2020-08-26  |
+| 2020-08-26  |
+
+#### 4)
+```sql
+SELECT name AS Gerichtname, erfasst_am FROM gericht GROUP BY Gerichtname ASC;
+```
+
+| Gerichtname | erfasst\_am |
+| :--- | :--- |
+| Bratkartoffeln mit Speck und Zwiebeln | 2020-08-25 |
+| Bratkartoffeln mit Zwiebeln | 2020-08-25 |
+| Drei Reibekuchen mit Apfelmus | 2020-08-23 |
+| Forellenfilet | 2020-08-22 |
+| Gemüsepfanne | 2020-08-25 |
+| Grilltofu | 2020-08-25 |
+| Hackbraten | 2020-08-25 |
+| Hühnersuppe | 2020-08-25 |
+| Kartoffel-Lauch-Suppe | 2020-08-22 |
+| Käsebrötchen | 2020-08-24 |
+| Kassler mit Rosmarinkartoffeln | 2020-08-23 |
+| Lasagne | 2020-08-24 |
+| Lasagne vegetarisch | 2020-08-24 |
+| Mousse au Chocolat | 2020-08-26 |
+| Pilzpfanne | 2020-08-23 |
+| Pilzpfanne vegan | 2020-08-24 |
+| Schinkenbrötchen | 2020-08-25 |
+| Suppenkreation á la Chef | 2020-08-26 |
+| Tomatenbrötchen | 2020-08-25 |
+
+#### 5)
+```sql
+SELECT name AS Gerichtname, erfasst_am FROM gericht GROUP BY Gerichtname ASC LIMIT 10 OFFSET 5;
+```
+
+| Gerichtname | erfasst\_am |
+| :--- | :--- |
+| Grilltofu | 2020-08-25 |
+| Hackbraten | 2020-08-25 |
+| Hühnersuppe | 2020-08-25 |
+| Kartoffel-Lauch-Suppe | 2020-08-22 |
+| Käsebrötchen | 2020-08-24 |
+| Kassler mit Rosmarinkartoffeln | 2020-08-23 |
+| Lasagne | 2020-08-24 |
+| Lasagne vegetarisch | 2020-08-24 |
+| Mousse au Chocolat | 2020-08-26 |
+| Pilzpfanne | 2020-08-23 |
+
+#### 6)
+```sql
+SELECT distinct(typ) FROM allergen;
+```
+
+| typ |
+| :--- |
+| Getreide \(Gluten\) |
+| Allergen |
+
+#### 7)
+```sql
+SELECT * FROM gericht WHERE name LIKE 'k%';
+```
+
+| id | name | beschreibung | erfasst\_am | vegetarisch | vegan | preisintern | preisextern |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 11 | Kartoffel-Lauch-Suppe | der klassische Bauchwärmer mit frischen Kräutern | 2020-08-22 | 1 | 0 | 2 | 3 |
+| 12 | Kassler mit Rosmarinkartoffeln | dazu Salat und Senf | 2020-08-23 | 0 | 0 | 3.8 | 5.2 |
+| 16 | Käsebrötchen | schmeckt vor und nach dem Essen | 2020-08-24 | 1 | 0 | 1 | 1.5 |
+
+#### 8)
+```sql
+SELECT id, name FROM gericht WHERE name LIKE '%suppe%';
+```
+
+| id | name |
+| :--- | :--- |
+| 9 | Hühnersuppe |
+| 11 | Kartoffel-Lauch-Suppe |
+| 20 | Suppenkreation á la Chef |
+
+#### 9)
+```sql
+SELECT * FROM kategorie WHERE eltern_id IS NOT NULL;
+```
+
+| id | name | eltern\_id | bildname |
+| :--- | :--- | :--- | :--- |
+| 3 | Hauptspeisen | 2 | kat\_menu\_haupt.bmp |
+| 4 | Vorspeisen | 2 | kat\_menu\_vor.svg |
+| 5 | Desserts | 2 | kat\_menu\_dessert.pic |
+| 6 | Mensastars | 1 | kat\_stars.tif |
+| 7 | Erstiewoche | 1 | kat\_erties.jpg |
+
+#### 10)
+```sql
+UPDATE allergen SET name = 'Kamut' WHERE code = 'a6';
+```
+
+#### 11)
+```sql
+INSERT INTO gericht (id, name, beschreibung, erfasst_am,vegetarisch, vegan, preisintern, preisextern)
+VALUE (21, 'Currywurst mit Pommes', 'Würzige Wurst in süßer Sauce mit knusprigen Kartoffeln', '2023-11-16', false, false, 2.3, 4);
+```
+
+```sql
+INSERT INTO gericht_hat_kategorie (gericht_id, kategorie_id) VALUE (21,3);
+```
