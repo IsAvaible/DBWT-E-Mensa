@@ -262,3 +262,10 @@ VALUE (21, 'Currywurst mit Pommes', 'Würzige Wurst in süßer Sauce mit knuspri
 ```sql
 INSERT INTO gericht_hat_kategorie (gericht_id, kategorie_id) VALUE (21,3);
 ```
+
+### Aufgabe 4)
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | 30 min           | 30 min          |
+| Simon   | x min          | x min         |
+
