@@ -78,6 +78,7 @@ CREATE TABLE `gericht` (
   `preisintern` double unsigned NOT NULL,
   `preisextern` double unsigned NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
   CONSTRAINT `CONSTRAINT_1` CHECK (`preisintern` <= `preisextern`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -121,7 +122,11 @@ DROP TABLE IF EXISTS `gericht_hat_allergen`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gericht_hat_allergen` (
   `code` char(4) DEFAULT NULL,
-  `gericht_id` int(11) NOT NULL
+  `gericht_id` int(11) NOT NULL,
+  KEY `code` (`code`),
+  KEY `gericht_id` (`gericht_id`),
+  CONSTRAINT `gericht_hat_allergen_ibfk_1` FOREIGN KEY (`code`) REFERENCES `allergen` (`code`),
+  CONSTRAINT `gericht_hat_allergen_ibfk_2` FOREIGN KEY (`gericht_id`) REFERENCES `gericht` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -175,7 +180,11 @@ DROP TABLE IF EXISTS `gericht_hat_kategorie`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gericht_hat_kategorie` (
   `gericht_id` int(11) NOT NULL,
-  `kategorie_id` int(11) NOT NULL
+  `kategorie_id` int(11) NOT NULL,
+  KEY `gericht_id` (`gericht_id`),
+  KEY `kategorie_id` (`kategorie_id`),
+  CONSTRAINT `gericht_hat_kategorie_ibfk_1` FOREIGN KEY (`gericht_id`) REFERENCES `gericht` (`id`),
+  CONSTRAINT `gericht_hat_kategorie_ibfk_2` FOREIGN KEY (`kategorie_id`) REFERENCES `kategorie` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -245,4 +254,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-16 14:56:11
+-- Dump completed on 2023-11-16 15:19:00

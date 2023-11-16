@@ -263,19 +263,19 @@ VALUE (21, 'Currywurst mit Pommes', 'Würzige Wurst in süßer Sauce mit knuspri
 INSERT INTO gericht_hat_kategorie (gericht_id, kategorie_id) VALUE (21,3);
 ```
 
-### Aufgabe 4)
+### Aufgabe 4
 |         | Geschätzte Zeit | Benötigte Zeit |
 | ------- | --------------- | -------------- |
 | Henning | 30 min           | 30 min          |
 | Simon   | x min          | x min         |
 
-### Aufgabe 5)
+### Aufgabe 5
 |         | Geschätzte Zeit | Benötigte Zeit |
 | ------- | --------------- | -------------- |
 | Henning | x min           | x min          |
 | Simon   | x min          | x min         |
 
-### Aufgabe 6)
+### Aufgabe 6
 |         | Geschätzte Zeit | Benötigte Zeit |
 | ------- | --------------- | -------------- |
 | Henning | 30 min           | 20 min          |
@@ -448,4 +448,37 @@ SELECT gericht.name FROM gericht
 JOIN emensawerbeseite.gericht_hat_allergen gha on gericht.id = gha.gericht_id
 GROUP BY gericht.name ASC
 HAVING count(gha.gericht_id) > 3;
+```
+
+### Aufgabe 7
+|         | Geschätzte Zeit | Benötigte Zeit |
+| ------- | --------------- | -------------- |
+| Henning | 20 min           | 10 min          |
+| Simon   | x min          | x min         |
+
+gericht_hat_allergen anpassen:
+```sql
+ALTER TABLE gericht_hat_allergen
+ADD FOREIGN KEY (code) REFERENCES allergen(code);
+```
+
+```sql
+ALTER TABLE gericht_hat_allergen
+ADD FOREIGN KEY (gericht_id) REFERENCES gericht(id);
+```
+
+gericht_hat_kategorie anpassen:
+```sql
+ALTER TABLE gericht_hat_kategorie
+ADD FOREIGN KEY (gericht_id) REFERENCES gericht(id);
+```
+
+```sql
+ALTER TABLE gericht_hat_kategorie
+ADD FOREIGN KEY (kategorie_id) REFERENCES kategorie(id);
+```
+
+gericht anpassen:
+```sql
+ALTER TABLE gericht ADD UNIQUE (name);
 ```
