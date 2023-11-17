@@ -51,7 +51,7 @@ b)
     } ?>
 </p>
 ```
-c) Ersetze ```stripos()``` mit ```stripos()```.
+c) Ersetze ```stripos()``` mit ```strpos()```.
 d) Teilen durch die Anzahl der Elemente darf erst nach der Addition erfolgen.
 
 
