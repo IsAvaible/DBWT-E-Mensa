@@ -1,8 +1,8 @@
 <?php
-$link = mysqli_connect("localhost", // Host der Datenbank
-    "root",                 // Benutzername zur Anmeldung
-    "root",    // Passwort
-    "emensawerbeseite"      // Auswahl der Datenbanken (bzw. des Schemas)
+$link = mysqli_connect("localhost",  // Host der Datenbank
+    "root",                          // Benutzername zur Anmeldung
+    "root",                          // Passwort
+    "emensawerbeseite"               // Auswahl der Datenbanken (bzw. des Schemas)
 // optional port der Datenbank
 );
 
