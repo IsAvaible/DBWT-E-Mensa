@@ -559,6 +559,7 @@ HAVING a_count > 3;
 | Pilzpfanne vegan                      | 5        |
 
 ### Aufgabe 7
+
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |     20 min      |     10 min     |
@@ -592,9 +593,59 @@ ALTER TABLE gericht ADD UNIQUE (name);
 ```
 
 ### Aufgabe 8
+
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |     10 min      |     10 min     |
 | Simon   |      x min      |     x min      |
 
 ![[m3_aufgabe8.drawio.png]]
+
+#### Aufgabe 9
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      x min      |     x min      |
+| Simon   |     30 min      |     60 min     | 
+
+*(Folgendes ist Prozessdokumentation und nicht die finale Lösung)**
+
+Erstelle Zahlen Table
+
+```sql
+CREATE TABLE zahlen
+(
+    name VARCHAR(100)  NOT NULL,
+    zahl INTEGER NOT NULL DEFAULT 0
+);
+
+INSERT INTO zahlen (name, zahl) VALUES ('besucher', 0);  
+INSERT INTO zahlen (name, zahl) VALUES ('gerichte', 0);
+```
+
+Erstelle Trigger, um die Gerichtanzahl bei Operation auf Gerichte zu aktualisieren
+
+```sql
+DROP TRIGGER IF EXISTS gerichtanzahl_aktualisieren;  
+  
+CREATE TRIGGER gerichtanzahl_aktualisieren  
+    AFTER UPDATE ON gericht  
+    FOR EACH ROW  
+    BEGIN  
+        UPDATE zahlen  
+        SET zahl = @@rowcount  
+        WHERE name = 'gerichte';  
+    END;
+```
+
+*(Prozessdokumentation Ende)*
+
+Erstelle Besucher Tabelle
+
+```sql
+CREATE TABLE besucher  
+(  
+    IP    VARCHAR(39) NOT NULL,  
+    datum DATE        NOT NULL DEFAULT NOW()  
+)
+```

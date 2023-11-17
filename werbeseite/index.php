@@ -6,28 +6,7 @@
  */
 
 include("meals.php");
-
-/*
- * Besucher Zahlen
- */
-$besucherzahlen = 0;
-if (is_file("besucherzahlen.txt")) {
-    // Read file and increment value
-    $fbesucherzahlen = fopen("besucherzahlen.txt", "r");
-    $besucherzahlen = fgets($fbesucherzahlen) + 1;
-    fclose($fbesucherzahlen);
-    // Write incremented value to file
-    $fbesucherzahlen = fopen("besucherzahlen.txt", "w");
-    fwrite($fbesucherzahlen, $besucherzahlen);
-    fclose($fbesucherzahlen);
-} else {
-    // Create a new file with default value of 0
-    if ($fbesucherzahlen = fopen("besucherzahlen.txt", "w")) {
-        fwrite($fbesucherzahlen, "0");
-        fclose($fbesucherzahlen);
-    }
-    $besucherzahlen = 'x';
-}
+include("besucher.php");
 
 /*
  * Newsletter Anmeldungen
@@ -120,11 +99,11 @@ if (is_file("newsletter.csv")) {
 
 <h2 id="stats">E-Mensa in Zahlen</h2>
 <div class="mensa-stats">
-    <div><span><?php echo $besucherzahlen ?></span>
+    <div><span><?php echo $besucheranzahl ?? 'X' ?></span>
         <p>Besuche</p></div>
     <div><span><?php echo $newsletteranmeldung ?></span>
         <p>Anmeldungen zum Newsletter</p></div>
-    <div><span><?php echo count($meal) ?></span>
+    <div><span><?php echo $meal_count ?? 'X' ?></span>
         <p>Speisen</p></div>
 </div>
 

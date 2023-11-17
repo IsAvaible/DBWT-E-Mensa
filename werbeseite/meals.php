@@ -1,4 +1,10 @@
 <?php
+/**
+ * Praktikum DBWT. Autoren:
+ * Simon, Conrad, 3597903
+ * Henning, Schreiber, 3568055
+ */
+
 // Establish a new database connection to the MySQL database server
 $link = mysqli_connect("localhost", "root", "root", "emensawerbeseite");
 
@@ -39,6 +45,8 @@ $meals = array_map(function ($row) {
     $row['allergens'] = array_filter(json_decode($row['allergens'])) ?? [];
     return $row;
 }, mysqli_fetch_all($result, MYSQLI_ASSOC));
+
+$meal_count = mysqli_fetch_row(mysqli_query($link, "SELECT COUNT(*) FROM gericht;"))[0];
 
 // Define a SQL query to fetch some information from the 'allergen' table
 $query = "
