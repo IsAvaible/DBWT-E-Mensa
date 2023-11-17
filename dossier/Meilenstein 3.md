@@ -324,18 +324,37 @@ INSERT INTO gericht_hat_kategorie (gericht_id, kategorie_id) VALUE (21,3);
 ```
 
 ### Aufgabe 4
+
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |     30 min      |     30 min     |
 | Simon   |     25 min      |     20 min     |
 
 ### Aufgabe 5
+
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |      x min      |     x min      |
-| Simon   |      x min      |     x min      |
+| Simon   |     30 min      |     70 min     | 
 
+Spalte als Array aggregieren am Beispiel von Allergencodes:
+In der Query als JSON String speichern
+
+```sql
+SELECT JSON_ARRAYAGG(code) AS allergens
+FROM allergen;
+```
+
+In PHP parsen:
+
+```php
+$meals = array_map(function ($row) {  
+    $row['allergens'] = array_filter(json_decode($row['allergens'])) ?? [];  
+    return $row;  
+}, mysqli_fetch_all($result, MYSQLI_ASSOC));
+```
 ### Aufgabe 6
+
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |     30 min      |     20 min     |

@@ -149,6 +149,22 @@ nav > a {
     flex-grow: 1;
 }
 
+#food-menu-allergens {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 0.5rem;
+    padding: 0 calc((100% - 80ch) / 2);
+}
+
+#food-menu-allergens:before {
+    content: "Allergene";
+    flex-basis: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
 .food-properties {
     display: flex;
     flex-wrap: wrap;

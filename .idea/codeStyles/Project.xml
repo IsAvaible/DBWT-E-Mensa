@@ -1,0 +1,11 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <PHPCodeStyleSettings>
+      <option name="ALIGN_INLINE_COMMENTS" value="true" />
+      <option name="ELSE_IF_STYLE" value="SEPARATE" />
+    </PHPCodeStyleSettings>
+    <SqlCodeStyleSettings version="6">
+      <option name="KEYWORD_CASE" value="2" />
+    </SqlCodeStyleSettings>
+  </code_scheme>
+</component>
