@@ -8,26 +8,25 @@
 include("meals.php");
 include("besucher.php");
 
-/*
- * Newsletter Anmeldungen
- */
-
-if (is_file("newsletter.csv")) {
-    $fnewsletteranmeldung = fopen("newsletter.csv", "r");
-    $newsletteranmeldung = 0;
-    while (!feof($fnewsletteranmeldung)) {
-        $line = fgets($fnewsletteranmeldung);
+// Count the number of newsletter signups
+if (is_file("newsletter.csv")) { // Check if the file "newsletter.csv" exists
+    // Open the existing file for reading
+    $newsletterFile = fopen("newsletter.csv", "r");
+    $newsletterSignups = 0;
+    // Count the number of non-empty lines in the file
+    while (!feof($newsletterFile)) {
+        $line = fgets($newsletterFile);
         if (trim($line) != "") {
-            $newsletteranmeldung++;
+            $newsletterSignups++;
         }
     }
-    fclose($fnewsletteranmeldung);
+    fclose($newsletterFile);
 } else {
-    $fnewsletteranmeldung = fopen("newsletter.csv", "c");
-    fclose($fnewsletteranmeldung);
-    $newsletteranmeldung = 'x';
+    // If the file does not exist, create a new file for writing
+    $newsletterFile = fopen("newsletter.csv", "c");
+    fclose($newsletterFile);
+    $newsletterSignups = 'x';
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -67,14 +66,13 @@ if (is_file("newsletter.csv")) {
 <h2 id="menu">Köstlichkeiten die Sie erwarten</h2>
 <div class="food-menu full-bleed">
     <?php
-    if (isset($meals) && isset($allergens)) { // meals.php included
-        foreach ($meals as $meal) {
+    foreach (queryMeals(5) as $meal) {
             // Sort meal allergens by code
             usort($meal['allergens'], function ($a, $b) {
                 return strcmp($a, $b);
             });
             echo "<div class='food-card'>",
-//                    <img src='img/{$meal['img']}' alt='{$meal['description']}'>
+//                   <img src='img/{$meal['img']}' alt='{$meal['description']}'>
                 "<div>
                         <h3>{$meal['name']}</h3>
                         <p>{$meal['description']}</p>
@@ -85,6 +83,7 @@ if (is_file("newsletter.csv")) {
                     </div>
                 </div>";
         }
+    $allergens = queryAllergens();
         // Sort allergens by code
         usort($allergens, function ($a, $b) {
             return strcmp($a['code'], $b['code']);
@@ -92,18 +91,17 @@ if (is_file("newsletter.csv")) {
         echo "<p id='food-menu-allergens'>" . implode(array_map(function ($allergen) {
                 return "<span><strong>{$allergen['code']}</strong>: {$allergen['name']}</span>";
             }, $allergens)) . "</p>";
-    }
     ?>
 
 </div>
 
 <h2 id="stats">E-Mensa in Zahlen</h2>
 <div class="mensa-stats">
-    <div><span><?php echo $besucheranzahl ?? 'X' ?></span>
+    <div><span><?php echo queryVisitorCount() ?? 'X' ?></span>
         <p>Besuche</p></div>
-    <div><span><?php echo $newsletteranmeldung ?></span>
+    <div><span><?php echo $newsletterSignups ?></span>
         <p>Anmeldungen zum Newsletter</p></div>
-    <div><span><?php echo $meal_count ?? 'X' ?></span>
+    <div><span><?php echo queryMealCount() ?? 'X' ?></span>
         <p>Speisen</p></div>
 </div>
 

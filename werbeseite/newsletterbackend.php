@@ -1,54 +1,54 @@
 <?php
-
-/*
- * anrede
- * vorname
- * nachname
- * email
- *
- * datenschutz
+/**
+ * Praktikum DBWT. Autoren:
+ * Simon, Conrad, 3597903
+ * Henning, Schreiber, 3568055
  */
 
-$name = preg_replace('/[^A-Za-z ]+/', '', $_POST['name'] ?? NULL);
+// Sanitize user input and assign to variables
+$name = preg_replace('/[^A-Za-z ]+/', '', $_POST['name'] ?? NULL); // Remove any non-alphabetic characters from name
 $email = $_POST['mail'] ?? NULL;
 $lang = $_POST['lang'] ?? NULL;
-$datenschutz = $_POST['datenschutz'] ?? NULL;
+$privacyPolicy = $_POST['datenschutz'] ?? NULL;
 
-$fehler = array();
+$error = array(); // Initialize an array to store error messages
 
 /*
- * Eingabe Prüefen
+ * Input validation
  */
+// Check if name is not empty
 if ($name == NULL) {
-    array_push($fehler, "Der Name enthält nicht erlabute Zeichen.");
+    $error[] = "Der Name enthält nicht erlabute Zeichen.";
 }
 
+// Validate email format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    array_push($fehler, "Ihre E-Mail entspricht nicht den Vorgaben.");
+    $error[] = "Ihre E-Mail entspricht nicht den Vorgaben.";
 }
 
+// Check if email is not from a disposable email service
 if (str_contains($email, 'rcpt.at') or str_contains($email, 'damnthespam.at') or str_contains($email, 'wegwerfmail.de') or str_contains($email, 'trashmail.')) {
-    array_push($fehler, "Ihre E-Mail ist auf unsere Blogliste, bitte Wählen sie eine andere.");
+    $error[] = "Ihre E-Mail ist auf unsere Blogliste, bitte Wählen sie eine andere.";
 }
 
+// Validate language input
 if ($lang != "de" and $lang != "en") {
-    array_push($fehler, "Der Sprache wurde falsch eingabe.");
+    $error[] = "Der Sprache wurde falsch eingabe.";
 }
 
-if ($datenschutz != "on") {
-    array_push($fehler, "Sie müssen die Datenschutzbestimmungen akzeptieren");
+// Check if privacy policy is accepted
+if ($privacyPolicy != "on") {
+    $error[] = "Sie müssen die Datenschutzbestimmungen akzeptieren";
 }
 
-/*
- * Speicher der Daten
- */
-if (count($fehler) == 0) {
-    $myfile = fopen("newsletter.csv", "a+") or die("Unable to open file!");
-    fwrite($myfile, $name . ";");
-    fwrite($myfile, $email . ";");
-    fwrite($myfile, $lang . ";");
-    fwrite($myfile, $datenschutz . PHP_EOL);
-    fclose($myfile);
+// If there are no errors, write the data to a CSV file
+if (count($error) == 0) {
+    $myfile = fopen("newsletter.csv", "a+") or die("Unable to open file!"); // Open the file or exit if it can't be opened
+    fwrite($myfile, $name . ";");                                           // Write the name to the file
+    fwrite($myfile, $email . ";");                                          // Write the email to the file
+    fwrite($myfile, $lang . ";");                                           // Write the language to the file
+    fwrite($myfile, $privacyPolicy . PHP_EOL);                              // Write the privacy policy acceptance to the file
+    fclose($myfile);                                                        // Close the file
 }
 ?>
 
@@ -58,23 +58,25 @@ if (count($fehler) == 0) {
     <meta charset="UTF-8"/>
     <title>Verarbeitung Newsletter Anmeldung</title>
 </head>
-<body style="font-family: 'Comic Sans', sans-serif;">
+<body style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;">
 <?php
 
-if (count($fehler) == 0) {
+// If there are no errors, display a success message
+if (count($error) == 0) {
     echo "<h3>Erfolgreiche Anmeldung. </h3>";
     echo $name . "<br>";
     echo $email . "<br>";
     echo "Gewünschte Sprache: " . $lang . "<br>";
     echo "Datenschutzbestimmungen akzeptiert";
 } else {
+    // If there are errors, display them
     echo "<h3>Leider ist ein Fehler aufgetreten.</h3>";
-    foreach ($fehler as $meldung) {
+    foreach ($error as $meldung) {
         echo $meldung . "<br>";
     }
 }
 
-// Return to index.php after 3 seconds
+// After 3 seconds, redirect to index.php
 header("Refresh: 3; url=index.php");
 ?>
 </body>

@@ -1,3 +1,8 @@
+/*
+ Preflight is a set of base styles that are designed to smooth over cross-browser inconsistencies
+ See: https://tailwindcss.com/docs/preflight
+ */
+
 blockquote,
 dl,
 dd,
