@@ -649,3 +649,23 @@ CREATE TABLE besucher
     datum DATE        NOT NULL DEFAULT NOW()  
 )
 ```
+
+#### Aufgabe 10
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      x min      |     x min      |
+| Simon   |     30 min      |     25 min     |
+
+- Konsistenz erhöhen: Code in Englisch, Variabel in camelCase
+- Schönerer SQL Integration: Funktionen zum abrufen statt globaler Variabeln
+- Lesbarkeit: Formatierung und Kommentare
+
+#### Aufgabe 11
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      x min      |     x min      |
+| Simon   |     30 min      |     35 min     | 
+
+![[m3_aufgabe11.drawio.png]]
