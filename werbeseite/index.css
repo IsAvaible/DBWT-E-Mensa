@@ -1,5 +1,5 @@
 :root {
-    --main-color: #0069b4;
+    --primary-color: #0069b4;
     --secondary-color: #00B1AA;
     --accent-color: #AF2BBF;
 
@@ -19,6 +19,7 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
     background-color: var(--bg-color);
+    border-radius: 0.5rem;
 }
 
 body > h2 {
@@ -75,7 +76,7 @@ nav {
 
 nav > a {
     font-weight: bolder;
-    color: var(--main-color);
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -104,7 +105,7 @@ nav > a {
 }
 
 .food-menu {
-    width: min(88rem, 100%);
+    width: min(66rem, 100%);
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -194,7 +195,7 @@ nav > a {
 .mensa-stats > div > span {
     font-weight: bold;
     font-size: xx-large;
-    color: var(--main-color);
+    color: var(--primary-color);
 }
 
 .mensa-stats > div > p {
@@ -220,7 +221,7 @@ nav > a {
 .newsletter > button[type="submit"] {
     width: fit-content;
     margin: 0 auto;
-    background-color: var(--main-color);
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 0.5rem;
@@ -231,11 +232,11 @@ nav > a {
 }
 
 .newsletter > button[type="submit"]:hover {
-    background-color: color-mix(in srgb, var(--main-color), var(--fg-color) 20%);
+    background-color: color-mix(in srgb, var(--primary-color), var(--fg-color) 20%);
 }
 
 .newsletter > button[type="submit"]:active {
-    background-color: color-mix(in srgb, var(--main-color), var(--fg-color) 40%);
+    background-color: color-mix(in srgb, var(--primary-color), var(--fg-color) 40%);
 }
 
 .important-to-us {

@@ -20,8 +20,8 @@ if (!$link) {
 
 /**
  * Fetches the specified number of meals from the database and returns them as a PHP array.
- * @param int $n The number of meals to fetch
- * @return array The fetched meals
+ * @param int $n The number of meals to fetch, or -1 to fetch all meals
+ * @return array The fetched meals {name: string, description: string, vegetarian: bool, vegan: bool, price_intern: float, price_extern: float, allergens: string[]}
  */
 function queryMeals(int $n = -1): array
 {
@@ -31,7 +31,7 @@ function queryMeals(int $n = -1): array
     $query =
         "SELECT gericht.name  AS name,
        beschreibung  AS description,
-       vegetarisch   AS vegeterian,
+       vegetarisch   AS vegetarian,
        vegan,
        preisintern   AS price_intern,
        preisextern   AS price_extern,
@@ -77,20 +77,20 @@ function queryMealCount(): int
     return mysqli_fetch_row($result)[0];
 }
 
-;
 
 /**
- * Fetches all the allergens from the database and returns them as a PHP array.
- * @return array The fetched allergens
+ * Fetches all allergens used in the first $n meals
+ * @param int $n The number of meals to fetch the allergens for, or -1 for all meals
+ * @return array The fetched allergens as a PHP array {code: string, name: string}[]
  */
-function queryAllergens(): array
+function queryAllergens(int $n = -1): array
 {
     global $link;
 
     // Define a SQL query to fetch some information from the 'allergen' table
     $query = "
     SELECT DISTINCT allergen.code AS code, allergen.name AS name
-    FROM (SELECT id FROM gericht LIMIT 5) AS gericht
+    FROM (SELECT id FROM gericht" . ($n >= 0 ? " LIMIT $n" : "") . ") AS gericht
          LEFT JOIN gericht_hat_allergen
                    ON gericht.id = gericht_hat_allergen.gericht_id
          INNER JOIN allergen
