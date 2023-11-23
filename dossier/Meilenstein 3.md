@@ -3,13 +3,13 @@
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |      2 min      |     2 min      |
-| Simon   |      x min      |     x min      |
+| Simon   |     10 min      |     15 min     |
 
 ### Aufgabe 2
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |     20 min      |     40 min     |
-| Simon   |      x min      |     x min      |
+| Simon   |      x min      |     x min      | 
 
 #### 1)
 ```sql
@@ -664,7 +664,7 @@ CREATE TABLE besucher
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      x min      |     x min      |
+| Henning |     15 min      |     15 min     |
 | Simon   |     30 min      |     35 min     | 
 
 ![[m3_aufgabe11.drawio.png]]
@@ -680,3 +680,11 @@ CREATE TABLE besucher
 **KontaktHatRechnungsAnschrift**({Femdschlüssel}KontaktID,{Femdschlüssel}AnschriftID)
 
 **Stellt**({Femdschlüssel}KontaktID,{Femdschlüssel}Rückfrage-Nummer)
+### Gesamt Aufwand
+
+|         |   Benötigte Zeit    |
+|:-------:|:-------------------:|
+| Henning |       157 min       |
+|  Simon  |       240 min       |
+|         |                     |
+| Gesamt  | 397 min = 6.616 std | 
