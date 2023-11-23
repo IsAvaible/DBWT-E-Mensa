@@ -406,8 +406,7 @@ SELECT gericht.name, gha.code FROM gericht
 
 #### 2)
 
-Ändern Sie die vorherige Abfrage so ab, dass alle existierenden Gerichte dargestellt werden (auch wenn keine Allergene
-enthalten sind).
+Ändern Sie die vorherige Abfrage so ab, dass alle existierenden Gerichte dargestellt werden (auch wenn keine Allergene enthalten sind).
 ```sql
 SELECT gericht.name, gha.code FROM gericht
 LEFT JOIN emensawerbeseite.gericht_hat_allergen gha on gericht.id = gha.gericht_id;
@@ -669,3 +668,15 @@ CREATE TABLE besucher
 | Simon   |     30 min      |     35 min     | 
 
 ![[m3_aufgabe11.drawio.png]]
+
+**Kontakt**(Anrede, Leiferungszeitfenster, <u>KundenID</u>,Ist Kunde, E-Mail, Telefonnummer, Vorname, Nachname)
+
+**Rückfrage**(Text, Thema, Erfassungszeitpunkt, Dringlichkeit, Art, <u>Rückfrage-Nummer</u>)
+
+**Anschrift**(Hausnummer, Straßenname, Postleitzahl, Ort, <u>AnschriftID</u>)
+
+**KontaktHatHausAnschrift**({Femdschlüssel}KontaktID,{Femdschlüssel}AnschriftID,Art)
+
+**KontaktHatRechnungsAnschrift**({Femdschlüssel}KontaktID,{Femdschlüssel}AnschriftID)
+
+**Stellt**({Femdschlüssel}KontaktID,{Femdschlüssel}Rückfrage-Nummer)
