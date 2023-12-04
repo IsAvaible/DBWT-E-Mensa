@@ -1,3 +1,42 @@
+### Aufgabe 1
+
+#### 1)
+![[m4_aufgabe1.drawio.png]]
+
+**wunschgericht**(name, beschreibung, ersteldatum , <u>nummer</u>, {Femdschlüssel} ersteller:in)
+**ersteller:in**(name, <u>email</u>)
+#### 2)
+```sql
+create TABLE ersteller_in
+(
+    name  char(80)    DEFAULT 'anonym',
+    email char(80)    PRIMARY KEY
+);
+
+create TABLE wunschgericht
+(
+    name            char(80)        NOT NULL,
+    beschreibung    VARCHAR(800)    NOT NULL,
+    erfasst_am      DATE            NOT NULL default now(),
+    nummer          INTEGER         AUTO_INCREMENT,
+    ersteller_in    char(80),
+    PRIMARY KEY (nummer) ,
+    FOREIGN KEY (ersteller_in)      REFERENCES ersteller_in(email)
+);
+```
+
+#### 6)
+a)
+```sql
+SELECT * FROM wunschgericht ORDER BY erfasst_am LIMIT 5;
+```
+
+b)
+```sql
+SELECT ersteller_in, count(*) From wunschgericht 
+GROUP BY ersteller_in;
+```
+
 ### Aufgabe 4
 
 |         | Geschätzte Zeit | Benötigte Zeit |
@@ -79,3 +118,11 @@ soll als Primärschlüssel dienen.
 ALTER TABLE gericht_hat_kategorie
     ADD CONSTRAINT gericht_hat_kategorie_pkey PRIMARY KEY (gericht_id, kategorie_id);
 ```
+
+### Aufgabe 5
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      30 min      |     20 min      |
+| Simon   |     x min      |     x min     |
+

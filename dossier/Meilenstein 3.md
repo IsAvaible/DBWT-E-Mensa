@@ -95,7 +95,7 @@ mysqldump -u root -p emensawerbeseite > emensawerbeseite.sql
 ```
 
 ```sql
-mysqldump -u root -p emensawerbeseite < emensawerbeseite.sql
+mysql -u root -p emensawerbeseite < emensawerbeseite.sql
 ```
 
 ### Aufgabe 3
