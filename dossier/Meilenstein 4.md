@@ -1,4 +1,8 @@
 ### Aufgabe 1
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      120 min      |     210 min      |
+| Simon   |     x min      |     x min     |
 
 #### 1)
 ![[m4_aufgabe1.drawio.png]]
@@ -36,6 +40,26 @@ b)
 SELECT ersteller_in, count(*) From wunschgericht 
 GROUP BY ersteller_in;
 ```
+
+### Aufgabe 2
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      60 min      |     20 min      |
+| Simon   |     x min      |     x min     |
+
+#### 1)
+* XSS
+	* htmlspecialchars() in newsletterbackend.php und wunschgreichtbackend.php bei wiedergabe der Eingaben eingebunden.
+	* Einbindung von htmlspecialchars() in der index.php
+
+* SQL-Injection
+	* mysqli_real_escape_string() in wunschgreichtbackend.php eingebunden.
+
+#### 2)
+* CSRF
+	* Dieser fall ist auf unsere Seite nicht wirklich vorhanden
+
 
 ### Aufgabe 4
 

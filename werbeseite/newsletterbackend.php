@@ -16,11 +16,6 @@ $error = array(); // Initialize an array to store error messages
 /*
  * Input validation
  */
-// Check if name is not empty
-if ($name == NULL) {
-    $error[] = "Der Name enthält nicht erlabute Zeichen.";
-}
-
 // Validate email format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $error[] = "Ihre E-Mail entspricht nicht den Vorgaben.";
@@ -64,9 +59,9 @@ if (count($error) == 0) {
 // If there are no errors, display a success message
 if (count($error) == 0) {
     echo "<h3>Erfolgreiche Anmeldung. </h3>";
-    echo $name . "<br>";
-    echo $email . "<br>";
-    echo "Gewünschte Sprache: " . $lang . "<br>";
+    echo htmlspecialchars($name) . "<br>";
+    echo htmlspecialchars($email) . "<br>";
+    echo "Gewünschte Sprache: " . htmlspecialchars($lang) . "<br>";
     echo "Datenschutzbestimmungen akzeptiert";
 } else {
     // If there are errors, display them

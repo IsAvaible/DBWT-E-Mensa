@@ -99,10 +99,10 @@ if (count($error) == 0) {
 // If there are no errors, display a success message
 if (count($error) == 0) {
     echo "<h3>Erfolgreiche Anmeldung. </h3>";
-    echo $ersteller_in . "<br>";
-    echo $email . "<br>";
-    echo $gerichtname . "<br>";
-    echo $beschreibung . "<br>";
+    echo htmlspecialchars($ersteller_in) . "<br>";
+    echo htmlspecialchars($email) . "<br>";
+    echo htmlspecialchars($gerichtname) . "<br>";
+    echo htmlspecialchars($beschreibung) . "<br>";
 } else {
     // If there are errors, display them
     echo "<h3>Leider ist ein Fehler aufgetreten.</h3>";
