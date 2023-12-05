@@ -12,24 +12,23 @@
     <title>Wunschgericht</title>
     <link rel="stylesheet" href="preflight.css">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="wunschgericht.css">
 </head>
 <header class="full-bleed">
     <img src="img/logo.png" alt="E-Mensa Logo">
     <nav>
-        <a href="wunschgericht#announcements">Ankündigungen</a>
-        <a href='wunschgericht#menu'>Speisen</a>
-        <a href='wunschgericht#stats'>Zahlen</a>
-        <a href='wunschgericht#contact'>
-            <Kon></Kon>
-            takt</a>
-        <a href='wunschgericht#important'>Wichtig für uns</a>
+        <a href="/#announcements">Ankündigungen</a>
+        <a href='/#menu'>Speisen</a>
+        <a href='/#stats'>Zahlen</a>
+        <a href='/#contact'>Kontakt</a>
+        <a href='/#important'>Wichtig für uns</a>
     </nav>
 </header>
 
-<body>
-
+<body class="base-layout">
 <h2 id="contact">Haben Sie ein Wunschgericht? Teilen Sie es mit uns!</h2>
-<form class="newsletter" action="wunschgerichtbackend.php" method="post">
+<img id="mainImg" src="img/spaghetti.jpg" alt="Bild des Salatbuffets der Mensa">
+<form action="wunschgerichtbackend.php" method="post" class="full-bleed">
     <div>
         <div>
             <label for="name">Ihr Name:</label>
@@ -39,19 +38,15 @@
             <label for="mail">Ihre E-Mail*:</label>
             <input type="email" id="mail" name="mail" required>
         </div>
-    </div>
-    <div>
         <div>
             <label for="gerichtname">Name des Gerichtes*:</label>
             <input type="text" id="gerichtname" name="gerichtname" required>
         </div>
     </div>
-    <div>
         <div>
             <label for="beschreibung">Beschreibung*:</label>
-            <input type="text" id="beschreibung" name="beschreibung" style="height:150px;" required>
         </div>
-    </div>
+    <textarea id="beschreibung" name="beschreibung" required></textarea>
     <button type="submit">Wunsch abschicken</button>
 </form>
 </body>

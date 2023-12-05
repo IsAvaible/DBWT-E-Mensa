@@ -218,7 +218,15 @@ nav > a {
     display: block;
 }
 
-.newsletter > button[type="submit"] {
+input[type="text"], input[type="email"], select {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 0.5rem;
+    border: 1px solid var(--fg-color);
+}
+
+button[type="submit"] {
     width: fit-content;
     margin: 0 auto;
     background-color: var(--primary-color);
@@ -231,11 +239,11 @@ nav > a {
     cursor: pointer;
 }
 
-.newsletter > button[type="submit"]:hover {
+button[type="submit"]:hover {
     background-color: color-mix(in srgb, var(--primary-color), var(--fg-color) 20%);
 }
 
-.newsletter > button[type="submit"]:active {
+button[type="submit"]:active {
     background-color: color-mix(in srgb, var(--primary-color), var(--fg-color) 40%);
 }
 
