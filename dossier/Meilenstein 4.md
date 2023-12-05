@@ -147,6 +147,19 @@ ALTER TABLE gericht_hat_kategorie
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      30 min      |     20 min      |
-| Simon   |     x min      |     x min     |
+| Henning |     30 min      |     20 min     |
+| Simon   |      x min      |     x min      |
 
+### Aufgabe 6
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      x min      |     x min      |
+| Simon   |     20 min      |     12 min     | 
+
+### Aufgabe 7
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      x min      |     x min      |
+| Simon   |     70 min      |     50 min     | 
