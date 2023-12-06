@@ -61,6 +61,34 @@ GROUP BY ersteller_in;
 	* Dieser fall ist auf unsere Seite nicht wirklich vorhanden
 
 
+### Aufgabe 2
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |     105 min      |     45 min      |
+| Simon   |     105 min      |     x min     |
+
+#### 3)
+* Sind Dateien, Variablen, Funktionen, usw. zweckdienlich benannt?
+	* Henning
+		* Daten, Funktionen und Namen gut benannt.
+* Existieren Fehler im Quelltext?
+* Was würden Sie anders strukturieren?
+	* Henning:
+		* intert_ip.php als Funktion aufgebaut und zusammen mit getVisitors() in eine eigene Datei ausgelagert. In diesem Speziellen Fall weicht der Code von seiner sonstigen Structure etwas ab.
+* Existieren Sicherheitsprobleme?
+	* Henning:
+		* Keine offensichtliche gesehen.
+* Was fällt Ihnen sonst am Quelltext auf?
+	* Henning:
+		* Einfach und übersichtlich durch gleiche Petterns in den Funktionen
+* Was haben Sie selbst durch das Lesen des anderen Quelltexts gelernt? Was würden Sie jetzt bei Ihrem Quelltext anpassen?
+	* Henning:
+		* Gute Strukturierung und Benennung der Daten/Verzeichnisse
+		* Aufteilung von Config und Funktionen
+		* Gut Kommentiert
+
+
 ### Aufgabe 4
 
 |         | Geschätzte Zeit | Benötigte Zeit |
