@@ -191,3 +191,10 @@ ALTER TABLE gericht_hat_kategorie
 |:--------|:---------------:|:--------------:|
 | Henning |      x min      |     x min      |
 | Simon   |     70 min      |     50 min     | 
+
+### Aufgabe 8
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      120 min      |     120 min      |
+| Simon   |     x min      |     x min     |

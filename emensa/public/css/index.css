@@ -1,0 +1,274 @@
+:root {
+    --primary-color: #0069b4;
+    --secondary-color: #00B1AA;
+    --accent-color: #AF2BBF;
+
+    --fg-color: #1B1B1E;
+    --bg-color: #faf9ff;
+
+    --box-shadow: 20px 20px 60px #d5d5d5,
+    -20px -20px 60px #ebebeb
+}
+
+* {
+    scroll-behavior: smooth;
+    color: var(--fg-color);
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
+    background-color: var(--bg-color);
+    border-radius: 0.5rem;
+}
+
+body > h2 {
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* From: https://www.joshwcomeau.com/css/full-bleed/ */
+.base-layout {
+    display: grid;
+    grid-template-columns:
+            1fr
+            min(80ch, 100%)
+            1fr;
+}
+
+.base-layout > * {
+    grid-column: 2;
+}
+
+.base-layout > .full-bleed {
+    grid-column: 1 / -1;
+}
+
+header {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns:
+            1fr
+            min(80ch, calc(100% - 6rem))
+            1fr;
+    padding: 1rem 0;
+    border-bottom: color-mix(in srgb, var(--fg-color), var(--bg-color)) 1px solid;
+}
+
+header > img {
+    grid-column: 1;
+    justify-self: end;
+    width: 5rem;
+}
+
+header > nav {
+    grid-column: 2;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+nav > a {
+    font-weight: bolder;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+#intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+#intro > img {
+    border-radius: 0.5rem;
+    border: color-mix(in srgb, var(--fg-color), var(--bg-color)) 1px solid;
+    aspect-ratio: 21/6;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#announcements {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.food-menu {
+    width: min(66rem, 100%);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+.food-card {
+    background-color: white;
+    max-width: 20rem;
+    width: calc(50% - 1rem);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.food-card > img {
+    border-radius: 0.5rem 0.5rem 0 0;
+    aspect-ratio: 1/1;
+    width: 100%;
+    object-fit: cover;
+}
+
+.food-card > div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.food-card h3 {
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.food-card p {
+    color: color-mix(in srgb, var(--fg-color), var(--bg-color));
+    flex-grow: 1;
+}
+
+#food-menu-allergens {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 0.5rem;
+    padding: 0 calc((100% - 80ch) / 2);
+}
+
+#food-menu-allergens:before {
+    content: "Allergene";
+    flex-basis: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.food-properties {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.food-properties p {
+    color: var(--fg-color);
+}
+
+.food-properties:last-child {
+    color: var(--accent-color);
+}
+
+.mensa-stats {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-evenly;
+}
+
+.mensa-stats > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mensa-stats > div > span {
+    font-weight: bold;
+    font-size: xx-large;
+    color: var(--primary-color);
+}
+
+.mensa-stats > div > p {
+    text-align: center;
+}
+
+.newsletter > div {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.newsletter > label, input, select {
+    display: block;
+}
+
+input[type="text"], input[type="email"], select {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 0.5rem;
+    border: 1px solid var(--fg-color);
+}
+
+button[type="submit"] {
+    width: fit-content;
+    margin: 0 auto;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: large;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: color-mix(in srgb, var(--primary-color), var(--fg-color) 20%);
+}
+
+button[type="submit"]:active {
+    background-color: color-mix(in srgb, var(--primary-color), var(--fg-color) 40%);
+}
+
+.important-to-us {
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    border-top: #000000 1px solid;
+}
+
+footer > ul {
+    display: flex;
+    justify-content: center;
+}
+
+footer > ul > li {
+    display: inline;
+    text-align: center;
+}
+
+footer > ul > li:not(:first-child):before {
+    content: "";
+    border-left: 1px solid #989898;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
