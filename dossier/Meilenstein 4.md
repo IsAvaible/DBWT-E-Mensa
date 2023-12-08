@@ -60,34 +60,52 @@ GROUP BY ersteller_in;
 * CSRF
 	* Dieser fall ist auf unsere Seite nicht wirklich vorhanden
 
-
-### Aufgabe 2
+### Aufgabe 3
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |     105 min      |     45 min      |
-| Simon   |     105 min      |     x min     |
+| Henning |     105 min     |     45 min     |
+| Simon   |     105 min     |     40 min     | 
 
 #### 3)
+
 * Sind Dateien, Variablen, Funktionen, usw. zweckdienlich benannt?
 	* Henning
 		* Daten, Funktionen und Namen gut benannt.
+	* Simon
+		* Sieht gut aus
+		* Datenbank Tabelle "visits" englisch bennant, während der Rest der Datenbank deutsch ist
 * Existieren Fehler im Quelltext?
 * Was würden Sie anders strukturieren?
 	* Henning:
-		* intert_ip.php als Funktion aufgebaut und zusammen mit getVisitors() in eine eigene Datei ausgelagert. In diesem Speziellen Fall weicht der Code von seiner sonstigen Structure etwas ab.
+		* insert_ip.php als Funktion aufgebaut und zusammen mit getVisitors() in eine eigene Datei ausgelagert. In
+		  diesem Speziellen Fall weicht der Code von seiner sonstigen Structure etwas ab.
+	* Simon:
+		* Fehlermeldung des Newsletters an unintuitiver Stelle, beim Rückleiten auf die Werbeseite evtl. direkt zum
+		  Formular springen
 * Existieren Sicherheitsprobleme?
 	* Henning:
 		* Keine offensichtliche gesehen.
 * Was fällt Ihnen sonst am Quelltext auf?
 	* Henning:
-		* Einfach und übersichtlich durch gleiche Petterns in den Funktionen
+		* Einfach und übersichtlich durch gleiche Patterns in den Funktionen
+	* Simon:
+		* Code wurde nicht  (auto-)formatiert (\[CTRL]+\[ALT]+\[L])
+		* DOC Comments starten nicht mit /** (werden deswegen auch nicht von PHPStorm erkannt)
+		* Rechtschreibfehler in den Kommentaren
+		* Autorenkommentar am Anfang der PHP Dateien nicht überall vorhanden
+		* Globale Variabeln als solche deklarieren (\$link)
+		* Allergenen an den Gerichten könnten alphabetisch sortiert sein
+		* Im Footer wird nur eins der Teammitglieder genannt (Timgur)
+		* \<br> sollte nicht für vertikalen Abstand genutzt werden
+		* Datenschutz Label nicht zu Checkbox zugeordnet (ID)
 * Was haben Sie selbst durch das Lesen des anderen Quelltexts gelernt? Was würden Sie jetzt bei Ihrem Quelltext anpassen?
 	* Henning:
 		* Gute Strukturierung und Benennung der Daten/Verzeichnisse
 		* Aufteilung von Config und Funktionen
 		* Gut Kommentiert
-
+	* Simon
+		* Datenbank Link zentral verwalten und nach Abschluss des Skripts schließen
 
 ### Aufgabe 4
 
