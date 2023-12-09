@@ -1,28 +1,6 @@
-@extends("layouts.layout")
+@extends("layouts.main_layout")
 
 @section("content")
-    <header class="mt-5">
-        <meta charset="UTF-8">
-        <title>E-Mensa</title>
-        <link rel="stylesheet" href="/css/preflight.css">
-        <link rel="stylesheet" href="/css/index.css">
-    </header>
-    <body class="base-layout">
-
-    <header class="full-bleed">
-        <img src="/img/logo.png" alt="E-Mensa Logo">
-        <nav>
-            <a href="#announcements">Ankündigungen</a>
-            <a href='#menu'>Speisen</a>
-            <a href='#stats'>Zahlen</a>
-            <a href='#contact'>Kontakt</a>
-            <a href='#important'>Wichtig für uns</a>
-            <a href='wunschgericht.php'>
-                <button type="submit">Wunschgericht?</button>
-            </a>
-        </nav>
-    </header>
-
     <div id="intro">
         <img src="/img/salad.jpg" alt="Bild des Salatbuffets der Mensa">
         <h2 id="announcements">Willkommen auf der E-Mensa!</h2>
@@ -55,15 +33,15 @@
             <p>Speisen</p></div>
     </div>
     <h2 id="contact">Interesse geweckt? Wir informieren Sie!</h2>
-    <form class="newsletter" action="../../werbeseite/newsletterbackend.php" method="post">
+    <form class="newsletter" action="newsletter" method="post">
         <div>
             <div>
                 <label for="name">Ihr Name:</label>
                 <input type="text" id="name" name="name" required>
             </div>
             <div>
-                <label for="mail">Ihre E-Mail:</label>
-                <input type="email" id="mail" name="mail" required>
+                <label for="email">Ihre E-Mail:</label>
+                <input type="email" id="email" name="email" required>
             </div>
             <div>
                 <label for="lang">Newsletter bitte in:</label>
@@ -74,38 +52,25 @@
             </div>
         </div>
         <div>
-            <input type="checkbox" id="datenschutz" name="datenschutz" required>
-            <label for="datenschutz">Den Datenschutzbestimmungens stimme ich zu</label>
+            <input type="checkbox" id="privacyPolicy" name="privacyPolicy" required>
+            <label for="privacyPolicy">Den Datenschutzbestimmungen stimme ich zu</label>
         </div>
         <button type="submit">Zum Newsletter anmelden</button>
-        <h2 id="important">Das ist uns wichtig</h2>
-        <div class="important-to-us">
-            <ul>
-                <li>Beste frische saisonale Zutaten</li>
-                <li>Ausgewogene abwechslungsreiche Gerichte</li>
-                <li>Sauberkeit</li>
-            </ul>
-        </div>
+    </form>
+    <h2 id="important">Das ist uns wichtig</h2>
+    <div class="important-to-us">
+        <ul>
+            <li>Beste frische saisonale Zutaten</li>
+            <li>Ausgewogene abwechslungsreiche Gerichte</li>
+            <li>Sauberkeit</li>
+        </ul>
+    </div>
 
-        <h2 style="text-align: center">Wir freuen uns auf ihren Besuch!</h2>
+    <h2 style="text-align: center">Wir freuen uns auf ihren Besuch!</h2>
+@endsection
 
-        <footer class="full-bleed">
-            <ul>
-                <li>&copy; E-Mensa GmbH</li>
-                <li>Henning Schreiber & Simon Conrad</li>
-                <li><a href="">Impressum</a></li>
-            </ul>
-        </footer>
-        @endsection
+@section("cssextra")
+@endsection
 
-        @section("cssextra")
-            <style>
-
-
-            </style>
-        @endsection
-
-        @section("jsextra")
-            <script src="/js/highlight.min.js"></script>
-            <script>hljs.highlightAll();</script>
+@section("jsextra")
 @endsection

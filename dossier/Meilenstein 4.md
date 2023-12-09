@@ -214,5 +214,17 @@ ALTER TABLE gericht_hat_kategorie
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      120 min      |     120 min      |
-| Simon   |     x min      |     x min     |
+| Henning |     120 min     |    120 min     |
+| Simon   |     60 min      |    120 min     | 
+
+### Gesamt Aufwand
+
+|         |   Benötigte Zeit   |
+|:-------:|:------------------:|
+| Henning |      415 min       |
+|  Simon  |      242 min       |
+|         |                    |
+| Gesamt  | 657 min = 10.95std |
+
+
+

@@ -8,7 +8,9 @@
 
 return array(
     '/' => "HomeController@index",
-    "/demo" => "DemoController@demo",
+    '/wunschgericht' => "HomeController@desired_meal",
+    '/newsletter' => "HomeController@newsletter",
+    '/demo' => "DemoController@demo",
     '/dbconnect' => 'DemoController@dbconnect',
     '/debug' => 'HomeController@debug',
     '/error' => 'DemoController@error',

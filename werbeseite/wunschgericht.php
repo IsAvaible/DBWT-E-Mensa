@@ -28,7 +28,7 @@
 <body class="base-layout">
 <h2 id="contact">Haben Sie ein Wunschgericht? Teilen Sie es mit uns!</h2>
 <img id="mainImg" src="img/spaghetti.jpg" alt="Bild des Salatbuffets der Mensa">
-<form action="wunschgerichtbackend.php" method="post" class="full-bleed">
+<form action="add_desired_meal" method="post" class="full-bleed">
     <div>
         <div>
             <label for="name">Ihr Name:</label>
@@ -39,14 +39,14 @@
             <input type="email" id="mail" name="mail" required>
         </div>
         <div>
-            <label for="gerichtname">Name des Gerichtes*:</label>
-            <input type="text" id="gerichtname" name="gerichtname" required>
+            <label for="meal_name">Name des Gerichtes*:</label>
+            <input type="text" id="meal_name" name="gerichtname" required>
         </div>
     </div>
         <div>
-            <label for="beschreibung">Beschreibung*:</label>
+            <label for="description">Beschreibung*:</label>
         </div>
-    <textarea id="beschreibung" name="beschreibung" required></textarea>
+    <textarea id="description" name="beschreibung" required></textarea>
     <button type="submit">Wunsch abschicken</button>
 </form>
 </body>

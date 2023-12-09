@@ -1,12 +1,8 @@
 <?php
-
-/*
- * anrede
- * vorname
- * nachname
- * email
- *
- * datenschutz
+/**
+ * Praktikum DBWT. Autoren:
+ * Simon, Conrad, 3597903
+ * Henning, Schreiber, 3568055
  */
 
 
