@@ -24,29 +24,19 @@ class HomeController
 
     public function newsletter(RequestData $rd)
     {
-        $title = $_POST['title'] ?? NULL;
-        $name = preg_replace('/[^A-Za-z]+/', '', $_POST['name'] ?? NULL);
+        $name = ($_POST['name'] ?? NULL) ? preg_replace('/[^A-Za-z]+/', '', $_POST['name']) : NULL;
         $email = $_POST['email'] ?? NULL;
         $privacyPolicy = $_POST['privacyPolicy'] ?? NULL;
 
         $errors = array();
 
-        /*
-         * Eingabe Prüefen
-         */
-        if ($title != "herr" and $title != "frau" and $title != "divers") {
-            $errors[] = "Die Anrede wurde falsch eingabe.";
-        }
-
         if ($name == NULL) {
-            $errors[] = "Der Name fehlt in der eingabe.";
+            $errors[] = "Der Name fehlt in der Eingabe.";
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = "Ihre E-Mail entspricht nicht den Vorgaben.";
-        }
-
-        if (str_contains($email, 'rcpt.at') or str_contains($email, 'damnthespam.at') or str_contains($email, 'wegwerfmail.de') or str_contains($email, 'trashmail.')) {
+        } else if (str_contains($email, 'rcpt.at') or str_contains($email, 'damnthespam.at') or str_contains($email, 'wegwerfmail.de') or str_contains($email, 'trashmail.')) {
             $errors[] = "Ihre E-Mail ist auf unsere Blockliste, bitte wählen sie eine andere.";
         }
 
@@ -59,14 +49,15 @@ class HomeController
          */
         if (count($errors) == 0) {
             $myfile = fopen("newsletter.csv", "a+") or die("Unable to open file!");
-            fwrite($myfile, $title . ";");
             fwrite($myfile, $name . ";");
             fwrite($myfile, $email . ";");
             fwrite($myfile, $privacyPolicy . PHP_EOL);
             fclose($myfile);
         }
 
-        return view('newsletter', ['rd' => $rd, 'errors' => $errors, 'title' => $title, 'name' => $name, 'email' => $email]);
+        header("Refresh: 3; url=/");
+
+        return view('newsletter', ['rd' => $rd, 'errors' => $errors, 'name' => $name, 'email' => $email]);
     }
 
     public function desired_meal(RequestData $rd)

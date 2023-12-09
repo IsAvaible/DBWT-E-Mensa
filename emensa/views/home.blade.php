@@ -1,3 +1,10 @@
+<?php
+/**
+ * Praktikum DBWT. Autoren:
+ * Simon, Conrad, 3597903
+ * Henning, Schreiber, 3568055
+ */
+?>
 @extends("layouts.main_layout")
 
 @section("content")
