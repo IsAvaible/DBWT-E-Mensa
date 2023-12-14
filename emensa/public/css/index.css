@@ -52,16 +52,43 @@ header {
     gap: 1rem;
     grid-template-columns:
             1fr
-            min(80ch, calc(100% - 6rem))
+            min(80ch, calc(100% - 8rem)) /* 9rem = 5rem (logo) + 7rem (user) + 1rem (gap) */
             1fr;
     padding: 1rem 0;
     border-bottom: color-mix(in srgb, var(--fg-color), var(--bg-color)) 1px solid;
 }
 
-header > a {
+header .logo {
     grid-column: 1;
     justify-self: end;
     width: 5rem;
+    display: flex;
+    align-items: center;
+}
+
+header .user {
+    grid-column: 3;
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+header .user > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 120ch) {
+    header .user {
+        width: 1.5rem;
+    }
+
+    header .user > span {
+        display: none;
+    }
 }
 
 header > nav {
@@ -220,7 +247,7 @@ nav > a {
     display: block;
 }
 
-input[type="text"], input[type="email"], select {
+input[type="text"], input[type="email"], input[type="password"], select {
     width: 100%;
     padding: 5px;
     margin: 5px 0;
@@ -274,4 +301,20 @@ footer > ul > li:not(:first-child):before {
     border-left: 1px solid #989898;
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+.alert-danger {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #a94442;
+    background-color: #f1cfcf;
+    border-color: #ebccd1;
+    font-weight: 600;
+}
+
+.alert-danger:before {
+    content: "⚠ ";
+    margin-right: 0.5rem;
 }

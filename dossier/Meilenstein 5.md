@@ -1,8 +1,8 @@
 ### Aufgabe 1
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      60 min      |     20 min      |
-| Simon   |     x min      |     x min     |
+| Henning |     60 min      |     20 min     |
+| Simon   |     60 min      |    120 min     |
 
 #### 1)
 ```sql

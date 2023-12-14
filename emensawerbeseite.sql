@@ -50,14 +50,14 @@ INSERT INTO `allergen` VALUES
 ('e','Sellerie','Allergen'),
 ('f','Milch und Laktose','Allergen'),
 ('f1','Butter','Allergen'),
-('f2','K├ñse','Allergen'),
+('f2', 'Käse', 'Allergen'),
 ('f3','Margarine','Allergen'),
 ('g','Sesam','Allergen'),
-('h','N├╝sse','Allergen'),
+('h', 'Nüsse', 'Allergen'),
 ('h1','Mandeln','Allergen'),
-('h2','Haseln├╝sse','Allergen'),
-('h3','Waln├╝sse','Allergen'),
-('i','Erdn├╝sse','Allergen');
+('h2', 'Haselnüsse', 'Allergen'),
+('h3', 'Walnüsse', 'Allergen'),
+('i', 'Erdnüsse', 'Allergen');
 /*!40000 ALTER TABLE `allergen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,24 +187,24 @@ LOCK TABLES `gericht` WRITE;
 INSERT INTO `gericht` VALUES
 (1,'Bratkartoffeln mit Speck und Zwiebeln','Kartoffeln mit Zwiebeln und gut Speck','2020-08-25',0,0,2.3,4),
 (3,'Bratkartoffeln mit Zwiebeln','Kartoffeln mit Zwiebeln und ohne Speck','2020-08-25',1,1,2.3,4),
-(4,'Grilltofu','Fein gew├╝rzt und mariniert','2020-08-25',1,1,2.5,4.5),
-(5,'Lasagne','Klassisch mit Bologneseso├ƒe und Creme Fraiche','2020-08-24',0,0,2.5,4.5),
-(6,'Lasagne vegetarisch','Klassisch mit Sojagranulatso├ƒe und Creme Fraiche','2020-08-24',1,0,2.5,4.5),
-(7,'Hackbraten','Nicht nur f├╝r Hacker','2020-08-25',0,0,2.5,4),
-(8,'Gem├╝sepfanne','Gesundes aus der Region, deftig angebraten','2020-08-25',1,1,2.3,4),
-(9,'H├╝hnersuppe','Suppenhuhn trifft Petersilie','2020-08-25',0,0,2,3.5),
+(4, 'Grilltofu', 'Fein gewürzt und mariniert', '2020-08-25', 1, 1, 2.5, 4.5),
+(5, 'Lasagne', 'Klassisch mit Bolognesesoße und Creme Fraiche', '2020-08-24', 0, 0, 2.5, 4.5),
+(6, 'Lasagne vegetarisch', 'Klassisch mit Sojagranulatsoße und Creme Fraiche', '2020-08-24', 1, 0, 2.5, 4.5),
+(7, 'Hackbraten', 'Nicht nur für Hacker', '2020-08-25', 0, 0, 2.5, 4),
+(8, 'Gemüsepfanne', 'Gesundes aus der Region, deftig angebraten', '2020-08-25', 1, 1, 2.3, 4),
+(9, 'Hühnersuppe', 'Suppenhuhn trifft Petersilie', '2020-08-25', 0, 0, 2, 3.5),
 (10,'Forellenfilet','mit Kartoffeln und Dilldip','2020-08-22',0,0,3.8,5),
-(11,'Kartoffel-Lauch-Suppe','der klassische Bauchw├ñrmer mit frischen Kr├ñutern','2020-08-22',1,0,2,3),
+(11, 'Kartoffel-Lauch-Suppe', 'der klassische Bauchwärmer mit frischen Kräutern', '2020-08-22', 1, 0, 2, 3),
 (12,'Kassler mit Rosmarinkartoffeln','dazu Salat und Senf','2020-08-23',0,0,3.8,5.2),
 (13,'Drei Reibekuchen mit Apfelmus','grob geriebene Kartoffeln aus der Region','2020-08-23',1,0,2.5,4.5),
-(14,'Pilzpfanne','die legend├ñre Pfanne aus Pilzen der Saison','2020-08-23',1,0,3,5),
-(15,'Pilzpfanne vegan','die legend├ñre Pfanne aus Pilzen der Saison ohne K├ñse','2020-08-24',1,1,3,5),
-(16,'K├ñsebr├╢tchen','schmeckt vor und nach dem Essen','2020-08-24',1,0,1,1.5),
-(17,'Schinkenbr├╢tchen','schmeckt auch ohne Hunger','2020-08-25',0,0,1.25,1.75),
-(18,'Tomatenbr├╢tchen','mit Schnittlauch und Zwiebeln','2020-08-25',1,1,1,1.5),
+(14, 'Pilzpfanne', 'die legendäre Pfanne aus Pilzen der Saison', '2020-08-23', 1, 0, 3, 5),
+(15, 'Pilzpfanne vegan', 'die legendäre Pfanne aus Pilzen der Saison ohne Käse', '2020-08-24', 1, 1, 3, 5),
+(16, 'Käsebrötchen', 'schmeckt vor und nach dem Essen', '2020-08-24', 1, 0, 1, 1.5),
+(17, 'Schinkenbrötchen', 'schmeckt auch ohne Hunger', '2020-08-25', 0, 0, 1.25, 1.75),
+(18, 'Tomatenbrötchen', 'mit Schnittlauch und Zwiebeln', '2020-08-25', 1, 1, 1, 1.5),
 (19,'Mousse au Chocolat','sahnige schweizer Schokolade rundet jedes Essen ab','2020-08-26',1,0,1.25,1.75),
-(20,'Suppenkreation ├í la Chef','was verschafft werden muss, gut und g├╝nstig','2020-08-26',0,0,0.5,0.9),
-(21,'Currywurst mit Pommes','W├╝rzige Wurst in s├╝├ƒer Sauce mit knusprigen Kartoffeln','2023-11-16',0,0,2.3,4);
+(20, 'Suppenkreation à la Chef', 'was verschafft werden muss, gut und günstig', '2020-08-26', 0, 0, 0.5, 0.9),
+(21, 'Currywurst mit Pommes', 'Würzige Wurst in süßer Sauce mit knusprigen Kartoffeln', '2023-11-16', 0, 0, 2.3, 4);
 /*!40000 ALTER TABLE `gericht` ENABLE KEYS */;
 UNLOCK TABLES;
 
