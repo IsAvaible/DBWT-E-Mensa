@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: emensawerbeseite
 -- ------------------------------------------------------
--- Server version	11.1.3-MariaDB
+-- Server version	11.2.2-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -62,6 +62,37 @@ INSERT INTO `allergen` VALUES
 UNLOCK TABLES;
 
 --
+-- Table structure for table `benutzer`
+--
+
+DROP TABLE IF EXISTS `benutzer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `benutzer` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT 0,
+  `anzahlfehler` int(11) NOT NULL DEFAULT 0,
+  `anzahlanmeldungen` int(11) NOT NULL,
+  `letzteanmeldung` datetime DEFAULT NULL,
+  `letzterfehler` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `benutzer`
+--
+
+LOCK TABLES `benutzer` WRITE;
+/*!40000 ALTER TABLE `benutzer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `benutzer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `besucher`
 --
 
@@ -87,7 +118,8 @@ INSERT INTO `besucher` VALUES
 ('::1','2023-11-24'),
 ('127.0.0.1','2023-12-01'),
 ('127.0.0.1','2023-12-04'),
-('::1','2023-12-04');
+('::1','2023-12-04'),
+('127.0.0.1','2023-12-07');
 /*!40000 ALTER TABLE `besucher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,4 +389,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-04 13:00:29
+-- Dump completed on 2023-12-14 10:23:00
