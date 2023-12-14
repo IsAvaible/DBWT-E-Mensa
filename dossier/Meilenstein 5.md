@@ -1,7 +1,7 @@
 ### Aufgabe 1
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      60 min      |     10 min      |
+| Henning |      60 min      |     20 min      |
 | Simon   |     x min      |     x min     |
 
 #### 1)
@@ -25,6 +25,23 @@ CREATE TABLE benutzer
 ```sql
 SET autocommit = 0;
 ```
+
+#### 3)
+```php
+$salt = 'z7HjaGWj8P7S';
+$admin_password = 'i9L05?QBZGD_';
+```
+
+```sql
+INSERT INTO benutzer(name, email, password, admin, anzahlanmeldungen)
+	VALUE (
+		'Administrator',
+		'admin@emensa.example',
+		'19c9449c1bd8008c83e5303231e0d06bf9a37869',
+		 true,
+		 0);
+```
+	
 ### Aufgabe 2
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
