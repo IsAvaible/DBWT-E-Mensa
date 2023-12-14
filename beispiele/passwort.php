@@ -11,7 +11,7 @@
  * @param string $passwort
  * @return string
  */
-function generateSHA1Hash(string $passwort)
+function generateSHA1Hash(string $passwort): string
 {
     //Same Salt for all user
     $salt = 'z7HjaGWj8P7S';
