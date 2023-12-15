@@ -154,6 +154,9 @@ class HomeController
             $errors[] = "Das Passwort fehlt in der Eingabe.";
         }
 
+        // Starts SQL transaction
+        mysqli_begin_transaction($link, 0, 'login');
+
         // Prepare and execute the SQL statement to fetch the user details
         $stmt = $link->prepare("SELECT * FROM benutzer WHERE email = ?");
         $stmt->bind_param("s", $email);
@@ -165,6 +168,7 @@ class HomeController
         if ($user == NULL) {
             $errors[] = "Der Benutzername oder das Passwort ist falsch.";
         } else {
+
             if (sha1(get_salt() . $password) == $user['password']) {
                 $stmt = $link->prepare("UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE email = ?");
                 $stmt->bind_param("s", $email);
@@ -182,6 +186,9 @@ class HomeController
 
                 $errors[] = "Der Benutzername oder das Passwort ist falsch.";
             }
+
+            // Saves SQL transaction
+            mysqli_commit($link, 0, 'login');
         }
 
         if (count($errors) > 0) {
