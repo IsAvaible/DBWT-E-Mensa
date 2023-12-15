@@ -201,6 +201,12 @@ class HomeController
         }
     }
 
+    /**
+     * This function is used to logout the user and send him beck to the home screen
+     * @param RequestData $request
+     * @param array $errors
+     * @return string
+     */
     public function logout(RequestData $request, array $errors = array())
     {
         // Logs the user out
