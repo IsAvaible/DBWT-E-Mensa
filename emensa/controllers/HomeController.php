@@ -201,6 +201,14 @@ class HomeController
         }
     }
 
+    public function logout(RequestData $request, array $errors = array())
+    {
+        // Logs the user out
+        session_destroy();
+
+        // Return the login view along with the request data and any errors
+        return view('home', ['rd' => $request, 'errors' => $errors]);
+    }
 
     public function debug(RequestData $request)
     {

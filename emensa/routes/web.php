@@ -11,6 +11,7 @@ return array(
     '/wunschgericht' => "HomeController@desired_meal",
     '/newsletter' => "HomeController@newsletter",
     '/anmeldung' => "HomeController@login",
+    '/abmeldung' => "HomeController@logout",
     '/anmeldung_verifizieren' => "HomeController@login_check",
     '/demo' => "DemoController@demo",
     '/dbconnect' => 'DemoController@dbconnect',
