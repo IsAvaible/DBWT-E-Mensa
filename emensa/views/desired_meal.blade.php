@@ -14,7 +14,7 @@
 
 @section("content")
     <div>
-        <h2 id="contact">Haben Sie ein Wunschgericht? Teilen Sie es mit uns!</h2>
+        <h2>Haben Sie ein Wunschgericht? Teilen Sie es mit uns!</h2>
         <img id="mainImg" src="img/spaghetti.jpg" alt="Bild des Salatbuffets der Mensa">
         @if(($success ?? false))
             <p class="success">Ihr Wunschgericht wurde erfolgreich hinzugefügt!</p>

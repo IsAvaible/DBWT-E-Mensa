@@ -67,12 +67,10 @@ class HomeController
         }
 
         // Establish a new database connection to the MySQL database server
-        $link = mysqli_connect("localhost", "root", "root", "emensawerbeseite");
+        $link = connectdb();
 
         // Check if the database connection was successful
         if (!$link) {
-            // Display an error message and terminate the script if the connection failed
-            echo "Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error();
             exit();
         }
 
@@ -113,6 +111,89 @@ class HomeController
 
         return view('desired_meal', ['rd' => $rd, 'success' => empty($errors), 'errors' => $errors]);
     }
+
+    /**
+     * This function is used to display the login page.
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
+     * @param array $errors This is an optional parameter. It is an array that contains any errors that occurred during the login process.
+     */
+    public function login(RequestData $request, array $errors = array())
+    {
+        // Return the login view along with the request data and any errors
+        return view('login', ['rd' => $request, 'errors' => $errors]);
+    }
+
+    /**
+     * This function is used to check the user's login credentials.
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
+     */
+    public function login_check(RequestData $request)
+    {
+        // Establish a new database connection to the MySQL database server
+        $link = connectdb();
+
+        // Check if the database connection was successful
+        if (!$link) {
+            exit();
+        }
+
+        // Retrieve the email and password from the POST data
+        $email = $_POST['email'] ?? NULL;
+        $password = $_POST['password'] ?? NULL;
+
+        // Initialize an empty array to store any errors
+        $errors = array();
+
+        // Check if the email is not provided
+        if ($email == NULL) {
+            $errors[] = "Die E-Mail-Adresse fehlt in der Eingabe.";
+        }
+
+        // Check if the password is not provided
+        if ($password == NULL) {
+            $errors[] = "Das Passwort fehlt in der Eingabe.";
+        }
+
+        // Prepare and execute the SQL statement to fetch the user details
+        $stmt = $link->prepare("SELECT * FROM benutzer WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        // Check if the user exists and the password is correct
+        if ($user == NULL) {
+            $errors[] = "Der Benutzername oder das Passwort ist falsch.";
+        } else {
+            if (sha1(get_salt() . $password) == $user['password']) {
+                $stmt = $link->prepare("UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE email = ?");
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+
+                // Remove the password from the user details
+                unset($user['password']);
+                // Store the user details in the session
+                $_SESSION['user'] = $user;
+            } else {
+                // Prepare and execute the SQL statement to update the user details
+                $stmt = $link->prepare("UPDATE benutzer SET letzterfehler = NOW() WHERE email = ?");
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+
+                $errors[] = "Der Benutzername oder das Passwort ist falsch.";
+            }
+        }
+
+        if (count($errors) > 0) {
+            // If there are errors, return to the login page with the errors
+            return $this->login($request, $errors);
+        } else {
+            header('Location: /');
+            // If there are no errors, return to the index page
+            return $this->index($request);
+        }
+    }
+
 
     public function debug(RequestData $request)
     {

@@ -10,6 +10,8 @@ return array(
     '/' => "HomeController@index",
     '/wunschgericht' => "HomeController@desired_meal",
     '/newsletter' => "HomeController@newsletter",
+    '/anmeldung' => "HomeController@login",
+    '/anmeldung_verifizieren' => "HomeController@login_check",
     '/demo' => "DemoController@demo",
     '/dbconnect' => 'DemoController@dbconnect',
     '/debug' => 'HomeController@debug',

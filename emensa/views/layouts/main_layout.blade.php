@@ -18,7 +18,7 @@
 <body class="base-layout">
 @section("header")
     <header class="full-bleed">
-        <a href="/" title="Startseite"><img src="/img/logo.png" alt="E-Mensa Logo"></a>
+        <a class="logo" href="/" title="Startseite"><img src="/img/logo.png" alt="E-Mensa Logo"></a>
         <nav>
             <a href="/#announcements">Ankündigungen</a>
             <a href='/#menu'>Speisen</a>
@@ -26,9 +26,21 @@
             <a href='/#contact'>Kontakt</a>
             <a href='/#important'>Wichtig für uns</a>
             <a href='wunschgericht'>
-                <button type="submit">Wunschgericht?</button>
+                Wunschgericht
             </a>
         </nav>
+        @if (isset($_SESSION['user']["name"]))
+            <a class="user" href="anmeldung">
+                <img src="/icons/user.svg" alt="Benutzerbild">
+                <span>{{$_SESSION['user']["name"]}}</span>
+            </a>
+        @else
+            <a class="user" href="anmeldung">
+                <img src="/icons/user.svg" alt="Benutzerbild">
+                <span>Anmelden &crarr;</span>
+            </a>
+        @endif
+
     </header>
 @show
 

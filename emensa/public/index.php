@@ -26,6 +26,13 @@ try {
 
 use eftec\bladeone\BladeOne;
 
+session_start();
+
+function get_salt(): string
+{
+    return 'z7HjaGWj8P7S';
+}
+
 /* Routing Script for PHP Dev Server */
 $verbosity = VERBOSITY;
 if (preg_match('/\.(?:css|js|png|jpg|jpeg|gif)$/', $_SERVER["REQUEST_URI"])) {
