@@ -19,7 +19,7 @@ if (!$link) {
 }
 
 /**
- * Fetches the specified number of meals from the database and returns them as a PHP array.
+ * Fetches the specified number of meals randomly from the database and returns them as a PHP array.
  * @param int $n The number of meals to fetch, or -1 to fetch all meals
  * @return array The fetched meals {name: string, description: string, vegetarian: bool, vegan: bool, price_intern: float, price_extern: float, allergens: string[]}
  */
@@ -32,6 +32,7 @@ function queryMeals(int $n = -1): array
         "SELECT gericht.name  AS name,
        beschreibung  AS description,
        bildname as image_name,
+       gericht.id   AS id,
        vegetarisch   AS vegetarian,
        vegan,
        preisintern   AS price_intern,
@@ -40,7 +41,7 @@ function queryMeals(int $n = -1): array
     FROM gericht
              LEFT JOIN gericht_hat_allergen
                        ON gericht.id = gericht_hat_allergen.gericht_id
-    GROUP BY gericht_id" . ($n >= 0 ? " LIMIT $n;" : ";");
+    GROUP BY gericht_id ORDER BY RAND()" . ($n >= 0 ? " LIMIT $n;" : ";");
 
     // Execute the SQL query
     $result = mysqli_query($link, $query);
@@ -81,21 +82,21 @@ function queryMealCount(): int
 
 /**
  * Fetches all allergens used in the first $n meals
- * @param int $n The number of meals to fetch the allergens for, or -1 for all meals
+ * @param array $meals The meals to fetch the allergens for
  * @return array The fetched allergens as a PHP array {code: string, name: string}[]
  */
-function queryAllergens(int $n = -1): array
+function queryAllergensForMeals(array $meals): array
 {
     $link = mysqli_connect("localhost", "root", "root", "emensawerbeseite");
 
+    $gericht_ids = array_map(function ($meal) {
+        return $meal['id'];
+    }, $meals);
     // Define a SQL query to fetch some information from the 'allergen' table
     $query = "
     SELECT DISTINCT allergen.code AS code, allergen.name AS name
-    FROM (SELECT id FROM gericht" . ($n >= 0 ? " LIMIT $n" : "") . ") AS gericht
-         LEFT JOIN gericht_hat_allergen
-                   ON gericht.id = gericht_hat_allergen.gericht_id
-         INNER JOIN allergen
-                    ON gericht_hat_allergen.code = allergen.code;";
+    FROM (SELECT code FROM gericht_hat_allergen WHERE gericht_id IN (" . implode(', ', $gericht_ids) . ")) as ghac 
+         INNER JOIN allergen ON ghac.code = allergen.code;";
 
     // Execute the SQL query
     $result = mysqli_query($link, $query);
@@ -115,8 +116,8 @@ function displayMeals()
 {
     $gerichteDarstellen = "";
 
-    $n = 6; // The number of meals to display
-    foreach (queryMeals($n) as $meal) {
+    $meals = queryMeals(6);
+    foreach ($meals as $meal) {
         // Sort meal allergens by code
         usort($meal['allergens'], function ($a, $b) {
             return strcmp($a, $b);
@@ -128,14 +129,14 @@ function displayMeals()
                             <p>{$meal['description']}</p>
                             <div class='food-properties'>
                                 <p><strong>Preis</strong>: " . number_format($meal['price_intern'], 2) . "€ (intern) / " . number_format($meal['price_extern'], 2) . "€ (extern)</p>
-                                <p><strong>Allergene</strong>: " . implode(', ', $meal['allergens']) . "</p>" .
+                                <p><strong>Allergene</strong>: " . (implode(', ', $meal['allergens']) ?: "Keine") . "</p>" .
             ($meal['vegan'] ? '<img src="icons/vegan.svg" alt="Vegan"/>'
                 : ($meal['vegetarian'] ? '<img src="icons/vegetarian.svg" alt="Vegetarisch"/>' : "")) . "
                             </div>
                         </div>
                     </div>";
     }
-    $allergens = queryAllergens($n);
+    $allergens = queryAllergensForMeals($meals);
     // Sort allergens by code
     usort($allergens, function ($a, $b) {
         return strcmp($a['code'], $b['code']);

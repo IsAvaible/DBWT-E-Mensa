@@ -1,8 +1,9 @@
 ### Aufgabe 1
+
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |     60 min      |     20 min     |
-| Simon   |     60 min      |    120 min     |
+| Simon   |     60 min      |    180 min     | 
 
 #### 1)
 ```sql
@@ -43,28 +44,38 @@ INSERT INTO benutzer(name, email, password, admin, anzahlanmeldungen)
 ```
 	
 ### Aufgabe 2
-|         | Geschätzte Zeit | Benötigte Zeit |
-|:--------|:---------------:|:--------------:|
-| Henning |      x min      |     x min      |
-| Simon   |     x min      |     x min     |
 
-### Aufgabe 3
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |      x min      |     x min      |
-| Simon   |     x min      |     x min     |
+| Simon   |     20 min      |     30 min     | 
+
+#### 1)
+
+```sql
+ALTER TABLE gericht
+    ADD bildname VARCHAR(200) DEFAULT NULL AFTER beschreibung;
+```
+### Aufgabe 3
+
+|         | Geschätzte Zeit | Benötigte Zeit |
+|:--------|:---------------:|:--------------:|
+| Henning |      x min      |     x min      |
+| Simon   |      x min      |     x min      |
 
 ### Aufgabe 4
+
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |      x min      |     x min      |
-| Simon   |     x min      |     x min     |
+| Simon   |      x min      |     x min      |
 
 ### Aufgabe 5
+
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |      x min      |     x min      |
-| Simon   |     x min      |     x min     |
+| Simon   |      x min      |     x min      |
 
 ### Gesamt Aufwand
 

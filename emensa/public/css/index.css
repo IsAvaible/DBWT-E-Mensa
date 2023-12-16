@@ -254,6 +254,16 @@ header > nav > a {
     flex-grow: 1;
 }
 
+@media (max-width: 1055px) {
+    .food-menu :nth-child(5) {
+        display: none;
+    }
+
+    .food-menu :nth-child(6) {
+        display: none;
+    }
+}
+
 #food-menu-allergens {
     flex-basis: 100%;
     display: flex;
