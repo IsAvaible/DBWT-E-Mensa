@@ -27,9 +27,9 @@
             necessitatibus nostrum obcaecati possimus quod quos ratione!
         </div>
     </div>
-    <h2 id="menu">Köstlichkeiten die Sie erwarten</h2>
+    <h2 id="food-menu-header">Köstlichkeiten die Sie erwarten</h2>
     <div class="food-menu full-bleed">
-        {!! $gerichteDarstellen !!}
+        {!! $displayMeals !!}
     </div>
     <div class="mensa-stats">
         <div><span>{{$queryVisitorCount}}</span>

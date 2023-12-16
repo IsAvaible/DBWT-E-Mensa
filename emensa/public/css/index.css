@@ -23,6 +23,10 @@ body {
     min-height: 100vh
 }
 
+img {
+    text-align: center;
+}
+
 body > h2 {
     text-align: center;
     margin-top: 1.5rem;
@@ -52,7 +56,7 @@ header {
     gap: 1rem;
     grid-template-columns:
             1fr
-            min(80ch, calc(100% - 8rem)) /* 9rem = 5rem (logo) + 7rem (user) + 1rem (gap) */
+            min(80ch, calc(100% - 10rem)) /* 6rem = 5rem (logo) + 1rem (gap) */
             1fr;
     padding: 1rem 0;
     border-bottom: color-mix(in srgb, var(--fg-color), var(--bg-color)) 1px solid;
@@ -79,6 +83,7 @@ header .user > span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-top: -2px;
 }
 
 @media (max-width: 120ch) {
@@ -95,7 +100,7 @@ header > nav {
     grid-column: 2;
 }
 
-nav {
+header > nav {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -103,11 +108,82 @@ nav {
     align-items: center;
 }
 
-nav > a {
+header > nav > a {
     font-weight: bolder;
     color: var(--primary-color);
     text-decoration: none;
 }
+
+#menu {
+    display: none;
+}
+
+#overlay {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    #overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    #overlay.active {
+        display: block;
+    }
+
+    #menu {
+        display: block;
+        margin-left: auto;
+        justify-self: end;
+        grid-column: 3;
+        aspect-ratio: 1;
+    }
+
+    header > .user, header > nav {
+        display: none;
+    }
+
+    #overlay > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        display: flex;
+        flex-direction: column;
+        background-color: var(--bg-color);
+        border-radius: 1rem;
+        padding: 2rem;
+        min-width: min(80%, 20rem);
+    }
+
+    #overlay nav {
+        display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
+    }
+
+    #overlay nav a {
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    #overlay nav a:hover {
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+}
+
 
 #intro {
     display: flex;
@@ -135,7 +211,7 @@ nav > a {
 
 .food-menu {
     width: min(66rem, 100%);
-    margin: 0 auto;
+    margin: 1rem auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
