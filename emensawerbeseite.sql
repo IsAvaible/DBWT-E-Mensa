@@ -89,8 +89,9 @@ CREATE TABLE `benutzer` (
 
 LOCK TABLES `benutzer` WRITE;
 /*!40000 ALTER TABLE `benutzer` DISABLE KEYS */;
-INSERT INTO `benutzer` VALUES (1, 'Administrator', 'admin@emensa.example', '19c9449c1bd8008c83e5303231e0d06bf9a37869',
-                               1, 0, 4, '2023-12-16 19:48:04', NULL);
+INSERT INTO `benutzer`
+VALUES (1, 'Administrator', 'admin@emensa.example', '19c9449c1bd8008c83e5303231e0d06bf9a37869', 1, 0, 4,
+        '2023-12-16 19:48:04', NULL);
 /*!40000 ALTER TABLE `benutzer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,45 +187,39 @@ CREATE TABLE `gericht` (
 
 LOCK TABLES `gericht` WRITE;
 /*!40000 ALTER TABLE `gericht` DISABLE KEYS */;
-INSERT INTO `gericht` VALUES (1, 'Bratkartoffeln mit Speck und Zwiebeln', 'Kartoffeln mit Zwiebeln und gut Speck',
-                              '01_bratkartoffeln_mit_speck_und_zwiebeln.jpg', '2020-08-25', 0, 0, 2.3, 4),
-                             (3, 'Bratkartoffeln mit Zwiebeln', 'Kartoffeln mit Zwiebeln und ohne Speck',
-                              '02_bratkartoffeln_mit_zwiebeln.jpg', '2020-08-25', 1, 1, 2.3, 4),
-                             (4, 'Grilltofu', 'Fein gewürzt und mariniert', '04_grilltofu.jpg', '2020-08-25', 1, 1, 2.5,
-                              4.5),
-                             (5, 'Lasagne', 'Klassisch mit Bolognesesoße und Creme Fraiche', '05_lasagne.webp',
-                              '2020-08-24', 0, 0, 2.5, 4.5),
-                             (6, 'Lasagne vegetarisch', 'Klassisch mit Sojagranulatsoße und Creme Fraiche',
-                              '06_lasagne_vegetarisch.jpg', '2020-08-24', 1, 0, 2.5, 4.5),
-                             (7, 'Hackbraten', 'Nicht nur für Hacker', '07_hackbraten.jpg', '2020-08-25', 0, 0, 2.5, 4),
-                             (8, 'Gemüsepfanne', 'Gesundes aus der Region, deftig angebraten', '08_gemuesepfanne.webp',
-                              '2020-08-25', 1, 1, 2.3, 4),
-                             (9, 'Hühnersuppe', 'Suppenhuhn trifft Petersilie', '09_huehnersuppe.jpg', '2020-08-25', 0,
-                              0, 2, 3.5),
-                             (10, 'Forellenfilet', 'mit Kartoffeln und Dilldip', '10_forellenfillet.jpg', '2020-08-22',
-                              0, 0, 3.8, 5),
-                             (11, 'Kartoffel-Lauch-Suppe', 'der klassische Bauchwärmer mit frischen Kräutern',
-                              '11_kartoffel_lauch_suppe.webp', '2020-08-22', 1, 0, 2, 3),
-                             (12, 'Kassler mit Rosmarinkartoffeln', 'dazu Salat und Senf',
-                              '12_kassler_mit_rosmarinkartoffeln.jpg', '2020-08-23', 0, 0, 3.8, 5.2),
-                             (13, 'Drei Reibekuchen mit Apfelmus', 'grob geriebene Kartoffeln aus der Region',
-                              '13_reibekuchen.jpg', '2020-08-23', 1, 0, 2.5, 4.5),
-                             (14, 'Pilzpfanne', 'die legendäre Pfanne aus Pilzen der Saison', '14_pfilzpfanne.jpg',
-                              '2020-08-23', 1, 0, 3, 5),
-                             (15, 'Pilzpfanne vegan', 'die legendäre Pfanne aus Pilzen der Saison ohne Käse',
-                              '15_pfilzpfanne_vegan.jpg', '2020-08-24', 1, 1, 3, 5),
-                             (16, 'Käsebrötchen', 'schmeckt vor und nach dem Essen', '16_kaesebroetchen.jpg',
-                              '2020-08-24', 1, 0, 1, 1.5),
-                             (17, 'Schinkenbrötchen', 'schmeckt auch ohne Hunger', '17_schinkenbroetchen.webp',
-                              '2020-08-25', 0, 0, 1.25, 1.75),
-                             (18, 'Tomatenbrötchen', 'mit Schnittlauch und Zwiebeln', '18_tomatenbroetchen.jpeg',
-                              '2020-08-25', 1, 1, 1, 1.5),
-                             (19, 'Mousse au Chocolat', 'sahnige schweizer Schokolade rundet jedes Essen ab',
-                              '19_mousse_au_chocolat.jpg', '2020-08-26', 1, 0, 1.25, 1.75),
-                             (20, 'Suppenkreation à la Chef', 'was verschafft werden muss, gut und günstig',
-                              '20_suppenkreation.jpg', '2020-08-26', 0, 0, 0.5, 0.9),
-                             (21, 'Currywurst mit Pommes', 'Würzige Wurst in süßer Sauce mit knusprigen Kartoffeln',
-                              '21_currywurst_mit_pommes.jpg', '2023-11-16', 0, 0, 2.3, 4);
+INSERT INTO `gericht`
+VALUES (1, 'Bratkartoffeln mit Speck und Zwiebeln', 'Kartoffeln mit Zwiebeln und gut Speck',
+        '01_bratkartoffeln_mit_speck_und_zwiebeln.jpg', '2020-08-25', 0, 0, 2.3, 4),
+       (3, 'Bratkartoffeln mit Zwiebeln', 'Kartoffeln mit Zwiebeln und ohne Speck',
+        '02_bratkartoffeln_mit_zwiebeln.jpg', '2020-08-25', 1, 1, 2.3, 4),
+       (4, 'Grilltofu', 'Fein gewürzt und mariniert', '04_grilltofu.jpg', '2020-08-25', 1, 1, 2.5, 4.5),
+       (5, 'Lasagne', 'Klassisch mit Bolognesesoße und Creme Fraiche', '05_lasagne.webp', '2020-08-24', 0, 0, 2.5, 4.5),
+       (6, 'Lasagne vegetarisch', 'Klassisch mit Sojagranulatsoße und Creme Fraiche', '06_lasagne_vegetarisch.jpg',
+        '2020-08-24', 1, 0, 2.5, 4.5),
+       (7, 'Hackbraten', 'Nicht nur für Hacker', '07_hackbraten.jpg', '2020-08-25', 0, 0, 2.5, 4),
+       (8, 'Gemüsepfanne', 'Gesundes aus der Region, deftig angebraten', '08_gemuesepfanne.webp', '2020-08-25', 1, 1,
+        2.3, 4),
+       (9, 'Hühnersuppe', 'Suppenhuhn trifft Petersilie', '09_huehnersuppe.jpg', '2020-08-25', 0, 0, 2, 3.5),
+       (10, 'Forellenfilet', 'Mit Kartoffeln und Dilldip', '10_forellenfillet.jpg', '2020-08-22', 0, 0, 3.8, 5),
+       (11, 'Kartoffel-Lauch-Suppe', 'Der klassische Bauchwärmer mit frischen Kräutern',
+        '11_kartoffel_lauch_suppe.webp', '2020-08-22', 1, 0, 2, 3),
+       (12, 'Kassler mit Rosmarinkartoffeln', 'Dazu Salat und Senf', '12_kassler_mit_rosmarinkartoffeln.jpg',
+        '2020-08-23', 0, 0, 3.8, 5.2),
+       (13, 'Drei Reibekuchen mit Apfelmus', 'Grob geriebene Kartoffeln aus der Region', '13_reibekuchen.jpg',
+        '2020-08-23', 1, 0, 2.5, 4.5),
+       (14, 'Pilzpfanne', 'Die legendäre Pfanne aus Pilzen der Saison', '14_pfilzpfanne.jpg', '2020-08-23', 1, 0, 3, 5),
+       (15, 'Pilzpfanne vegan', 'Die legendäre Pfanne aus Pilzen der Saison ohne Käse', '15_pfilzpfanne_vegan.jpg',
+        '2020-08-24', 1, 1, 3, 5),
+       (16, 'Käsebrötchen', 'Schmeckt vor und nach dem Essen', '16_kaesebroetchen.jpg', '2020-08-24', 1, 0, 1, 1.5),
+       (17, 'Schinkenbrötchen', 'Schmeckt auch ohne Hunger', '17_schinkenbroetchen.webp', '2020-08-25', 0, 0, 1.25,
+        1.75),
+       (18, 'Tomatenbrötchen', 'Mit Schnittlauch und Zwiebeln', '18_tomatenbroetchen.jpeg', '2020-08-25', 1, 1, 1, 1.5),
+       (19, 'Mousse au Chocolat', 'Sahnige schweizer Schokolade rundet jedes Essen ab', '19_mousse_au_chocolat.jpg',
+        '2020-08-26', 1, 0, 1.25, 1.75),
+       (20, 'Suppenkreation à la Chef', 'Was verschafft werden muss, gut und günstig', '20_suppenkreation.jpg',
+        '2020-08-26', 0, 0, 0.5, 0.9),
+       (21, 'Currywurst mit Pommes', 'Würzige Wurst in süßer Sauce mit knusprigen Kartoffeln',
+        '21_currywurst_mit_pommes.jpg', '2023-11-16', 0, 0, 2.3, 4);
 /*!40000 ALTER TABLE `gericht` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,6 +363,42 @@ INSERT INTO `kategorie` VALUES
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `view_anmeldungen`
+--
+
+DROP TABLE IF EXISTS `view_anmeldungen`;
+/*!50001 DROP VIEW IF EXISTS `view_anmeldungen`*/;
+SET @saved_cs_client = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `view_anmeldungen` AS
+SELECT 1 AS `id`,
+       1 AS `name`,
+       1 AS `anzahlanmeldungen`
+        */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_suppengericht`
+--
+
+DROP TABLE IF EXISTS `view_suppengericht`;
+/*!50001 DROP VIEW IF EXISTS `view_suppengericht`*/;
+SET @saved_cs_client = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `view_suppengericht` AS
+SELECT 1 AS `id`,
+       1 AS `name`,
+       1 AS `beschreibung`,
+       1 AS `bildname`,
+       1 AS `erfasst_am`,
+       1 AS `vegetarisch`,
+       1 AS `vegan`,
+       1 AS `preisintern`,
+       1 AS `preisextern`
+        */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `wunschgericht`
 --
 
@@ -401,6 +432,54 @@ INSERT INTO `wunschgericht` VALUES
 ('Nudeln','Nudeln mit soe','2023-12-04',33,'info@schr3iber.de');
 /*!40000 ALTER TABLE `wunschgericht` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `view_anmeldungen`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_anmeldungen`*/;
+/*!50001 SET @saved_cs_client = @@character_set_client */;
+/*!50001 SET @saved_cs_results = @@character_set_results */;
+/*!50001 SET @saved_col_connection = @@collation_connection */;
+/*!50001 SET character_set_client = utf8mb4 */;
+/*!50001 SET character_set_results = utf8mb4 */;
+/*!50001 SET collation_connection = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM = UNDEFINED */ /*!50013 DEFINER =`root`@`localhost` SQL SECURITY DEFINER */ /*!50001 VIEW `view_anmeldungen` AS
+SELECT `benutzer`.`id` AS `id`, `benutzer`.`name` AS `name`, `benutzer`.`anzahlanmeldungen` AS `anzahlanmeldungen`
+FROM `benutzer`
+ORDER BY `benutzer`.`anzahlanmeldungen`
+        */;
+/*!50001 SET character_set_client = @saved_cs_client */;
+/*!50001 SET character_set_results = @saved_cs_results */;
+/*!50001 SET collation_connection = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_suppengericht`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_suppengericht`*/;
+/*!50001 SET @saved_cs_client = @@character_set_client */;
+/*!50001 SET @saved_cs_results = @@character_set_results */;
+/*!50001 SET @saved_col_connection = @@collation_connection */;
+/*!50001 SET character_set_client = utf8mb4 */;
+/*!50001 SET character_set_results = utf8mb4 */;
+/*!50001 SET collation_connection = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM = UNDEFINED */ /*!50013 DEFINER =`root`@`localhost` SQL SECURITY DEFINER */ /*!50001 VIEW `view_suppengericht` AS
+SELECT `gericht`.`id`           AS `id`,
+       `gericht`.`name`         AS `name`,
+       `gericht`.`beschreibung` AS `beschreibung`,
+       `gericht`.`bildname`     AS `bildname`,
+       `gericht`.`erfasst_am`   AS `erfasst_am`,
+       `gericht`.`vegetarisch`  AS `vegetarisch`,
+       `gericht`.`vegan`        AS `vegan`,
+       `gericht`.`preisintern`  AS `preisintern`,
+       `gericht`.`preisextern`  AS `preisextern`
+FROM `gericht`
+WHERE `gericht`.`name` LIKE '%suppe%'
+        */;
+/*!50001 SET character_set_client = @saved_cs_client */;
+/*!50001 SET character_set_results = @saved_cs_results */;
+/*!50001 SET collation_connection = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -411,4 +490,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-16 20:50:48
+-- Dump completed on 2023-12-17 23:46:24

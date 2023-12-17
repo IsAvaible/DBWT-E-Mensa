@@ -68,7 +68,32 @@ ALTER TABLE gericht
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |      x min      |     x min      |
-| Simon   |      x min      |     x min      |
+| Simon   |     15 min      |     5 min      |
+
+#### a)
+
+Erstellen Sie eine SQL-Sicht view_suppengerichte, die alle Suppen-Gerichte
+(die ein \*suppe* im Namen tragen) darstellt
+
+```sql
+CREATE VIEW view_suppengericht AS
+SELECT *
+FROM gericht
+WHERE name LIKE '%suppe%';
+```
+
+#### b)
+
+Erzeugen Sie eine SQL-Sicht view_anmeldungen, die die Anzahl der
+Anmeldungen pro Benutzer absteigend sortiert nach Anzahl der
+Anmeldungen darstellt
+
+```sql
+CREATE VIEW view_anmeldungen AS
+SELECT id, name, anzahlanmeldungen
+FROM benutzer
+ORDER BY anzahlanmeldungen;
+```
 
 ### Aufgabe 5
 
