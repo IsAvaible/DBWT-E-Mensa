@@ -68,7 +68,7 @@ ALTER TABLE gericht
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |      x min      |     x min      |
-| Simon   |     15 min      |     5 min      |
+| Simon   |     15 min      |     5 min      | 
 
 #### a)
 
@@ -100,8 +100,19 @@ ORDER BY anzahlanmeldungen;
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
 | Henning |      x min      |     x min      |
-| Simon   |      x min      |     x min      |
+| Simon   |     10 min      |     10 min     | 
 
+#### a)
+
+Schreiben Sie eine Datenbank-Prozedur, die den Zähler bei einer Anmeldung anzahlanmeldungen in der Tabelle benutzer
+inkrementiert. Übergeben Sie die notwendige id des betreffenden Datensatzes aus benutzer an die Prozedur
+
+```sql
+CREATE PROCEDURE track_anmeldung(IN nutzer_id INT)
+BEGIN
+    UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE id = nutzer_id;
+END;
+```
 ### Gesamt Aufwand
 
 |         |   Benötigte Zeit   |

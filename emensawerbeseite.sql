@@ -90,8 +90,8 @@ CREATE TABLE `benutzer` (
 LOCK TABLES `benutzer` WRITE;
 /*!40000 ALTER TABLE `benutzer` DISABLE KEYS */;
 INSERT INTO `benutzer`
-VALUES (1, 'Administrator', 'admin@emensa.example', '19c9449c1bd8008c83e5303231e0d06bf9a37869', 1, 0, 4,
-        '2023-12-16 19:48:04', NULL);
+VALUES (1, 'Administrator', 'admin@emensa.example', '19c9449c1bd8008c83e5303231e0d06bf9a37869', 1, 0, 5,
+        '2023-12-18 00:04:07', NULL);
 /*!40000 ALTER TABLE `benutzer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +123,10 @@ INSERT INTO `besucher` VALUES
 ('127.0.0.1','2023-12-04'),
 ('::1','2023-12-04'),
 ('127.0.0.1', '2023-12-07'),
-('::1', '2023-12-16');
+('::1', '2023-12-16'),
+('::1', '2023-12-18'),
+('::1', '2023-12-18'),
+('::1', '2023-12-18');
 /*!40000 ALTER TABLE `besucher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,4 +493,4 @@ WHERE `gericht`.`name` LIKE '%suppe%'
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-17 23:46:24
+-- Dump completed on 2023-12-18  0:04:33

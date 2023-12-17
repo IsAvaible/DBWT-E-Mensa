@@ -170,8 +170,8 @@ class HomeController
         } else {
 
             if (sha1(get_salt() . $password) == $user['password']) {
-                $stmt = $link->prepare("UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE email = ?");
-                $stmt->bind_param("s", $email);
+                $stmt = $link->prepare("CALL track_anmeldung(?);"); // Call the stored procedure to track the login
+                $stmt->bind_param("s", $user['id']);
                 $stmt->execute();
 
                 // Remove the password from the user details
