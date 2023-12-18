@@ -110,7 +110,7 @@ ORDER BY kategorie.id;
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      10 min      |     x min      |
+| Henning |      10 min      |     15 min      |
 | Simon   |     10 min      |     10 min     | 
 
 #### a)
@@ -136,7 +136,7 @@ END;
 
 |         |   Benötigte Zeit   |
 |:-------:|:------------------:|
-| Henning |      415 min       |
-|  Simon  |      242 min       |
+| Henning |      85 min       |
+|  Simon  |      225 min       |
 |         |                    |
-| Gesamt  | 657 min = 10.95std |
+| Gesamt  | 310 min = 5.17std |
