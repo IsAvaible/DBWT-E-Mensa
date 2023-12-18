@@ -5,6 +5,10 @@ const CONFIG_WEBROUTES = "/../routes/web.php"; // like in laravel
 const CONFIG_DB = "/../config/db.php";
 const ROUTER_VERSION = '0.8.2';
 
+use eftec\bladeone\BladeOne;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 assert_php_version('8.2.0');
 assert_path();
 
@@ -23,8 +27,6 @@ try {
 } catch (Exception $ex) {
     echo "<code>DOCUMENT_ROOT</code><br><pre>{$_SERVER['DOCUMENT_ROOT']}</pre><code>Error</code><br><pre>" . $ex->getMessage() . "</pre>";
 }
-
-use eftec\bladeone\BladeOne;
 
 session_start();
 
@@ -273,6 +275,19 @@ function view($viewname, $viewargs = array())
     $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
 
     return $blade->run($viewname, $viewargs);
+}
+
+/**
+ * Configuration of a logger object
+ * @return Logger
+ */
+function logger(): Logger
+{
+    $log_dir = dirname(__DIR__) . '/storage/logs/log_file.log';
+    $logger = new Logger('emensa');
+    $logger->pushHandler(new StreamHandler($log_dir), Logger::DEBUG);
+
+    return $logger;
 }
 
 /**

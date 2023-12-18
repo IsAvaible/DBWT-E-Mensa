@@ -19,6 +19,9 @@ class HomeController
         $newsletterCount = newsletterCount();
         $mealCount = htmlspecialchars(queryMealCount()) ?? 'X';
 
+        // Log access to main page
+        $log = logger();
+        $log->info('Zugriff auf Hauptseite');
         return view('home', ['rd' => $rd, 'queryVisitorCount' => $queryVisitorCount, 'newsletterCount' => $newsletterCount, 'mealCount' => $mealCount, 'displayMeals' => $displayMeals]);
     }
 
@@ -164,6 +167,9 @@ class HomeController
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
+        // logging
+        $log = logger();
+
         // Check if the user exists and the password is correct
         if ($user == NULL) {
             $errors[] = "Der Benutzername oder das Passwort ist falsch.";
@@ -178,6 +184,9 @@ class HomeController
                 unset($user['password']);
                 // Store the user details in the session
                 $_SESSION['user'] = $user;
+
+                // log successful login
+                $log->info('login', ['user' => $email]);
             } else {
                 // Prepare and execute the SQL statement to update the user details
                 $stmt = $link->prepare("UPDATE benutzer SET letzterfehler = NOW() WHERE email = ?");
@@ -185,6 +194,9 @@ class HomeController
                 $stmt->execute();
 
                 $errors[] = "Der Benutzername oder das Passwort ist falsch.";
+
+                // log failed login
+                $log->warning('failed login', ['user' => $email]);
             }
 
             // Saves SQL transaction
@@ -222,8 +234,12 @@ class HomeController
      * This function is used to log the user out.
      * @param RequestData $request This is an instance of RequestData class. It contains the request data.
      */
-    public function logout(RequestData $request, array $errors = array())
+    public function logout(RequestData $request, array $errors = array()): string
     {
+        // log out loging user
+        $log = logger();
+        $log->info('logout', ['user' => $_SESSION['user']['email']]);
+
         // Logs the user out
         unset($_SESSION['user']);
 
