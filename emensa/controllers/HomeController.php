@@ -12,14 +12,14 @@ class HomeController
     public function index(RequestData $rd)
     {
         //Show dishes
-        $gerichteDarstellen = gerichte_dartsellen();
+        $displayMeals = displayMeals();
 
         //Statistic data
         $queryVisitorCount = htmlspecialchars(queryVisitorCount()) ?? 'X';
         $newsletterCount = newsletterCount();
         $mealCount = htmlspecialchars(queryMealCount()) ?? 'X';
 
-        return view('home', ['rd' => $rd, 'queryVisitorCount' => $queryVisitorCount, 'newsletterCount' => $newsletterCount, 'mealCount' => $mealCount, 'gerichteDarstellen' => $gerichteDarstellen]);
+        return view('home', ['rd' => $rd, 'queryVisitorCount' => $queryVisitorCount, 'newsletterCount' => $newsletterCount, 'mealCount' => $mealCount, 'displayMeals' => $displayMeals]);
     }
 
     public function newsletter(RequestData $rd)
@@ -170,8 +170,8 @@ class HomeController
         } else {
 
             if (sha1(get_salt() . $password) == $user['password']) {
-                $stmt = $link->prepare("UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE email = ?");
-                $stmt->bind_param("s", $email);
+                $stmt = $link->prepare("CALL track_anmeldung(?);"); // Call the stored procedure to track the login
+                $stmt->bind_param("s", $user['id']);
                 $stmt->execute();
 
                 // Remove the password from the user details
@@ -202,18 +202,33 @@ class HomeController
     }
 
     /**
-     * This function is used to logout the user and send him beck to the home screen
-     * @param RequestData $request
-     * @param array $errors
-     * @return string
+     * This function is used to display the user's profile page.
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
+     */
+    public function profile(RequestData $request)
+    {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user'])) {
+            // If the user is not logged in, redirect to the login page
+            return $this->login($request);
+        }
+
+        // Return the profile view along with the request data and the user details
+        return view('profile', ['rd' => $request, 'user' => $_SESSION['user']]);
+    }
+
+
+    /**
+     * This function is used to log the user out.
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
      */
     public function logout(RequestData $request, array $errors = array())
     {
         // Logs the user out
-        session_destroy();
+        unset($_SESSION['user']);
 
-        // Return the login view along with the request data and any errors
-        return view('home', ['rd' => $request, 'errors' => $errors]);
+        // Redirects the user to the index page
+        return $this->index($request);
     }
 
     public function debug(RequestData $request)
