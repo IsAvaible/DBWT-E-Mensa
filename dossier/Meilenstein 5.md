@@ -60,14 +60,14 @@ ALTER TABLE gericht
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      x min      |     x min      |
+| Henning |      30 min      |     35 min      |
 | Simon   |      x min      |     x min      |
 
 ### Aufgabe 4
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      x min      |     x min      |
+| Henning |      10 min      |     15 min      |
 | Simon   |     15 min      |     5 min      | 
 
 #### a)
@@ -95,6 +95,17 @@ FROM benutzer
 ORDER BY anzahlanmeldungen;
 ```
 
+#### c)
+Erzeugen Sie die SQL-Sicht view_kategoriegerichte_vegetarisch, die alle vegetarischen Gerichte sowie die zugehörigen Kategorien zeigt. Stellen Sie immer alle Kategorien dar, auch wenn dieser Kategorie kein Gericht zugeordnet ist.
+```sql
+CREATE VIEW view_kategoriegerichte_vegetarisch AS
+SELECT kategorie.name, gericht.name
+FROM kategorie
+LEFT JOIN gericht_hat_kategorie ON gericht_hat_kategorie.kategorie_id = kategorie.id
+LEFT JOIN gericht ON gericht.id = gericht_hat_kategorie.gericht_id
+AND gericht.vegetarisch = TRUE
+ORDER BY kategorie.id;
+```
 ### Aufgabe 5
 
 |         | Geschätzte Zeit | Benötigte Zeit |
