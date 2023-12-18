@@ -110,7 +110,7 @@ ORDER BY kategorie.id;
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      x min      |     x min      |
+| Henning |      10 min      |     x min      |
 | Simon   |     10 min      |     10 min     | 
 
 #### a)
@@ -124,6 +124,14 @@ BEGIN
     UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE id = nutzer_id;
 END;
 ```
+
+#### c)
+1. Besucher Statistiken
+	- Das Hochzählen einer Besucherzahl mit internem Abgleich der IP-Adressen sollte datenbankseitig wesentlich schneller erfolgen.
+	- Als Rückgabewert werden Besucherzahlen, Anzahl Newsletter Anmeldungen und Anzahl Speisen zurück gegeben. Diese infos sollten Die Datenbank ebenfalls scheller bereitstellen können.
+2.  Letzte Fehlerhafte Anmeldung
+	- Dies verhält sich wie a). So kann eine besser lesbarer Code entstehen.
+	- Durch die Beschränkung der Logik auf den Inhalt der Datenbank kann eine höhere Effizienz erreicht werden. (Parallele ausführung?)
 ### Gesamt Aufwand
 
 |         |   Benötigte Zeit   |
