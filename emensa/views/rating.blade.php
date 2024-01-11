@@ -16,7 +16,7 @@
 @section('content')
     <div class="content">
         <h1>Speise bewerten</h1>
-        <form action="/bewertung_" method="post">
+        <form action="/bewertung_abschicken" method="post">
             @csrf
             {!! $meal_card->render() !!}
             <div id="rating-div">
@@ -30,9 +30,18 @@
             </div>
             <div id="comment-div">
                 <label for="comment">Kommentar:</label>
-                <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                <textarea name="comment" id="comment" rows="6">{{$comment}}</textarea>
             </div>
             <input type="hidden" name="meal_id" value="{{ $meal->id }}">
+            <div class="errors">
+                @if(count($errors) > 0)
+                    @foreach($errors as $error)
+                        <div class="alert alert-danger">
+                            {{ $error }}
+                        </div>
+                    @endforeach
+                @endif
+            </div>
             <button type="submit">Bewerten</button>
         </form>
     </div>

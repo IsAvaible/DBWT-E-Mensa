@@ -273,6 +273,11 @@ class HomeController
     {
         $meal_id = $_GET['meal_id'];
         $rating = $_GET['rating'];
+        $comment = $_SESSION['rating-comment'] ?? NULL;
+        $errors = $_SESSION['rating-errors'] ?? [];
+        // Clear the parameters from the session
+        unset($_SESSION['rating-comment']);
+        unset($_SESSION['rating-errors']);
 
         // If the user is not logged in, redirect to the login page
         if (!isset($_SESSION['user'])) {
@@ -297,6 +302,11 @@ class HomeController
             header('Location: /', true, 303);
         }
 
+        // If no meal id is provided, redirect to the index page
+        if ($meal_id == NULL) {
+            header('Location: /', true, 303);
+        }
+
         // Prepare and execute the SQL statement to fetch the meal details
         $result = queryMeals(-1, $meal_id);
 
@@ -308,7 +318,7 @@ class HomeController
         $meal = $result[0];
 
         // Return the rating view along with the request data and the meal details
-        return view('rating', ['rd' => $request, 'meal' => $meal, 'rating' => $rating, 'meal_card' => new MealCardComponent($meal, true)]);
+        return view('rating', ['rd' => $request, 'meal' => $meal, 'rating' => $rating, 'comment' => $comment, 'meal_card' => new MealCardComponent($meal, true), 'errors' => $errors]);
     }
 
     public function debug(RequestData $request)
@@ -320,22 +330,27 @@ class HomeController
      * This function is used to check the input values of the rating form and save the data in the database
      * @param RequestData $request This is an instance of RequestData class. It contains the request data.
      */
-    public function check_rating(RequestData $request)
+    public function submit_rating(RequestData $request)
     {
+        // Retrieve the form entries from the POST data
+        $comment = $_POST['comment'] ?? NULL;
+        $rating = $_POST['rating'] ?? NULL;
+        $meal_id = $_POST['meal_id'] ?? NULL;
+
+        $redirect_url = "/bewertung?meal_id=$meal_id&rating=$rating";
 
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
 
         // Check if the database connection was successful
         if (!$link) {
-            exit();
+            $_SESSION['rating-comment'] = $comment;
+            $_SESSION['rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
+            header("Location: $redirect_url", true, 303);
         }
 
-        // Retrieve the Formal entries from the POST data
-        $comment = $_POST['comment'] ?? NULL;
-        $rating = $_POST['$rating'] ?? NULL;
-        $benutzer_id = $_SESSION['user']["email"] ?? NULL;
-        $meal_id = $_POST['meal_id'] ?? NULL;
+        // Retrieve the user details from the session
+        $benutzer_id = $_SESSION['user']['id'] ?? NULL;
 
         // Initialize an empty array to store any errors
         $errors = array();
@@ -343,10 +358,15 @@ class HomeController
         // Check if comment is not provided
         if ($comment == NULL) {
             $errors[] = "Der Bewertungstext fehlt in der Eingabe.";
+        } // Check if comment is too short
+        else if (strlen($comment) < 5) {
+            $errors[] = "Der Bewertungstext ist zu kurz.";
         }
 
-        // Cleans Bewertung for SQL
-        $bewertung = mysqli_real_escape_string($link, $comment);
+        // Check if comment is too long
+        if (strlen($comment) > 500) {
+            $errors[] = "Der Bewertungstext ist zu lang.";
+        }
 
         // Check if Sterne is not provided
         if ($rating == NULL) {
@@ -368,22 +388,34 @@ class HomeController
             $errors[] = "Die Gericht fehlt in der Eingabe.";
         }
 
+        $stmt = $link->prepare("SELECT COUNT(*) FROM bewertung WHERE gericht_id = ? AND benutzer_id = ?");
+        $stmt->bind_param("ss", $meal_id, $benutzer_id);
+        $stmt->execute();
+        $stmt->bind_result($result);
+        $stmt->fetch();
+        if ($result > 0) {
+            $errors[] = "Sie können nicht mehrere Bewertungen für ein Gericht abgeben.";
+        }
+        $stmt->close();
+
         if (empty($errors)) {
             $stmt = $link->prepare("INSERT INTO bewertung (bemerkung, sterne, benutzer_id, gericht_id) VALUE (?, ?, ?, ?)");
-            $stmt = $link->bind_param("ssss", $comment, $rating, $benutzer_id, $meal_id);
+            $stmt->bind_param("ssss", $comment, $rating, $benutzer_id, $meal_id);
             $stmt->execute();
-            mysqli_commit($link, 0, 'login');
+            mysqli_commit($link, 0, 'rating');
             $stmt->close();
-            $link->close();
         }
+        $link->close();
 
         if (count($errors) > 0) {
             // If there are errors, return to the rating page with the errors
-            return $this->rating($request, $errors);
-        } else {
-            // If there are no errors, return to the index page
-            return $this->rating($request);
+            $_SESSION['rating-comment'] = $comment;
+            $_SESSION['rating-errors'] = $errors;
+            header("Location: $redirect_url", true, 303);
+            return;
         }
 
+        // Redirect to the index page or the redirect URL
+        header('Location: /', true, 303);
     }
 }

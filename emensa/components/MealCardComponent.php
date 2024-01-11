@@ -41,7 +41,7 @@ class MealCardComponent
                             </div>
                             <div class='rating'>
                                     " . implode(array_map(function ($i) {
-                return ("<a href='bewertung?meal_id={$this->meal->id}&rating={$i}'><img src='icons/star_" . ($this->meal->rating != null ? ($i <= $this->meal->rating ? 'filled' : 'outline') : 'dashed') . ".svg' alt='Bewertung'/></a>");
+                return ("<a href='bewertung?meal_id={$this->meal->id}&rating={$i}'><img src='icons/star_" . ($this->meal->rating != null ? ($i <= round($this->meal->rating) ? 'filled' : 'outline') : 'dashed') . ".svg' alt='Bewertung'/></a>");
             }, range(1, 4))) . "
                                 </div>
                         </div>

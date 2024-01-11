@@ -67,16 +67,6 @@
     font-weight: bold;
 }
 
-.food-properties {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
 .food-properties p {
     color: var(--fg-color);
-}
-
-.food-properties:last-child {
-    color: var(--accent-color);
 }

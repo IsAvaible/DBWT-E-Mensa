@@ -15,7 +15,7 @@ return array(
     '/abmeldung' => "HomeController@logout",
     '/anmeldung_verifizieren' => "HomeController@login_check",
     '/bewertung' => "HomeController@rating",
-    '/bewertung_abschicken' => "HomeController@rating_submit",
+    '/bewertung_abschicken' => "HomeController@submit_rating",
     '/demo' => "DemoController@demo",
     '/dbconnect' => 'DemoController@dbconnect',
     '/debug' => 'HomeController@debug',
