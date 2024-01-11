@@ -238,7 +238,7 @@ class HomeController
         if (!isset($_SESSION['user'])) {
             // Set the parameters for the redirect URL
             $_SESSION['login-redirect_reason'] = 'Sie müssen angemeldet sein, um Ihr Profil anzuzeigen.';
-            $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];;
+            $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];
             // Redirect to the login page
             header('Location: /anmeldung', true, 303);
         }
@@ -332,29 +332,29 @@ class HomeController
         }
 
         // Retrieve the Formal entries from the POST data
-        $bewertung = $_POST['email'] ?? NULL;
-        $sterne = $_POST['password'] ?? NULL;
+        $comment = $_POST['comment'] ?? NULL;
+        $rating = $_POST['$rating'] ?? NULL;
         $benutzer_id = $_SESSION['user']["email"] ?? NULL;
-        $gericht_id = $_POST['gericht_id'] ?? NULL;
+        $meal_id = $_POST['meal_id'] ?? NULL;
 
         // Initialize an empty array to store any errors
         $errors = array();
 
-        // Check if Bewertung is not provided
-        if ($bewertung == NULL) {
+        // Check if comment is not provided
+        if ($comment == NULL) {
             $errors[] = "Der Bewertungstext fehlt in der Eingabe.";
         }
 
         // Cleans Bewertung for SQL
-        $bewertung = mysqli_real_escape_string($link, $bewertung);
+        $bewertung = mysqli_real_escape_string($link, $comment);
 
         // Check if Sterne is not provided
-        if ($sterne == NULL) {
+        if ($rating == NULL) {
             $errors[] = "Die Bewertung (Sterne) fehlt in der Eingabe.";
         }
 
         // Check if Sterne is a valid input
-        if (!($sterne == 'sehr gut' or $sterne == 'gut' or $sterne == 'schlecht' or $sterne == 'sehr schlecht')) {
+        if ($rating < 1 or $rating > 4) {
             $errors[] = "Die Bewertung (Sterne) ist nicht gültig.";
         }
 
@@ -364,13 +364,13 @@ class HomeController
         }
 
         // Check if gericht_id is not provided
-        if ($gericht_id == NULL) {
+        if ($meal_id == NULL) {
             $errors[] = "Die Gericht fehlt in der Eingabe.";
         }
 
         if (empty($errors)) {
             $stmt = $link->prepare("INSERT INTO bewertung (bemerkung, sterne, benutzer_id, gericht_id) VALUE (?, ?, ?, ?)");
-            $stmt = $link->bind_param("ssss", $bewertung, $sterne, $benutzer_id, $gericht_id);
+            $stmt = $link->bind_param("ssss", $comment, $rating, $benutzer_id, $meal_id);
             $stmt->execute();
             mysqli_commit($link, 0, 'login');
             $stmt->close();
