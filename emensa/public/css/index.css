@@ -219,41 +219,6 @@ header > nav > a {
     gap: 2rem;
 }
 
-.food-card {
-    background-color: white;
-    max-width: 20rem;
-    width: calc(50% - 1rem);
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.food-card > img {
-    border-radius: 0.5rem 0.5rem 0 0;
-    aspect-ratio: 1/1;
-    width: 100%;
-    object-fit: cover;
-}
-
-.food-card > div {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.food-card h3 {
-    font-size: large;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
-.food-card p {
-    color: color-mix(in srgb, var(--fg-color), var(--bg-color));
-    flex-grow: 1;
-}
-
 @media (max-width: 1055px) {
     .food-menu :nth-child(5) {
         display: none;
@@ -262,36 +227,6 @@ header > nav > a {
     .food-menu :nth-child(6) {
         display: none;
     }
-}
-
-#food-menu-allergens {
-    flex-basis: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0 0.5rem;
-    padding: 0 calc((100% - 80ch) / 2);
-}
-
-#food-menu-allergens:before {
-    content: "Allergene";
-    flex-basis: 100%;
-    text-align: center;
-    font-weight: bold;
-}
-
-.food-properties {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.food-properties p {
-    color: var(--fg-color);
-}
-
-.food-properties:last-child {
-    color: var(--accent-color);
 }
 
 .mensa-stats {
@@ -389,18 +324,50 @@ footer > ul > li:not(:first-child):before {
     margin-right: 1rem;
 }
 
-.alert-danger {
+.alert {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
-    color: #a94442;
-    background-color: #f1cfcf;
-    border-color: #ebccd1;
     font-weight: 600;
 }
 
+.alert-danger {
+    color: #a94442;
+    background-color: #f1cfcf;
+    border: 1px solid #ebccd1;
+    font-weight: 600;
+}
+
+.alert-warning {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #faebcc;
+    border-radius: 4px;
+    color: #a16207;
+    background-color: #fefce8;
+    font-weight: 600;
+}
+
+.alert-warning:before, .alert-danger:before {
+    display: inline-block;
+    content: url(data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22currentColor%22%20aria-hidden%3D%22true%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M8.257%203.099c.765-1.36%202.722-1.36%203.486%200l5.58%209.92c.75%201.334-.213%202.98-1.742%202.98H4.42c-1.53%200-2.493-1.646-1.743-2.98l5.58-9.92zM11%2013a1%201%200%2011-2%200%201%201%200%20012%200zm-1-8a1%201%200%2000-1%201v3a1%201%200%20002%200V6a1%201%200%2000-1-1z%22%20clip-rule%3D%22evenodd%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E);
+    height: 1.25rem;
+    width: 1.25rem;
+    margin-bottom: -2px;
+}
+
+.alert-warning:before {
+    /* https://angel-rs.github.io/css-color-filter-generator/ */
+    /* #facc15 */
+    filter: brightness(0) saturate(100%) invert(90%) sepia(25%) saturate(3971%) hue-rotate(347deg) brightness(105%) contrast(96%);
+}
+
 .alert-danger:before {
-    content: "⚠ ";
-    margin-right: 0.5rem;
+    /* https://angel-rs.github.io/css-color-filter-generator/ */
+    /* #9b1c1c */
+    filter: brightness(0) saturate(100%) invert(18%) sepia(74%) saturate(3833%) hue-rotate(350deg) brightness(67%) contrast(91%);
 }

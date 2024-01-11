@@ -1,4 +1,7 @@
 <?php
+
+use emensa\components\MealCardComponent;
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../models/gericht.php');
 include("../models/besucher.php");
 include("../models/meals.php");
@@ -118,12 +121,20 @@ class HomeController
     /**
      * This function is used to display the login page.
      * @param RequestData $request This is an instance of RequestData class. It contains the request data.
-     * @param array $errors This is an optional parameter. It is an array that contains any errors that occurred during the login process.
      */
-    public function login(RequestData $request, array $errors = array())
+    public function login(RequestData $request)
     {
-        // Return the login view along with the request data and any errors
-        return view('login', ['rd' => $request, 'errors' => $errors]);
+        // Get the parameters from the session
+        $errors = $_SESSION['login-errors'] ?? [];
+        $redirect_reason = $_SESSION['login-redirect_reason'] ?? null;
+        $redirect_url = $_SESSION['login-redirect_url'] ?? null;
+        // Clear the parameters from the session
+        unset($_SESSION['login-errors']);
+        unset($_SESSION['login-redirect_reason']);
+        unset($_SESSION['login-redirect_url']);
+
+        // Return the login view along with the request data, the errors, and the redirect reason and URL
+        return view('login', ['rd' => $request, 'errors' => $errors, 'redirect_reason' => $redirect_reason, 'redirect_url' => $redirect_url]);
     }
 
     /**
@@ -203,13 +214,17 @@ class HomeController
             mysqli_commit($link, 0, 'login');
         }
 
-        if (count($errors) > 0) {
-            // If there are errors, return to the login page with the errors
-            return $this->login($request, $errors);
+        // Check if the login was successful
+        if (count($errors) <= 0) {
+            $redirect_url = $_POST['redirect_url'];
+            // Redirect to the index page or the redirect URL
+            header('Location: ' . ($redirect_url ?? '/'), true, 303);
         } else {
-            header('Location: /');
-            // If there are no errors, return to the index page
-            return $this->index($request);
+            $_SESSION['login-redirect_reason'] = $_POST['redirect_reason'];
+            $_SESSION['login-redirect_url'] = $_POST['redirect_url'];
+            $_SESSION['login-errors'] = $errors;
+            // If there are errors, return to the login page with the errors
+            header('Location: /anmeldung', true, 303);
         }
     }
 
@@ -219,10 +234,13 @@ class HomeController
      */
     public function profile(RequestData $request)
     {
-        // Check if the user is logged in
+        // If the user is not logged in, redirect to the login page
         if (!isset($_SESSION['user'])) {
-            // If the user is not logged in, redirect to the login page
-            return $this->login($request);
+            // Set the parameters for the redirect URL
+            $_SESSION['login-redirect_reason'] = 'Sie müssen angemeldet sein, um Ihr Profil anzuzeigen.';
+            $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];;
+            // Redirect to the login page
+            header('Location: /anmeldung', true, 303);
         }
 
         // Return the profile view along with the request data and the user details
@@ -236,7 +254,7 @@ class HomeController
      */
     public function logout(RequestData $request, array $errors = array()): string
     {
-        // log out loging user
+        // log logout
         $log = logger();
         $log->info('logout', ['user' => $_SESSION['user']['email']]);
 
@@ -245,6 +263,52 @@ class HomeController
 
         // Redirects the user to the index page
         return $this->index($request);
+    }
+
+    /**
+     * This function is used to display the rating page.
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
+     */
+    public function rating(RequestData $request): string
+    {
+        $meal_id = $_GET['meal_id'];
+        $rating = $_GET['rating'];
+
+        // If the user is not logged in, redirect to the login page
+        if (!isset($_SESSION['user'])) {
+
+            // Set the parameters for the redirect URL
+            $_SESSION['login-redirect_reason'] = 'Sie müssen angemeldet sein, um eine Bewertung abzugeben.';
+            // current url
+            $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];
+            // Redirect to the login page
+            header('Location: /anmeldung', true, 303);
+        }
+
+        // log access to rating page
+        $log = logger();
+        $log->info('Zugriff auf Bewertungsseite');
+
+        // Establish a new database connection to the MySQL database server
+        $link = connectdb();
+
+        // Check if the database connection was successful
+        if (!$link) {
+            header('Location: /', true, 303);
+        }
+
+        // Prepare and execute the SQL statement to fetch the meal details
+        $result = queryMeals(-1, $meal_id);
+
+        // If the meal does not exist, redirect to the index page
+        if (count($result) <= 0) {
+            header('Location: /', true, 303);
+        }
+
+        $meal = $result[0];
+
+        // Return the rating view along with the request data and the meal details
+        return view('rating', ['rd' => $request, 'meal' => $meal, 'rating' => $rating, 'meal_card' => new MealCardComponent($meal, true)]);
     }
 
     public function debug(RequestData $request)

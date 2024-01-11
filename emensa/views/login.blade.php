@@ -6,7 +6,7 @@
  */
 ?>
 
-@extends("layouts.main_layout")
+@extends("layouts.app")
 
 @section("cssextra")
     <link rel="stylesheet" href="/css/login.css">
@@ -25,6 +25,11 @@
     <div class="content">
         <h3>Anmeldung</h3>
         <div class="errors">
+            @if($redirect_reason)
+                <div class="alert alert-warning">
+                    {{ $redirect_reason }}
+                </div>
+            @endif
             @if(count($errors) > 0)
                 @foreach($errors as $error)
                     <div class="alert alert-danger">
@@ -42,6 +47,8 @@
                 <label for="password">Passwort:</label>
                 <input type="password" id="password" name="password" required>
             </div>
+            <input type="hidden" name="redirect_reason" value="{{ $redirect_reason }}">
+            <input type="hidden" name="redirect_url" value="{{ $redirect_url }}">
             <button type="submit">Einloggen</button>
         </form>
     </div>

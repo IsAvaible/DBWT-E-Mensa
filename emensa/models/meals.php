@@ -9,6 +9,9 @@
  */
 
 // Establish a new database connection to the MySQL database server
+use emensa\components\MealCardComponent;
+use emensa\models\Meal;
+
 $link = mysqli_connect("localhost", "root", "root", "emensawerbeseite");
 
 // Check if the database connection was successful
@@ -21,26 +24,20 @@ if (!$link) {
 /**
  * Fetches the specified number of meals randomly from the database and returns them as a PHP array.
  * @param int $n The number of meals to fetch, or -1 to fetch all meals
- * @return array The fetched meals {name: string, description: string, vegetarian: bool, vegan: bool, price_intern: float, price_extern: float, allergens: string[]}
+ * @param int|null $id The id of the meal to fetch, or null to fetch all meals
+ * @return Meal[] The fetched meals
  */
-function queryMeals(int $n = -1): array
+function queryMeals(int $n = -1, int $id = null): array
 {
     $link = mysqli_connect("localhost", "root", "root", "emensawerbeseite");
 
     // Define a SQL query to fetch some information from the 'gericht' table
     $query =
-        "SELECT gericht.name  AS name,
-       beschreibung  AS description,
-       bildname as image_name,
-       gericht.id   AS id,
-       vegetarisch   AS vegetarian,
-       vegan,
-       preisintern   AS price_intern,
-       preisextern   AS price_extern,
-       JSON_ARRAYAGG(code) AS allergens -- Collect all allergen codes into a JSON array
+        "SELECT *, JSON_ARRAYAGG(code) AS allergene -- Collect all allergen codes into a JSON array
+
     FROM gericht
              LEFT JOIN gericht_hat_allergen
-                       ON gericht.id = gericht_hat_allergen.gericht_id
+                       ON gericht.id = gericht_hat_allergen.gericht_id " . ($id != null ? "WHERE gericht.id = $id" : "") . "
     GROUP BY gericht_id ORDER BY RAND()" . ($n >= 0 ? " LIMIT $n;" : ";");
 
     // Execute the SQL query
@@ -56,8 +53,9 @@ function queryMeals(int $n = -1): array
     // Fetch all the rows from the result set and transform each row
     return array_map(function ($row) {
         // Transform the 'allergens' field from JSON format into a PHP array
-        $row['allergens'] = array_filter(json_decode($row['allergens'])) ?? [];
-        return $row;
+        $row['allergene'] = array_filter(json_decode($row['allergene'])) ?? [];
+        // Return a new Meal object for each row
+        return Meal::from_db($row);
     }, mysqli_fetch_all($result, MYSQLI_ASSOC));
 }
 
@@ -82,7 +80,7 @@ function queryMealCount(): int
 
 /**
  * Fetches all allergens used in the first $n meals
- * @param array $meals The meals to fetch the allergens for
+ * @param Meal[] $meals The meals to fetch the allergens for
  * @return array The fetched allergens as a PHP array {code: string, name: string}[]
  */
 function queryAllergensForMeals(array $meals): array
@@ -90,7 +88,7 @@ function queryAllergensForMeals(array $meals): array
     $link = mysqli_connect("localhost", "root", "root", "emensawerbeseite");
 
     $gericht_ids = array_map(function ($meal) {
-        return $meal['id'];
+        return $meal->id;
     }, $meals);
     // Define a SQL query to fetch some information from the 'allergen' table
     $query = "
@@ -112,29 +110,19 @@ function queryAllergensForMeals(array $meals): array
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-function displayMeals()
+/**
+ * Renders all meals as HTML code.
+ * @return string The HTML code to display the meals
+ */
+function displayMeals(int $count = 6): string
 {
+    if ($count < 0) throw new InvalidArgumentException("count must be >= 0");
+
     $gerichteDarstellen = "";
 
-    $meals = queryMeals(6);
+    $meals = queryMeals($count);
     foreach ($meals as $meal) {
-        // Sort meal allergens by code
-        usort($meal['allergens'], function ($a, $b) {
-            return strcmp($a, $b);
-        });
-        $gerichteDarstellen .= "<div class='food-card'>
-                <img src='img/meals/" . ($meal['image_name'] ?? '00_image_missing.jpeg') . "' alt='{$meal['description']}'>
-                <div>
-                            <h3>{$meal['name']}</h3>
-                            <p>{$meal['description']}</p>
-                            <div class='food-properties'>
-                                <p><strong>Preis</strong>: " . number_format($meal['price_intern'], 2) . "€ (intern) / " . number_format($meal['price_extern'], 2) . "€ (extern)</p>
-                                <p><strong>Allergene</strong>: " . (implode(', ', $meal['allergens']) ?: "Keine") . "</p>" .
-            ($meal['vegan'] ? '<img src="icons/vegan.svg" alt="Vegan"/>'
-                : ($meal['vegetarian'] ? '<img src="icons/vegetarian.svg" alt="Vegetarisch"/>' : "")) . "
-                            </div>
-                        </div>
-                    </div>";
+        $gerichteDarstellen .= (new MealCardComponent($meal))->render();
     }
     $allergens = queryAllergensForMeals($meals);
     // Sort allergens by code

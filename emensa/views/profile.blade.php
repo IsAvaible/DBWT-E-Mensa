@@ -5,7 +5,7 @@
  * Henning, Schreiber, 3568055
  */
 ?>
-@extends("layouts.main_layout")
+@extends("layouts.app")
 
 @section("cssextra")
     <link rel="stylesheet" href="/css/profile.css">
