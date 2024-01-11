@@ -315,4 +315,75 @@ class HomeController
     {
         return view('debug');
     }
+
+    /**
+     * This function is used to check the input values of the rating form and save the data in the database
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
+     */
+    public function check_rating(RequestData $request)
+    {
+
+        // Establish a new database connection to the MySQL database server
+        $link = connectdb();
+
+        // Check if the database connection was successful
+        if (!$link) {
+            exit();
+        }
+
+        // Retrieve the Formal entries from the POST data
+        $bewertung = $_POST['email'] ?? NULL;
+        $sterne = $_POST['password'] ?? NULL;
+        $benutzer_id = $_SESSION['user']["email"] ?? NULL;
+        $gericht_id = $_POST['gericht_id'] ?? NULL;
+
+        // Initialize an empty array to store any errors
+        $errors = array();
+
+        // Check if Bewertung is not provided
+        if ($bewertung == NULL) {
+            $errors[] = "Der Bewertungstext fehlt in der Eingabe.";
+        }
+
+        // Cleans Bewertung for SQL
+        $bewertung = mysqli_real_escape_string($link, $bewertung);
+
+        // Check if Sterne is not provided
+        if ($sterne == NULL) {
+            $errors[] = "Die Bewertung (Sterne) fehlt in der Eingabe.";
+        }
+
+        // Check if Sterne is a valid input
+        if (!($sterne == 'sehr gut' or $sterne == 'gut' or $sterne == 'schlecht' or $sterne == 'sehr schlecht')) {
+            $errors[] = "Die Bewertung (Sterne) ist nicht gültig.";
+        }
+
+        // Check if Benutzer is not logged in
+        if ($benutzer_id == NULL) {
+            $errors[] = "Sie müssen angemeldet sein um eine Bewertung abgeben zu können.";
+        }
+
+        // Check if gericht_id is not provided
+        if ($gericht_id == NULL) {
+            $errors[] = "Die Gericht fehlt in der Eingabe.";
+        }
+
+        if (empty($errors)) {
+            $stmt = $link->prepare("INSERT INTO bewertung (bemerkung, sterne, benutzer_id, gericht_id) VALUE (?, ?, ?, ?)");
+            $stmt = $link->bind_param("ssss", $bewertung, $sterne, $benutzer_id, $gericht_id);
+            $stmt->execute();
+            mysqli_commit($link, 0, 'login');
+            $stmt->close();
+            $link->close();
+        }
+
+        if (count($errors) > 0) {
+            // If there are errors, return to the rating page with the errors
+            return $this->rating($request, $errors);
+        } else {
+            // If there are no errors, return to the index page
+            return $this->rating($request);
+        }
+
+    }
 }
