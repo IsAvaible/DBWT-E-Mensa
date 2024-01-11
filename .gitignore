@@ -1,5 +1,6 @@
 /werbeseite/besucherzahlen.txt
-/werbeseite/newsletter.csv
-/beispiele/newsletter.csv
 /beispiele/accesslog.txt
 **/*.bladec
+/emensa/vendor
+/emensa/storage/logs/log_file.log
+newsletter.csv
