@@ -503,7 +503,7 @@ class HomeController
 
         // Check if user is not logged in
         if ($benutzer_id == NULL) {
-            $errors[] = "Sie müssen angemeldet sein um Ihre Bewertung löschen zu können.";
+            $errors[] = "Sie müssen angemeldet sein um Bewertung hervorheben zu können.";
         }
 
         // Check if the user is an administrator
@@ -523,9 +523,9 @@ class HomeController
             $errors[] = "Das Gericht fehlt in der Eingabe.";
         }
 
-        // Check if rating is not already highlighted
+        // Check if rating is already highlighted
         if (empty($errors)) {
-            $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = false;");
+            $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = FALSE;");
             $stmt->bind_param("ss", $benutzer_id, $meal_id);
             $stmt->bind_result($result);
             $stmt->execute();
@@ -555,4 +555,83 @@ class HomeController
         header('Location: /', true, 303);
     }
 
+    /**
+     * This funktion is used to let administrator dehighlight rating
+     * @param RequestData $request
+     */
+    function dehighlight_rating(RequestData $request): void
+    {
+        // Establish a new database connection to the MySQL database server
+        $link = connectdb();
+
+        $redirect_url = "/bewertung";
+
+        // Check if the database connection was successful
+        if (!$link) {
+            $_SESSION['dehighlight-rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
+            header("Location: $redirect_url", true, 303);
+        }
+
+        // Retrieve meal_id from POST data
+        $meal_id = $_POST['meal_id'] ?? NULL;
+
+        // Retrieve the user id from the session
+        $benutzer_id = $_SESSION['user']['id'] ?? NULL;
+
+        // Initialize an empty array to store any errors
+        $errors = array();
+
+        // Check if user is not logged in
+        if ($benutzer_id == NULL) {
+            $errors[] = "Sie müssen angemeldet sein, um die Hervorheben von Bewertung zu entfernen.";
+        }
+
+        // Check if the user is an administrator
+        if (empty($errors)) {
+            $stmt = $link->prepare("SELECT count(*) FROM benutzer WHERE id = ? AND admin = TRUE;");
+            $stmt->bind_param("s", $benutzer_id);
+            $stmt->bind_result($result);
+            $stmt->execute();
+            $stmt->close();
+            if ($result != 1) {
+                $errors[] = "Sie müssen Administrator sein, um die Hervorheben von Bewertung zu entfernen.";
+            }
+        }
+
+        // Check if meal_id is not provided
+        if ($meal_id == NULL) {
+            $errors[] = "Das Gericht fehlt in der Eingabe.";
+        }
+
+        // Check if rating is highlighted
+        if (empty($errors)) {
+            $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = TRUE;");
+            $stmt->bind_param("ss", $benutzer_id, $meal_id);
+            $stmt->bind_result($result);
+            $stmt->execute();
+            $stmt->close();
+            if ($result != 1) {
+                $errors[] = "Diese Bewertung ist nicht hervorgehoben.";
+            }
+        }
+
+        // dehighlight rating
+        if (empty($errors)) {
+            $stmt = $link->prepare("UPDATE bewertung SET hervorgehoben = FALSE WHERE benutzer_id = ? AND gericht_id = ?;");
+            $stmt->bind_param("ss", $benutzer_id, $meal_id);
+            $stmt->execute();
+            mysqli_commit($link, 0, 'highlight_rating');
+            $stmt->close();
+        }
+        $link->close();
+
+        if (count($errors) > 0) {
+            // If there are errors, return to the rating page with the errors
+            $_SESSION['rating-errors'] = $errors;
+            return;
+        }
+
+        // Redirect to the index page or the redirect URL
+        header('Location: /', true, 303);
+    }
 }

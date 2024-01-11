@@ -2,7 +2,7 @@
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      20 min      |     90 min      |
+| Henning |      20 min      |     110 min      |
 | Simon   |     25 min      |     40 min     | 
 
 #### a)
