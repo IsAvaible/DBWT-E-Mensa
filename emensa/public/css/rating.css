@@ -1,0 +1,38 @@
+
+h1 {
+    text-align: center;
+}
+
+form > .meal-card {
+    width: 100%;
+    max-width: 26rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+#comment-div, #rating-div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+#comment-div {
+    width: 100%;
+}
+
+textarea {
+    width: min(100%, 26rem);
+    height: 5rem;
+}
+
+
+

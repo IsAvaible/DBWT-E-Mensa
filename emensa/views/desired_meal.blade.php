@@ -6,7 +6,7 @@
  */
 ?>
 
-@extends("layouts.main_layout")
+@extends("layouts.app")
 
 @section("cssextra")
     <link rel="stylesheet" href="/css/desired_meal.css">

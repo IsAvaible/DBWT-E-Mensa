@@ -5,7 +5,7 @@
  * Henning, Schreiber, 3568055
  */
 ?>
-@extends("layouts.main_layout")
+@extends("layouts.app")
 
 @section("content")
     <div id="intro">
@@ -51,7 +51,7 @@
                 <input type="email" id="email" name="email" required>
             </div>
             <div>
-                <label for="lang">Newsletter bitte in:</label>
+                <label for="lang">Sprache:</label>
                 <select id="lang" name="lang">
                     <option value="de">Deutsch</option>
                     <option value="en">Englisch</option>
@@ -77,6 +77,7 @@
 @endsection
 
 @section("cssextra")
+    <link rel="stylesheet" href="/css/meal-card.css">
 @endsection
 
 @section("jsextra")

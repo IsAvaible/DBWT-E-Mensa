@@ -20,8 +20,8 @@
         <tbody>
         @forelse($meals as $index => $meal)
             <tr>
-                <td>{{ $meal['name'] }}</td>
-                <td>{{ $meal['preisintern'] }}€</td>
+                <td>{{ $meal->name }}</td>
+                <td>{{ $meal->preisintern }}€</td>
             </tr>
         @empty
             <tr>
