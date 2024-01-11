@@ -361,10 +361,8 @@ class HomeController
         } // Check if comment is too short
         else if (strlen($comment) < 5) {
             $errors[] = "Der Bewertungstext ist zu kurz.";
-        }
-
-        // Check if comment is too long
-        if (strlen($comment) > 500) {
+        } // Check if comment is too long
+        else if (strlen($comment) > 500) {
             $errors[] = "Der Bewertungstext ist zu lang.";
         }
 
@@ -385,7 +383,7 @@ class HomeController
 
         // Check if gericht_id is not provided
         if ($meal_id == NULL) {
-            $errors[] = "Die Gericht fehlt in der Eingabe.";
+            $errors[] = "Das Gericht fehlt in der Eingabe.";
         }
 
         $stmt = $link->prepare("SELECT COUNT(*) FROM bewertung WHERE gericht_id = ? AND benutzer_id = ?");
@@ -418,4 +416,61 @@ class HomeController
         // Redirect to the index page or the redirect URL
         header('Location: /', true, 303);
     }
+
+    /**
+     * This funktions is used to delete rating
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
+     */
+    public function delete_rating(RequestData $request): void
+    {
+        // Establish a new database connection to the MySQL database server
+        $link = connectdb();
+
+        $redirect_url = "/bewertung";
+
+        // Check if the database connection was successful
+        if (!$link) {
+            $_SESSION['rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
+            header("Location: $redirect_url", true, 303);
+        }
+
+        // Retrieve the form entries from the POST data
+        $meal_id = $_POST['meal_id'] ?? NULL;
+
+        // Retrieve the user details from the session
+        $benutzer_id = $_SESSION['user']['id'] ?? NULL;
+
+        // Initialize an empty array to store any errors
+        $errors = array();
+
+        // Check if Benutzer is not logged in
+        if ($benutzer_id == NULL) {
+            $errors[] = "Sie müssen angemeldet sein um Ihre Bewertung löschen zu können.";
+        }
+
+        // Check if gericht_id is not provided
+        if ($meal_id == NULL) {
+            $errors[] = "Das Gericht fehlt in der Eingabe.";
+        }
+
+        if (empty($errors)) {
+            $stmt = $link->prepare("DELETE FROM bewertung WHERE benutzer_id = ? AND gericht_id = ?;");
+            $stmt->bind_param("ss", $benutzer_id, $meal_id);
+            $stmt->execute();
+            mysqli_commit($link, 0, 'delete_rating');
+            $stmt->close();
+        }
+        $link->close();
+
+        if (count($errors) > 0) {
+            // If there are errors, return to the rating page with the errors
+            $_SESSION['rating-errors'] = $errors;
+            return;
+        }
+
+        // Redirect to the index page or the redirect URL
+        header('Location: /', true, 303);
+    }
+
+
 }
