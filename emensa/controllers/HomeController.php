@@ -366,26 +366,27 @@ class HomeController
             $errors[] = "Der Bewertungstext ist zu lang.";
         }
 
-        // Check if Sterne is not provided
+        // Check if rating is not provided
         if ($rating == NULL) {
             $errors[] = "Die Bewertung (Sterne) fehlt in der Eingabe.";
         }
 
-        // Check if Sterne is a valid input
+        // Check if rating is a valid input
         if ($rating < 1 or $rating > 4) {
             $errors[] = "Die Bewertung (Sterne) ist nicht gültig.";
         }
 
-        // Check if Benutzer is not logged in
+        // Check if user is not logged in
         if ($benutzer_id == NULL) {
             $errors[] = "Sie müssen angemeldet sein um eine Bewertung abgeben zu können.";
         }
 
-        // Check if gericht_id is not provided
+        // Check if meal_id is not provided
         if ($meal_id == NULL) {
             $errors[] = "Das Gericht fehlt in der Eingabe.";
         }
 
+        // Checks if user already made a rating for that meal
         $stmt = $link->prepare("SELECT COUNT(*) FROM bewertung WHERE gericht_id = ? AND benutzer_id = ?");
         $stmt->bind_param("ss", $meal_id, $benutzer_id);
         $stmt->execute();
@@ -396,6 +397,7 @@ class HomeController
         }
         $stmt->close();
 
+        // Saves rating in daterbase
         if (empty($errors)) {
             $stmt = $link->prepare("INSERT INTO bewertung (bemerkung, sterne, benutzer_id, gericht_id) VALUE (?, ?, ?, ?)");
             $stmt->bind_param("ssss", $comment, $rating, $benutzer_id, $meal_id);
@@ -430,29 +432,30 @@ class HomeController
 
         // Check if the database connection was successful
         if (!$link) {
-            $_SESSION['rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
+            $_SESSION['delete-rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
             header("Location: $redirect_url", true, 303);
         }
 
-        // Retrieve the form entries from the POST data
+        // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
 
-        // Retrieve the user details from the session
+        // Retrieve the user id from the session
         $benutzer_id = $_SESSION['user']['id'] ?? NULL;
 
         // Initialize an empty array to store any errors
         $errors = array();
 
-        // Check if Benutzer is not logged in
+        // Check if user is not logged in
         if ($benutzer_id == NULL) {
             $errors[] = "Sie müssen angemeldet sein um Ihre Bewertung löschen zu können.";
         }
 
-        // Check if gericht_id is not provided
+        // Check if meal_i is not provided
         if ($meal_id == NULL) {
             $errors[] = "Das Gericht fehlt in der Eingabe.";
         }
 
+        // deletes rating
         if (empty($errors)) {
             $stmt = $link->prepare("DELETE FROM bewertung WHERE benutzer_id = ? AND gericht_id = ?;");
             $stmt->bind_param("ss", $benutzer_id, $meal_id);
@@ -472,5 +475,84 @@ class HomeController
         header('Location: /', true, 303);
     }
 
+    /**
+     * This funktion is used to let administrator highlight rating
+     * @param RequestData $request
+     */
+    function highlight_rating(RequestData $request): void
+    {
+        // Establish a new database connection to the MySQL database server
+        $link = connectdb();
+
+        $redirect_url = "/bewertung";
+
+        // Check if the database connection was successful
+        if (!$link) {
+            $_SESSION['highlight-rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
+            header("Location: $redirect_url", true, 303);
+        }
+
+        // Retrieve meal_id from POST data
+        $meal_id = $_POST['meal_id'] ?? NULL;
+
+        // Retrieve the user id from the session
+        $benutzer_id = $_SESSION['user']['id'] ?? NULL;
+
+        // Initialize an empty array to store any errors
+        $errors = array();
+
+        // Check if user is not logged in
+        if ($benutzer_id == NULL) {
+            $errors[] = "Sie müssen angemeldet sein um Ihre Bewertung löschen zu können.";
+        }
+
+        // Check if the user is an administrator
+        if (empty($errors)) {
+            $stmt = $link->prepare("SELECT count(*) FROM benutzer WHERE id = ? AND admin = TRUE;");
+            $stmt->bind_param("s", $benutzer_id);
+            $stmt->bind_result($result);
+            $stmt->execute();
+            $stmt->close();
+            if ($result != 1) {
+                $errors[] = "Sie müssen Administrator sein, um Bewertung hervorheben zu kommen.";
+            }
+        }
+
+        // Check if meal_id is not provided
+        if ($meal_id == NULL) {
+            $errors[] = "Das Gericht fehlt in der Eingabe.";
+        }
+
+        // Check if rating is not already highlighted
+        if (empty($errors)) {
+            $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = false;");
+            $stmt->bind_param("ss", $benutzer_id, $meal_id);
+            $stmt->bind_result($result);
+            $stmt->execute();
+            $stmt->close();
+            if ($result != 1) {
+                $errors[] = "Diese Bewertung ist bereits hervorgehoben.";
+            }
+        }
+
+        // highlight rating
+        if (empty($errors)) {
+            $stmt = $link->prepare("UPDATE bewertung SET hervorgehoben = TRUE WHERE benutzer_id = ? AND gericht_id = ?;");
+            $stmt->bind_param("ss", $benutzer_id, $meal_id);
+            $stmt->execute();
+            mysqli_commit($link, 0, 'highlight_rating');
+            $stmt->close();
+        }
+        $link->close();
+
+        if (count($errors) > 0) {
+            // If there are errors, return to the rating page with the errors
+            $_SESSION['rating-errors'] = $errors;
+            return;
+        }
+
+        // Redirect to the index page or the redirect URL
+        header('Location: /', true, 303);
+    }
 
 }

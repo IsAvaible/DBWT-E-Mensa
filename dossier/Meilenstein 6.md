@@ -2,7 +2,7 @@
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      x min      |     x min      |
+| Henning |      20 min      |     90 min      |
 | Simon   |     25 min      |     40 min     | 
 
 #### a)
@@ -81,7 +81,7 @@ END;
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      x min      |     x min      |
+| Henning |      30 min      |     60 min      |
 | Simon   |      x min      |     x min      | 
 
 ### Aufgabe 3
