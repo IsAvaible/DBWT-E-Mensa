@@ -18,6 +18,7 @@ return array(
     '/bewertung_abschicken' => "HomeController@submit_rating",
     '/bewertungen' => "HomeController@ratings",
     '/bewertung_hervorheben' => "HomeController@highlight_rating",
+    '/bewertung_entvorheben' => "HomeController@unhighlight_rating",
     '/meine_bewertungen' => "HomeController@my_ratings",
     '/demo' => "DemoController@demo",
     '/dbconnect' => 'DemoController@dbconnect',

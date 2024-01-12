@@ -473,15 +473,18 @@ class HomeController
      */
     public function ratings(RequestData $request)
     {
+        $errors = $_SESSION['rating-errors'] ?? [];
+        unset($_SESSION['rating-errors']);
+
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
 
         // Prepare and execute the SQL statement to fetch the last 30 ratings
-        $result = mysqli_query($link, "SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id ORDER BY zeitpunkt LIMIT 30;");
+        $result = mysqli_query($link, "SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id ORDER BY zeitpunkt LIMIT 30;");
         $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         // Return the ratings view along with the request data and the ratings
-        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'is_admin' => $_SESSION['user']['admin'] ?? false]);
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'errors' => $errors]);
     }
 
     /**
@@ -531,53 +534,27 @@ class HomeController
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
 
-        $redirect_url = "/bewertung";
-
-        // Check if the database connection was successful
-        if (!$link) {
-            $_SESSION['highlight-rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
-            header("Location: $redirect_url", true, 303);
-        }
-
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
-
-        // Retrieve the user id from the session
-        $benutzer_id = $_SESSION['user']['id'] ?? NULL;
+        $user_id = $_POST['user_id'] ?? NULL;
 
         // Initialize an empty array to store any errors
         $errors = array();
 
-        // Check if user is not logged in
-        if ($benutzer_id == NULL) {
+        if ($_SESSION['user'] == NULL) { // Check if user is not logged in
             $errors[] = "Du musst angemeldet sein um Bewertung hervorheben zu können.";
-        }
-
-        // Check if the user is an administrator
-        if (empty($errors)) {
-            $stmt = $link->prepare("SELECT count(*) FROM benutzer WHERE id = ? AND admin = TRUE;");
-            $stmt->bind_param("s", $benutzer_id);
-            $stmt->bind_result($result);
-            $stmt->execute();
-            $stmt->close();
-            if ($result != 1) {
-                $errors[] = "Du musst Administrator sein, um Bewertung hervorheben zu kommen.";
-            }
-        }
-
-        // Check if meal_id is not provided
-        if ($meal_id == NULL) {
+        } else if (!$_SESSION['user']['admin']) { // Check if the user is an administrator
+            $errors[] = "Du musst Administrator sein, um Bewertung hervorheben zu können.";
+        } else if ($meal_id == null) { // Check if meal_id is not provided
             $errors[] = "Das Gericht fehlt in der Eingabe.";
-        }
-
-        // Check if rating is already highlighted
-        if (empty($errors)) {
-            $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = FALSE;");
-            $stmt->bind_param("ss", $benutzer_id, $meal_id);
-            $stmt->bind_result($result);
+        } else { // Check if rating is already highlighted
+            $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = TRUE;");
+            $stmt->bind_param("ii", $user_id, $meal_id);
             $stmt->execute();
+            $stmt->bind_result($result);
+            $stmt->fetch();
             $stmt->close();
-            if ($result != 1) {
+            if ($result == 1) {
                 $errors[] = "Diese Bewertung ist bereits hervorgehoben.";
             }
         }
@@ -585,7 +562,7 @@ class HomeController
         // highlight rating
         if (empty($errors)) {
             $stmt = $link->prepare("UPDATE bewertung SET hervorgehoben = TRUE WHERE benutzer_id = ? AND gericht_id = ?;");
-            $stmt->bind_param("ss", $benutzer_id, $meal_id);
+            $stmt->bind_param("ii", $user_id, $meal_id);
             $stmt->execute();
             mysqli_commit($link, 0, 'highlight_rating');
             $stmt->close();
@@ -593,69 +570,42 @@ class HomeController
         $link->close();
 
         if (count($errors) > 0) {
-            // If there are errors, return to the rating page with the errors
+            // If there are errors, set the errors in the session and return to the rating page
             $_SESSION['rating-errors'] = $errors;
-            return;
         }
 
-        // Redirect to the index page or the redirect URL
-        header('Location: /', true, 303);
+        // Redirect to the ratings page
+        header("Location: /bewertungen", true, 303);
     }
 
     /**
-     * This funktion is used to let administrator dehighlight rating
+     * This funktion is used to let administrator unhighlight rating
      * @param RequestData $request
      */
-    public function dehighlight_rating(RequestData $request): void
+    public function unhighlight_rating(RequestData $request): void
     {
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
 
-        $redirect_url = "/bewertung";
-
-        // Check if the database connection was successful
-        if (!$link) {
-            $_SESSION['dehighlight-rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
-            header("Location: $redirect_url", true, 303);
-        }
-
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
-
-        // Retrieve the user id from the session
-        $benutzer_id = $_SESSION['user']['id'] ?? NULL;
+        $user_id = $_POST['user_id'] ?? NULL;
 
         // Initialize an empty array to store any errors
         $errors = array();
 
-        // Check if user is not logged in
-        if ($benutzer_id == NULL) {
-            $errors[] = "Du musst angemeldet sein, um die Hervorheben von Bewertung zu entfernen.";
-        }
-
-        // Check if the user is an administrator
-        if (empty($errors)) {
-            $stmt = $link->prepare("SELECT count(*) FROM benutzer WHERE id = ? AND admin = TRUE;");
-            $stmt->bind_param("s", $benutzer_id);
-            $stmt->bind_result($result);
-            $stmt->execute();
-            $stmt->close();
-            if ($result != 1) {
-                $errors[] = "Du musst Administrator sein, um die Hervorheben von Bewertung zu entfernen.";
-            }
-        }
-
-        // Check if meal_id is not provided
-        if ($meal_id == NULL) {
+        if ($_SESSION['user'] == NULL) { // Check if user is not logged in
+            $errors[] = "Du musst angemeldet sein um Bewertung hervorheben zu können.";
+        } else if (!$_SESSION['user']['admin']) { // Check if the user is an administrator
+            $errors[] = "Du musst Administrator sein, um Bewertung hervorheben zu können.";
+        } else if ($meal_id == null) { // Check if meal_id is not provided
             $errors[] = "Das Gericht fehlt in der Eingabe.";
-        }
-
-        // Check if rating is highlighted
-        if (empty($errors)) {
+        } else { // Check if rating is highlighted
             $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = TRUE;");
-            $stmt->bind_param("ss", $benutzer_id, $meal_id);
-            $stmt->bind_result($result);
+            $stmt->bind_param("ii", $user_id, $meal_id);
             $stmt->execute();
+            $stmt->bind_result($result);
+            $stmt->fetch();
             $stmt->close();
             if ($result != 1) {
                 $errors[] = "Diese Bewertung ist nicht hervorgehoben.";
@@ -665,7 +615,7 @@ class HomeController
         // dehighlight rating
         if (empty($errors)) {
             $stmt = $link->prepare("UPDATE bewertung SET hervorgehoben = FALSE WHERE benutzer_id = ? AND gericht_id = ?;");
-            $stmt->bind_param("ss", $benutzer_id, $meal_id);
+            $stmt->bind_param("ss", $user_id, $meal_id);
             $stmt->execute();
             mysqli_commit($link, 0, 'highlight_rating');
             $stmt->close();
@@ -675,11 +625,10 @@ class HomeController
         if (count($errors) > 0) {
             // If there are errors, return to the rating page with the errors
             $_SESSION['rating-errors'] = $errors;
-            return;
         }
 
         // Redirect to the index page or the redirect URL
-        header('Location: /', true, 303);
+        header('Location: /bewertungen', true, 303);
     }
 
     public function debug(RequestData $request)

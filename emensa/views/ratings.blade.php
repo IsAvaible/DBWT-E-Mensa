@@ -20,6 +20,13 @@
         @endfor
     </div>
     <div class="content">
+        @if(count($errors) > 0)
+            @foreach($errors as $error)
+                <div class="alert alert-danger">
+                    {{ $error }}
+                </div>
+            @endforeach
+        @endif
         <h1>Bewertungen</h1>
         <div class="ratings">
             @foreach($ratings as $rating)
@@ -36,7 +43,8 @@
                         @if ($is_admin)
                             <form action='bewertung_{{$rating['hervorgehoben'] ? 'entvorheben' : 'hervorheben'}}'
                                   method='post'>
-                                <input type='hidden' name='meal_id' value='{{$rating["gerichtid"]}}'/>
+                                <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
+                                <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
                                 <button type='submit'>{{$rating['hervorgehoben'] ? 'Entvorheben' : 'Hervorheben'}}</button>
                             </form>
                         @endif

@@ -30,13 +30,14 @@
 .rating {
     display: flex;
     flex-direction: row;
-    gap: 1.5rem;
+    gap: 1.25rem;
     min-height: 7rem;
 }
 
 .rating .title {
     position: relative;
     z-index: 1;
+    overflow: hidden;
 }
 
 .highlighted .highlight-background {

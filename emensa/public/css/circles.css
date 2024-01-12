@@ -26,6 +26,7 @@
     animation-delay: 0s;
     top: 15vh;
     left: 20vw;
+    rotate: -10deg;
 }
 
 .circle:nth-child(2) {
@@ -33,6 +34,7 @@
     animation-delay: 1s;
     top: 40vh;
     right: 10vw;
+    rotate: 30deg;
 }
 
 .circle:nth-child(3) {
@@ -40,6 +42,7 @@
     animation-delay: 2s;
     bottom: 20vh;
     left: 30vw;
+    rotate: -20deg;
 }
 
 .circle:nth-child(1).error {
