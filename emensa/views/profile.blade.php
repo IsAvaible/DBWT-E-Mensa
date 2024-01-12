@@ -17,6 +17,7 @@
             <img src="/img/profile_image.jpeg" alt="Benutzerbild">
             <p id="name">{{ $user['name'] . ($user['admin'] ? ' (Admin)' : '') }}</p>
             <p id="email">{{ $user['email'] }}</p>
+            <a href="meine_bewertungen">Deine Bewertungen</a>
             <div>
                 <label for="anzahlfehler">Anzahl Fehlversuche:</label>
                 <span id="anzahlfehler">{{ $user['anzahlfehler'] }}</span>

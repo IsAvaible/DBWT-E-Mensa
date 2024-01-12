@@ -206,6 +206,10 @@ header > nav > a {
     object-fit: cover;
 }
 
+#intro > .alerts:empty {
+    display: none;
+}
+
 #announcements {
     font-weight: bold;
     font-size: xx-large;

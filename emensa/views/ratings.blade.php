@@ -27,7 +27,14 @@
                 </div>
             @endforeach
         @endif
-        <h1>Bewertungen</h1>
+        @if($success ?? false)
+            <div class="alert alert-success">
+                {{ $success }}
+            </div>
+        @endif
+        <h1>@if($personal_ratings)
+                Meine
+            @endif Bewertungen</h1>
         <div class="ratings">
             @foreach($ratings as $rating)
                 <div class="rating{{$rating['hervorgehoben'] ? ' highlighted' : ''}}">
@@ -40,14 +47,25 @@
                         {!!displayRating($rating["sterne"])!!}
                         <p class="comment">"{{$rating["bemerkung"]}}"</p>
                         <p class="author">- {{$rating["benutzername"]}}</p>
-                        @if ($is_admin)
-                            <form action='bewertung_{{$rating['hervorgehoben'] ? 'entvorheben' : 'hervorheben'}}'
-                                  method='post'>
-                                <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
-                                <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
-                                <button type='submit'>{{$rating['hervorgehoben'] ? 'Entvorheben' : 'Hervorheben'}}</button>
-                            </form>
-                        @endif
+                        <div class="button-row">
+                            @if ($is_admin)
+                                <form action='bewertung_{{$rating['hervorgehoben'] ? 'entvorheben' : 'hervorheben'}}'
+                                      method='post'>
+                                    <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
+                                    <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
+                                    <button type='submit'>{{$rating['hervorgehoben'] ? 'Entvorheben' : 'Hervorheben'}}</button>
+                                </form>
+                            @endif
+                            @if ($personal_ratings || $is_admin)
+                                <form action='bewertung_loeschen' method='post'>
+                                    <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
+                                    <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
+                                    <button type='submit' class="delete-button">
+                                        Löschen
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 @if(!$loop->last)

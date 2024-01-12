@@ -95,7 +95,16 @@ h4 {
     color: color-mix(in srgb, var(--fg-color) 85%, var(--bg-color));
 }
 
-button[type="submit"] {
+.button-row:empty {
+    display: none;
+}
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
     margin-top: 1rem !important;
 }
 

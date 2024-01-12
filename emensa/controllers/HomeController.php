@@ -14,19 +14,24 @@ class HomeController
 {
     public function index(RequestData $rd)
     {
-        //Show dishes
+        // Show dishes
         $displayMeals = displayMeals();
         $displayTestimonials = displayHomepageRatings();
 
-        //Statistic data
+        // Statistic data
         $queryVisitorCount = htmlspecialchars(queryVisitorCount()) ?? 'X';
         $newsletterCount = newsletterCount();
         $mealCount = htmlspecialchars(queryMealCount()) ?? 'X';
 
+        // Retrieve the alert messages from the session
+        $alerts = $_SESSION['index-alerts'] ?? [];
+        // Clear the alerts from the session
+        unset($_SESSION['index-alerts']);
+
         // Log access to main page
         $log = logger();
         $log->info('Zugriff auf Hauptseite');
-        return view('home', ['rd' => $rd, 'queryVisitorCount' => $queryVisitorCount, 'newsletterCount' => $newsletterCount, 'mealCount' => $mealCount, 'displayMeals' => $displayMeals, 'displayTestimonials' => $displayTestimonials]);
+        return view('home', ['rd' => $rd, 'queryVisitorCount' => $queryVisitorCount, 'newsletterCount' => $newsletterCount, 'mealCount' => $mealCount, 'displayMeals' => $displayMeals, 'displayTestimonials' => $displayTestimonials, 'alerts' => $alerts]);
     }
 
     public function newsletter(RequestData $rd)
@@ -212,7 +217,10 @@ class HomeController
 
         // Check if the login was successful
         if (count($errors) <= 0) {
-            $redirect_url = $_POST['redirect_url'];
+            $redirect_url = $_POST['redirect_url'] ?? '/';
+            if (preg_split('?', $redirect_url, 1)[0] == '/') {
+                $_SESSION['index-alerts'] = [['type' => "success", 'message' => "Du wurdest erfolgreich angemeldet."]];
+            }
             // Redirect to the index page or the redirect URL
             header('Location: ' . ($redirect_url ?? '/'), true, 303);
         } else {
@@ -248,7 +256,7 @@ class HomeController
      * This function is used to log the user out.
      * @param RequestData $request This is an instance of RequestData class. It contains the request data.
      */
-    public function logout(RequestData $request, array $errors = array()): string
+    public function logout(RequestData $request, array $errors = array())
     {
         // log logout
         $log = logger();
@@ -257,9 +265,9 @@ class HomeController
         // Logs the user out
         unset($_SESSION['user']);
 
+        $_SESSION['index-alerts'] = [['type' => "success", 'message' => "Du wurdest erfolgreich abgemeldet."]];
         // Redirects the user to the index page
         header('Location: /', true, 303);
-        return '';
     }
 
     /**
@@ -294,13 +302,9 @@ class HomeController
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
 
-        // Check if the database connection was successful
-        if (!$link) {
-            header('Location: /', true, 303);
-        }
-
         // If no meal id is provided, redirect to the index page
         if ($meal_id == NULL) {
+            $_SESSION['index-alerts'] = [['type' => "danger", 'message' => "Es wurde kein Gericht angegeben."]];
             header('Location: /', true, 303);
         }
 
@@ -309,6 +313,7 @@ class HomeController
 
         // If the meal does not exist, redirect to the index page
         if (count($result) <= 0) {
+            $_SESSION['index-alerts'] = [['type' => "danger", 'message' => "Das Gericht wurde nicht gefunden."]];
             header('Location: /', true, 303);
         }
 
@@ -380,7 +385,7 @@ class HomeController
 
         // Checks if user already made a rating for that meal
         $stmt = $link->prepare("SELECT COUNT(*) FROM bewertung WHERE gericht_id = ? AND benutzer_id = ?");
-        $stmt->bind_param("ss", $meal_id, $benutzer_id);
+        $stmt->bind_param("ii", $meal_id, $benutzer_id);
         $stmt->execute();
         $stmt->bind_result($result);
         $stmt->fetch();
@@ -407,12 +412,13 @@ class HomeController
             return;
         }
 
+        $_SESSION['index-alerts'] = [['type' => "success", 'message' => "Deine Bewertung wurde erfolgreich abgegeben."]];
         // Redirect to the index page or the redirect URL
         header('Location: /', true, 303);
     }
 
     /**
-     * This funktions is used to delete rating
+     * This function is used to delete rating
      * @param RequestData $request This is an instance of RequestData class. It contains the request data.
      */
     public function delete_rating(RequestData $request): void
@@ -420,51 +426,40 @@ class HomeController
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
 
-        $redirect_url = "/bewertung";
-
-        // Check if the database connection was successful
-        if (!$link) {
-            $_SESSION['delete-rating-errors'] = ["Verbindung zur Datenbank fehlgeschlagen: ", mysqli_connect_error()];
-            header("Location: $redirect_url", true, 303);
-        }
-
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
-
-        // Retrieve the user id from the session
-        $benutzer_id = $_SESSION['user']['id'] ?? NULL;
+        $user_id = $_POST['user_id'] ?? NULL;
 
         // Initialize an empty array to store any errors
         $errors = array();
 
         // Check if user is not logged in
-        if ($benutzer_id == NULL) {
-            $errors[] = "Du musst angemeldet sein um deine Bewertung löschen zu können.";
-        }
-
-        // Check if meal_i is not provided
-        if ($meal_id == NULL) {
+        if ($_SESSION['user'] == NULL) {
+            $errors[] = "Du musst angemeldet sein um Bewertungen löschen zu können.";
+        } else if ($meal_id == NULL) {
             $errors[] = "Das Gericht fehlt in der Eingabe.";
+        } else if ($user_id != $_SESSION['user']['id'] && !$_SESSION['user']['admin']) {
+            $errors[] = "Du kannst nur deine eigenen Bewertungen löschen.";
         }
 
         // deletes rating
         if (empty($errors)) {
             $stmt = $link->prepare("DELETE FROM bewertung WHERE benutzer_id = ? AND gericht_id = ?;");
-            $stmt->bind_param("ss", $benutzer_id, $meal_id);
+            $stmt->bind_param("ii", $user_id, $meal_id);
             $stmt->execute();
             mysqli_commit($link, 0, 'delete_rating');
             $stmt->close();
+            $_SESSION['rating-success'] = "Die Bewertung wurde erfolgreich gelöscht.";
         }
         $link->close();
 
         if (count($errors) > 0) {
             // If there are errors, return to the rating page with the errors
             $_SESSION['rating-errors'] = $errors;
-            return;
         }
 
         // Redirect to the index page or the redirect URL
-        header('Location: /', true, 303);
+        header('Location: /meine_bewertungen', true, 303);
     }
 
     /**
@@ -474,17 +469,19 @@ class HomeController
     public function ratings(RequestData $request)
     {
         $errors = $_SESSION['rating-errors'] ?? [];
+        $success = $_SESSION['rating-success'] ?? null;
         unset($_SESSION['rating-errors']);
+        unset($_SESSION['rating-success']);
 
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
 
         // Prepare and execute the SQL statement to fetch the last 30 ratings
-        $result = mysqli_query($link, "SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id ORDER BY zeitpunkt LIMIT 30;");
+        $result = mysqli_query($link, "SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id ORDER BY zeitpunkt DESC LIMIT 30;");
         $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         // Return the ratings view along with the request data and the ratings
-        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'errors' => $errors]);
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => false, 'errors' => $errors, 'success' => $success]);
     }
 
     /**
@@ -493,13 +490,13 @@ class HomeController
      */
     public function user_ratings(RequestData $request)
     {
+        $errors = $_SESSION['rating-errors'] ?? [];
+        $success = $_SESSION['rating-success'] ?? null;
+        unset($_SESSION['rating-errors']);
+        unset($_SESSION['rating-success']);
+
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
-
-        // Check if the database connection was successful
-        if (!$link) {
-            exit();
-        }
 
         // Retrieve the user id from the session
         $benutzer_id = $_SESSION['user']['id'] ?? NULL;
@@ -514,15 +511,15 @@ class HomeController
         }
 
         // Prepare and execute the SQL statement to fetch the user's ratings
-        $stmt = $link->prepare("SELECT * FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id WHERE bewertung.benutzer_id = ?;");
-        $stmt->bind_param("s", $benutzer_id);
+        $stmt = $link->prepare("SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id WHERE benutzer_id = ? ORDER BY zeitpunkt DESC;");
+        $stmt->bind_param("i", $benutzer_id);
         $stmt->execute();
         $result = $stmt->get_result();
-        $ratings = $result->fetch_all(MYSQLI_ASSOC);
+        $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $stmt->close();
 
         // Return the ratings view along with the request data and the ratings
-        return view('ratings', ['rd' => $request, 'ratings' => $ratings]);
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => true, 'errors' => $errors, 'success' => $success]);
     }
 
     /**
@@ -566,6 +563,7 @@ class HomeController
             $stmt->execute();
             mysqli_commit($link, 0, 'highlight_rating');
             $stmt->close();
+            $_SESSION['rating-success'] = "Die Hervorhebung wurde erfolgreich gesetzt.";
         }
         $link->close();
 
@@ -619,6 +617,7 @@ class HomeController
             $stmt->execute();
             mysqli_commit($link, 0, 'highlight_rating');
             $stmt->close();
+            $_SESSION['rating-success'] = "Die Hervorhebung wurde erfolgreich entfernt.";
         }
         $link->close();
 

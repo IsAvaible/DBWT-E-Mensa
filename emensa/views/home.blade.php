@@ -10,6 +10,15 @@
 @section("content")
     <div id="intro">
         <img src="/img/salad.jpg" alt="Bild des Salatbuffets der Mensa">
+        @if(count($alerts) > 0)
+            <div class="alerts">
+                @foreach($alerts as $alert)
+                    <div class="alert alert-{{$alert['type']}}">
+                        {{ $alert['message'] }}
+                    </div>
+                @endforeach
+            </div>
+        @endif
         <h2 id="announcements">Willkommen auf der E-Mensa!</h2>
         <div id="description">
             Willkommen auf der E-Mensa Aachen, dem Ort, an dem du leckere und gesunde Mahlzeiten zu

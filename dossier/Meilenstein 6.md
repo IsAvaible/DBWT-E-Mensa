@@ -16,7 +16,7 @@ CREATE TABLE bewertung
 (
     bemerkung     VARCHAR(500)                                          NOT NULL,
     sterne        ENUM ('sehr gut', 'gut', 'schlecht', 'sehr schlecht') NOT NULL,
-    zeitpunkt     DATE DEFAULT NOW()                                    NOT NULL,
+    zeitpunkt DATETIME DEFAULT NOW() NOT NULL,
     hervorgehoben BOOL DEFAULT FALSE                                    NULL,
     benutzer_id   BIGINT                                                NOT NULL
         REFERENCES benutzer (id),
