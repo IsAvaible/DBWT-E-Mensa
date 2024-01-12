@@ -9,6 +9,15 @@
     filter: blur(3px);
 }
 
+.stars {
+    filter: unset;
+}
+
+.stars > .circle {
+    mask-image: url("/icons/star_filled.svg");
+    mask-size: contain;
+}
+
 .circle {
     width: 150px;
     height: 150px;

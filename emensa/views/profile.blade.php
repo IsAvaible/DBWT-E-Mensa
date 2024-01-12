@@ -9,15 +9,21 @@
 
 @section("cssextra")
     <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/circles.css">
 @endsection
 
 @section("content")
+    <div class="circles">
+        @for($i = 0; $i < 3; $i++)
+            <div class="circle"></div>
+        @endfor
+    </div>
     <div class="content">
         <div class="profile-card">
             <img src="/img/profile_image.jpeg" alt="Benutzerbild">
             <p id="name">{{ $user['name'] . ($user['admin'] ? ' (Admin)' : '') }}</p>
             <p id="email">{{ $user['email'] }}</p>
-            <a href="meine_bewertungen">Deine Bewertungen</a>
+            <a href="deine_bewertungen">Deine Bewertungen</a>
             <div>
                 <label for="anzahlfehler">Anzahl Fehlversuche:</label>
                 <span id="anzahlfehler">{{ $user['anzahlfehler'] }}</span>

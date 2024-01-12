@@ -112,11 +112,11 @@ class HomeController
                     $errors[] = "Fehler während der Besucher Datenbankabfrage:  " . mysqli_error($link);
                 }
             } else {
-                $errors[] = "Gericht wurde Bereits vorgeschlagen.";
+                $errors[] = "Das Gericht wurde bereits vorgeschlagen.";
             }
         }
 
-        return view('desired_meal', ['rd' => $rd, 'success' => empty($errors), 'errors' => $errors]);
+        return view('desired_meal', ['rd' => $rd, 'name' => $creator, 'mail' => $email, 'meal_name' => $meal_name, 'description' => $description, 'success' => empty($errors), 'errors' => $errors]);
     }
 
     /**
@@ -459,7 +459,7 @@ class HomeController
         }
 
         // Redirect to the index page or the redirect URL
-        header('Location: /meine_bewertungen', true, 303);
+        header('Location: /deine_bewertungen', true, 303);
     }
 
     /**

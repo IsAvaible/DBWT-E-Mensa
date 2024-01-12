@@ -19,7 +19,7 @@ return array(
     '/bewertungen' => "HomeController@ratings",
     '/bewertung_hervorheben' => "HomeController@highlight_rating",
     '/bewertung_entvorheben' => "HomeController@unhighlight_rating",
-    '/meine_bewertungen' => "HomeController@user_ratings",
+    '/deine_bewertungen' => "HomeController@user_ratings",
     '/bewertung_loeschen' => "HomeController@delete_rating",
     '/demo' => "DemoController@demo",
     '/dbconnect' => 'DemoController@dbconnect',

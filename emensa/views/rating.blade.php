@@ -11,9 +11,15 @@
 @section('cssextra')
     <link rel="stylesheet" href="/css/rating.css">
     <link rel="stylesheet" href="/css/meal-card.css">
+    <link rel="stylesheet" href="/css/circles.css">
 @endsection
 
 @section('content')
+    <div class="circles stars">
+        @for($i = 0; $i < 3; $i++)
+            <div class="circle"></div>
+        @endfor
+    </div>
     <div class="content">
         <h1>Speise bewerten</h1>
         <form action="/bewertung_abschicken" method="post">

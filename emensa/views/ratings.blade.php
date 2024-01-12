@@ -14,7 +14,7 @@
 @endsection
 
 @section("content")
-    <div class="circles">
+    <div class="circles stars">
         @for($i = 0; $i < 3; $i++)
             <div class="circle"></div>
         @endfor
@@ -33,7 +33,7 @@
             </div>
         @endif
         <h1>@if($personal_ratings)
-                Meine
+                Deine
             @endif Bewertungen</h1>
         <div class="ratings">
             @foreach($ratings as $rating)
