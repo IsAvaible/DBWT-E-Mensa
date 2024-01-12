@@ -27,6 +27,7 @@
     flex-direction: row;
     gap: 1.25rem;
     min-height: 7rem;
+    max-width: 100%;
 }
 
 .rating .title {
@@ -99,8 +100,20 @@ h4 {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1rem !important;
+}
+
+.button-row img {
+    color: white;
+    filter: invert(100%);
+    scale: 1.25;
+}
+
+.button-row button {
+    aspect-ratio: 1;
+    padding: 0.75rem !important;
 }
 
 hr {

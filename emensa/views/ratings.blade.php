@@ -53,15 +53,19 @@
                                       method='post'>
                                     <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
                                     <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
-                                    <button type='submit'>{{$rating['hervorgehoben'] ? 'Entvorheben' : 'Hervorheben'}}</button>
+                                    <button type='submit'
+                                            title="{{$rating['hervorgehoben'] ? 'Hervorhebung Entfernen' : 'Hervorheben'}}">
+                                        <img src="/icons/{{$rating['hervorgehoben'] ? 'star_filled' : 'star_outline'}}.svg"
+                                             alt="star_icon">
+                                    </button>
                                 </form>
                             @endif
                             @if ($personal_ratings || $is_admin)
                                 <form action='bewertung_loeschen' method='post'>
                                     <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
                                     <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
-                                    <button type='submit' class="delete-button">
-                                        Löschen
+                                    <button type='submit' class="delete-button" title="Löschen">
+                                        <img src="icons/trash_can.svg" alt="trash_icon">
                                     </button>
                                 </form>
                             @endif
