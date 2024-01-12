@@ -7,5 +7,11 @@
     "ext-mysqli": "*",
     "monolog/monolog": "^3.5.0",
     "illuminate/database": "^10.40"
+  },
+  "autoload": {
+    "psr-4": {
+      "emensa\\models\\": "models/",
+      "emensa\\components\\": "components/"
+    }
   }
 }
