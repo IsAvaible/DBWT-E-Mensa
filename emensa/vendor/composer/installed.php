@@ -3,7 +3,7 @@
         'name' => 'emensa/mvc',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'a5a8486aecf9d9487f0cba47f7d876f4c4504a79',
+        'reference' => 'e5b939b25d693e1d4c405d4b2803fd6662d27e14',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'emensa/mvc' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'a5a8486aecf9d9487f0cba47f7d876f4c4504a79',
+            'reference' => 'e5b939b25d693e1d4c405d4b2803fd6662d27e14',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

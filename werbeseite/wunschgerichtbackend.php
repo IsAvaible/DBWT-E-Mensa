@@ -32,17 +32,17 @@ $error = array(); // Initialize an array to store error messages
 
 // Validate email format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $error[] = "Ihre E-Mail entspricht nicht den Vorgaben.";
+    $error[] = "Deine E-Mail entspricht nicht den Vorgaben.";
 }
 
 // Check if name is not empty
 if ($gerichtname == NULL) {
-    $error[] = "Der Gerichtname enthält nicht erlabute Zeichen.";
+    $error[] = "Der Gerichtname enthält nicht erlaubte Zeichen.";
 }
 
 // Check if name is not empty
 if ($beschreibung == NULL) {
-    $error[] = "Die Beschreibung enthält nicht erlabute Zeichen.";
+    $error[] = "Die Beschreibung enthält nicht erlaubte Zeichen.";
 }
 
 // If there are no errors, write the data to a CSV file

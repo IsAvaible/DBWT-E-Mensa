@@ -51,7 +51,7 @@ ALTER TABLE gericht
 CREATE PROCEDURE update_bewertung(IN gericht_id int)
 BEGIN
     UPDATE gericht
-    SET bewertung = (SELECT AVG(sterne) FROM bewertung WHERE gericht_id = gericht.id)
+    SET bewertung = (SELECT AVG(sterne) FROM bewertung WHERE bewertung.gericht_id = gericht.id)
     WHERE id = gericht_id;
 END;
 

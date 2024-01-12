@@ -2,9 +2,9 @@
 
 use emensa\components\MealCardComponent;
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../models/gericht.php');
 include("../models/besucher.php");
 include("../models/meals.php");
+include("../models/ratings.php");
 include("../models/newsletter.php");
 
 
@@ -16,6 +16,7 @@ class HomeController
     {
         //Show dishes
         $displayMeals = displayMeals();
+        $displayTestimonials = displayHomepageRatings();
 
         //Statistic data
         $queryVisitorCount = htmlspecialchars(queryVisitorCount()) ?? 'X';
@@ -25,7 +26,7 @@ class HomeController
         // Log access to main page
         $log = logger();
         $log->info('Zugriff auf Hauptseite');
-        return view('home', ['rd' => $rd, 'queryVisitorCount' => $queryVisitorCount, 'newsletterCount' => $newsletterCount, 'mealCount' => $mealCount, 'displayMeals' => $displayMeals]);
+        return view('home', ['rd' => $rd, 'queryVisitorCount' => $queryVisitorCount, 'newsletterCount' => $newsletterCount, 'mealCount' => $mealCount, 'displayMeals' => $displayMeals, 'displayTestimonials' => $displayTestimonials]);
     }
 
     public function newsletter(RequestData $rd)
@@ -41,13 +42,13 @@ class HomeController
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Ihre E-Mail entspricht nicht den Vorgaben.";
+            $errors[] = "Deine E-Mail entspricht nicht den Vorgaben.";
         } else if (str_contains($email, 'rcpt.at') or str_contains($email, 'damnthespam.at') or str_contains($email, 'wegwerfmail.de') or str_contains($email, 'trashmail.')) {
-            $errors[] = "Ihre E-Mail ist auf unsere Blockliste, bitte wählen sie eine andere.";
+            $errors[] = "Deine E-Mail ist auf unsere Blockliste, bitte wähle eine andere.";
         }
 
         if ($privacyPolicy != "on") {
-            $errors[] = "Sie müssen die Datenschutzbestimmungen akzeptieren";
+            $errors[] = "Du musst die Datenschutzbestimmungen akzeptieren";
         }
 
         /*
@@ -75,11 +76,6 @@ class HomeController
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
 
-        // Check if the database connection was successful
-        if (!$link) {
-            exit();
-        }
-
         // Sanitize user input and assign to variables
         $creator = mysqli_real_escape_string($link, $_POST['name']);
         $email = mysqli_real_escape_string($link, $_POST['mail']);
@@ -92,7 +88,7 @@ class HomeController
         $errors = array();
         // Validate email format
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Ihre E-Mail entspricht nicht den Vorgaben.";
+            $errors[] = "Deine E-Mail entspricht nicht den Vorgaben.";
         }
 
         if (count($errors) == 0) {
@@ -127,7 +123,7 @@ class HomeController
         // Get the parameters from the session
         $errors = $_SESSION['login-errors'] ?? [];
         $redirect_reason = $_SESSION['login-redirect_reason'] ?? null;
-        $redirect_url = $_SESSION['login-redirect_url'] ?? null;
+        $redirect_url = $_SESSION['login-redirect_url'] ?? $_POST['login-redirect_url'] ?? null;
         // Clear the parameters from the session
         unset($_SESSION['login-errors']);
         unset($_SESSION['login-redirect_reason']);
@@ -237,7 +233,7 @@ class HomeController
         // If the user is not logged in, redirect to the login page
         if (!isset($_SESSION['user'])) {
             // Set the parameters for the redirect URL
-            $_SESSION['login-redirect_reason'] = 'Sie müssen angemeldet sein, um Ihr Profil anzuzeigen.';
+            $_SESSION['login-redirect_reason'] = 'Du musst angemeldet sein, um Dein Profil anzuzeigen.';
             $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];
             // Redirect to the login page
             header('Location: /anmeldung', true, 303);
@@ -262,7 +258,8 @@ class HomeController
         unset($_SESSION['user']);
 
         // Redirects the user to the index page
-        return $this->index($request);
+        header('Location: /', true, 303);
+        return '';
     }
 
     /**
@@ -283,7 +280,7 @@ class HomeController
         if (!isset($_SESSION['user'])) {
 
             // Set the parameters for the redirect URL
-            $_SESSION['login-redirect_reason'] = 'Sie müssen angemeldet sein, um eine Bewertung abzugeben.';
+            $_SESSION['login-redirect_reason'] = 'Du musst angemeldet sein, um eine Bewertung abzugeben.';
             // current url
             $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];
             // Redirect to the login page
@@ -319,11 +316,6 @@ class HomeController
 
         // Return the rating view along with the request data and the meal details
         return view('rating', ['rd' => $request, 'meal' => $meal, 'rating' => $rating, 'comment' => $comment, 'meal_card' => new MealCardComponent($meal, true), 'errors' => $errors]);
-    }
-
-    public function debug(RequestData $request)
-    {
-        return view('debug');
     }
 
     /**
@@ -378,7 +370,7 @@ class HomeController
 
         // Check if user is not logged in
         if ($benutzer_id == NULL) {
-            $errors[] = "Sie müssen angemeldet sein um eine Bewertung abgeben zu können.";
+            $errors[] = "Du musst angemeldet sein um eine Bewertung abgeben zu können.";
         }
 
         // Check if meal_id is not provided
@@ -393,7 +385,7 @@ class HomeController
         $stmt->bind_result($result);
         $stmt->fetch();
         if ($result > 0) {
-            $errors[] = "Sie können nicht mehrere Bewertungen für ein Gericht abgeben.";
+            $errors[] = "Du kannst nicht mehrere Bewertungen für ein Gericht abgeben.";
         }
         $stmt->close();
 
@@ -447,7 +439,7 @@ class HomeController
 
         // Check if user is not logged in
         if ($benutzer_id == NULL) {
-            $errors[] = "Sie müssen angemeldet sein um Ihre Bewertung löschen zu können.";
+            $errors[] = "Du musst angemeldet sein um deine Bewertung löschen zu können.";
         }
 
         // Check if meal_i is not provided
@@ -476,10 +468,65 @@ class HomeController
     }
 
     /**
+     * This function is used to display the last 30 ratings.
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
+     */
+    public function ratings(RequestData $request)
+    {
+        // Establish a new database connection to the MySQL database server
+        $link = connectdb();
+
+        // Prepare and execute the SQL statement to fetch the last 30 ratings
+        $result = mysqli_query($link, "SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id ORDER BY zeitpunkt LIMIT 30;");
+        $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        // Return the ratings view along with the request data and the ratings
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'is_admin' => $_SESSION['user']['admin'] ?? false]);
+    }
+
+    /**
+     * This function is used to display the user's ratings page.
+     * @param RequestData $request This is an instance of RequestData class. It contains the request data.
+     */
+    public function user_ratings(RequestData $request)
+    {
+        // Establish a new database connection to the MySQL database server
+        $link = connectdb();
+
+        // Check if the database connection was successful
+        if (!$link) {
+            exit();
+        }
+
+        // Retrieve the user id from the session
+        $benutzer_id = $_SESSION['user']['id'] ?? NULL;
+
+        // Check if user is not logged in
+        if ($benutzer_id == NULL) {
+            $_SESSION['login-redirect_reason'] = 'Du musst angemeldet sein, um deine Bewertungen anzuzeigen.';
+            $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];
+            // Redirect to the login page
+            header('Location: /anmeldung', true, 303);
+            return '';
+        }
+
+        // Prepare and execute the SQL statement to fetch the user's ratings
+        $stmt = $link->prepare("SELECT * FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id WHERE bewertung.benutzer_id = ?;");
+        $stmt->bind_param("s", $benutzer_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $ratings = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        // Return the ratings view along with the request data and the ratings
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings]);
+    }
+
+    /**
      * This funktion is used to let administrator highlight rating
      * @param RequestData $request
      */
-    function highlight_rating(RequestData $request): void
+    public function highlight_rating(RequestData $request): void
     {
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
@@ -503,7 +550,7 @@ class HomeController
 
         // Check if user is not logged in
         if ($benutzer_id == NULL) {
-            $errors[] = "Sie müssen angemeldet sein um Bewertung hervorheben zu können.";
+            $errors[] = "Du musst angemeldet sein um Bewertung hervorheben zu können.";
         }
 
         // Check if the user is an administrator
@@ -514,7 +561,7 @@ class HomeController
             $stmt->execute();
             $stmt->close();
             if ($result != 1) {
-                $errors[] = "Sie müssen Administrator sein, um Bewertung hervorheben zu kommen.";
+                $errors[] = "Du musst Administrator sein, um Bewertung hervorheben zu kommen.";
             }
         }
 
@@ -559,7 +606,7 @@ class HomeController
      * This funktion is used to let administrator dehighlight rating
      * @param RequestData $request
      */
-    function dehighlight_rating(RequestData $request): void
+    public function dehighlight_rating(RequestData $request): void
     {
         // Establish a new database connection to the MySQL database server
         $link = connectdb();
@@ -583,7 +630,7 @@ class HomeController
 
         // Check if user is not logged in
         if ($benutzer_id == NULL) {
-            $errors[] = "Sie müssen angemeldet sein, um die Hervorheben von Bewertung zu entfernen.";
+            $errors[] = "Du musst angemeldet sein, um die Hervorheben von Bewertung zu entfernen.";
         }
 
         // Check if the user is an administrator
@@ -594,7 +641,7 @@ class HomeController
             $stmt->execute();
             $stmt->close();
             if ($result != 1) {
-                $errors[] = "Sie müssen Administrator sein, um die Hervorheben von Bewertung zu entfernen.";
+                $errors[] = "Du musst Administrator sein, um die Hervorheben von Bewertung zu entfernen.";
             }
         }
 
@@ -633,5 +680,10 @@ class HomeController
 
         // Redirect to the index page or the redirect URL
         header('Location: /', true, 303);
+    }
+
+    public function debug(RequestData $request)
+    {
+        return view('debug');
     }
 }

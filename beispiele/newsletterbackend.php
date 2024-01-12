@@ -19,7 +19,7 @@ $fehler = array();
  * Eingabe Prüefen
  */
 if ($anrede != "herr" and $anrede != "frau" and $anrede != "divers") {
-    array_push($fehler, "Die Anrede wurde falsch eingabe.");
+    array_push($fehler, "Die Anrede wurde falsch eingegeben.");
 }
 
 if ($vorname == NULL) {
@@ -32,11 +32,11 @@ if ($nachname == NULL) {
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    array_push($fehler, "Ihre E-Mail entspricht nicht den Vorgaben.");
+    array_push($fehler, "Deine E-Mail entspricht nicht den Vorgaben.");
 }
 
 if (str_contains($email, 'rcpt.at') or str_contains($email, 'damnthespam.at') or str_contains($email, 'wegwerfmail.de') or str_contains($email, 'trashmail.')) {
-    array_push($fehler, "Ihre E-Mail ist auf unsere Blogliste, bitte Wählen sie eine andere.");
+    array_push($fehler, "Deine E-Mail ist auf unsere Blogliste, bitte wähle eine andere.");
 }
 
 if ($benint != "täglich" and $benint != "wöchentlich" and $benint != "monatlich") {
@@ -44,7 +44,7 @@ if ($benint != "täglich" and $benint != "wöchentlich" and $benint != "monatlic
 }
 
 if ($datenschutz != "on") {
-    array_push($fehler, "Sie müssen die Datenschutzbestimmungen akzeptieren");
+    array_push($fehler, "Du musst die Datenschutzbestimmungen akzeptieren");
 }
 
 /*

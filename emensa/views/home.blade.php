@@ -12,24 +12,24 @@
         <img src="/img/salad.jpg" alt="Bild des Salatbuffets der Mensa">
         <h2 id="announcements">Willkommen auf der E-Mensa!</h2>
         <div id="description">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur cupiditate delectus dolor esse eum
-            fuga
-            ipsam, minima molestiae quam rerum, ut velit vero! A alias amet animi autem commodi debitis, doloribus ea
-            earum
-            illum natus necessitatibus, perferendis placeat quae quasi vero, vitae voluptate voluptatibus. Ducimus et
-            eveniet,
-            expedita facilis ipsum quae voluptas. Amet assumenda deserunt ea eaque eveniet illo inventore, magni nisi
-            nulla,
-            pariatur, quia quisquam ratione veritatis. Asperiores at, beatae blanditiis eius facere illo ipsam ipsum
-            modi
-            mollitia neque numquam odio perferendis quae quam quas voluptatem voluptatibus! Blanditiis eos illo
-            inventore
-            necessitatibus nostrum obcaecati possimus quod quos ratione!
+            Willkommen auf der E-Mensa Aachen, dem Ort, an dem du leckere und gesunde Mahlzeiten zu
+            studentenfreundlichen
+            Preisen genießen kannst. Ob du Lust auf ein warmes Mittagessen, einen frischen Salat oder einen süßen Snack
+            hast, bei uns findest du immer etwas, das deinen Geschmack trifft. Wir bieten dir eine vielfältige Auswahl
+            an regionalen, saisonalen und internationalen Speisen, die täglich frisch zubereitet werden. Außerdem achten
+            wir auf eine nachhaltige und faire Beschaffung unserer Zutaten, um die Umwelt und die Menschen zu schützen.
+            Komm vorbei und überzeuge dich selbst von unserem Angebot. Wir freuen uns auf deinen Besuch!
         </div>
     </div>
-    <h2 id="food-menu-header">Köstlichkeiten die Sie erwarten</h2>
+    <h2 id="food-menu-header">Köstlichkeiten die dich erwarten</h2>
     <div class="food-menu full-bleed">
         {!! $displayMeals !!}
+    </div>
+    <div class="testimonials full-bleed">
+        <h2>Das sagen unsere Kunden</h2>
+        <p>Überzeug dich selbst. Hör es von unseren zufriedenen Kunden!</p>
+        {!! $displayTestimonials !!}
+        <a href="/bewertungen">Mehr Erfahrungsberichte</a>
     </div>
     <div class="mensa-stats">
         <div><span>{{$queryVisitorCount}}</span>
@@ -39,15 +39,15 @@
         <div><span>{{$mealCount}}</span>
             <p>Speisen</p></div>
     </div>
-    <h2 id="contact">Interesse geweckt? Wir informieren Sie!</h2>
+    <h2 id="contact">Interesse geweckt? Wir informieren dich!</h2>
     <form class="newsletter" action="newsletter" method="post">
         <div>
             <div>
-                <label for="name">Ihr Name:</label>
+                <label for="name">Dein Name:</label>
                 <input type="text" id="name" name="name" required>
             </div>
             <div>
-                <label for="email">Ihre E-Mail:</label>
+                <label for="email">Deinee E-Mail:</label>
                 <input type="email" id="email" name="email" required>
             </div>
             <div>
@@ -73,7 +73,7 @@
         </ul>
     </div>
 
-    <h2 style="text-align: center">Wir freuen uns auf ihren Besuch!</h2>
+    <h2 style="text-align: center">Wir freuen uns auf deinen Besuch!</h2>
 @endsection
 
 @section("cssextra")

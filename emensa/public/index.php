@@ -182,7 +182,7 @@ class FrontController
             FrontController::showErrorMessage("<h1>Web Software Error</h1><img alt='shrug' src='https://c.tenor.com/9TEDud6eP2UAAAAC/woody-woodpecker-shrug-shoulders.gif'>" .
                 "<p>Keine entspreche Zuordnung der Route für {$ctrlName}::{$actionName} gefunden. Tippfehler in der Route?" .
                 "<p>Es konnte keine Klasse <abbr title='Gesucht im Verzeichnis {$controllerDirectory}'>" . $ctrlFile . "</abbr> gefunden werden! Request fehlgeschlagen.</p>" .
-                "<p> Prüfen Sie die Einträge in der Datei <code>config/web.php</code> und gleichen Sie den getätigten Aufruf damit ab.</p>");
+                "<p> Prüfe die Einträge in der Datei <code>config/web.php</code> und gleiche den getätigten Aufruf damit ab.</p>");
         }
 
         // a file matching has been found, now try to load the class
@@ -201,7 +201,7 @@ class FrontController
         } catch (Exception $ex) {
             // #ERROR
             FrontController::showErrorMessage(
-                "<h2>Fehler in Controller " . get_class($controller) . "!</h2><p>Stellen Sie sicher, dass die Action/der Controller existiert.</p>
+                "<h2>Fehler in Controller " . get_class($controller) . "!</h2><p>Stelle sicher, dass die Action/der Controller existiert.</p>
                     <p>Das Routing Config-Array hat " . count($config) . " Einträge.</p>
                     <p><strong>Exception text</strong><br>" . $ex->getMessage() . "</p>");
         }
@@ -256,7 +256,7 @@ function connectdb()
             <p style='margin-bottom: 2em;'>Verbindung fehlgeschlagen: <code>" . mysqli_connect_error() . "</code>.</p>
             <h2>Prüfen Sie</h2><ol><li>die Angaben in der Datei <code>config/db.php</code>:
             ( ist Benutzer <code>{$config['user']}</code> an Datenbank <code>{$config['database']}</code> auf Server <code>{$config['host']}</code> korrekt?)<br>
-            </li><li>ob Ihre Datenbank unter der oben gezeigten Adresse läuft </li></ol>");
+            </li><li>ob Deine Datenbank unter der oben gezeigten Adresse läuft </li></ol>");
         exit(1);
     }
     if (mysqli_connect_errno()) {
@@ -310,7 +310,7 @@ function assert_php_version($minversion = '8.0.0')
     }
 
     if ($version_too_low) {
-        FrontController::showErrorMessage("Diese PHP-Version wird nicht unterstützt: <strong>Minimum PHP Version " . $minversion . "</strong><br>Sie betreiben gerade PHP Version " . phpversion());
+        FrontController::showErrorMessage("Diese PHP-Version wird nicht unterstützt: <strong>Minimum PHP Version " . $minversion . "</strong><br>Du betreibst gerade PHP Version " . phpversion());
         exit(1);
     }
     // version is okay, go on.
@@ -326,7 +326,7 @@ function assert_path(): void
     $charsfound = 0;
     str_ireplace($chars, '', $_SERVER['DOCUMENT_ROOT'], $charsfound);
     if ($charsfound > 0) {
-        FrontController::showErrorMessage("<h1>Bitte verwenden Sie einen anderen Ordner für das Projekt!</h1>
+        FrontController::showErrorMessage("<h1>Bitte verwende einen anderen Ordner für das Projekt!</h1>
         <p>Der Pfad <strong>" . $_SERVER['DOCUMENT_ROOT'] . "</strong> enthält <code>" . $charsfound . "</code> problematische Zeichen, die die korrekte Ausführung verhindern.</p>>
         <p>Bekannte problematische Zeichen sind</p>
         <pre> " . implode(" ", $chars) . " </pre>");
@@ -343,14 +343,14 @@ function assert_blade(): void
                 <h1>Fehler: Blade wurde nicht gefunden</h1>
                 <p>Tipps für die Lösung:</p>
                 <ul>
-                <li><p>führen Sie im Terminal folgende Zeilen aus.</p>
+                <li><p>führe im Terminal folgende Zeilen aus.</p>
                 <ol>
                     <li><code>php bin/composer.phar update</code> oder <code>php bin/composer.phar reinstall eftec/bladeone</code></li>
                     <li><code>php bin/composer.phar dump-autoload</code></li>
                 </ol>
-                <li><p>Prüfen Sie im Anschluss: befindet sich in dem Ordner <code>vendor/eftec/bladeone/lib/</code> die Datei <code>BladeOne.php</code> ?</p></li>
-                <li><p>Starten Sie dann den Webserver neu.</p></li>
-                <li><p>Befragen Sie gerne auch das Forum in Ilias.</p></li>
+                <li><p>Prüfe im Anschluss: befindet sich in dem Ordner <code>vendor/eftec/bladeone/lib/</code> die Datei <code>BladeOne.php</code> ?</p></li>
+                <li><p>Starte dann den Webserver neu.</p></li>
+                <li><p>Befrage gerne auch das Forum in Ilias.</p></li>
                 </ul>
                 
                 </div>");

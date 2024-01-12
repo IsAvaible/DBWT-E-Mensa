@@ -12,17 +12,18 @@
             <code>routes/web.php</code>) gefunden wird, lädt der Router die angegebene Klasse.</p>
 
         <h3>Funktionsweise</h3>
-        <p>Im vorliegenden Beispiel sehen Sie diese Seite ... </p>
+        <p>Im vorliegenden Beispiel siehst du diese Seite ... </p>
         <ol>
             <li>weil der Pfad in der Routenkonfiguration gefunden wurde</li>
             <li>und dort <span class="code">'DemoController@howto'</span> hinterlegt ist</li>
             <li>und im Ordner <span class="code">controllers/</span> die Datei <code class="language-php">DemoController.php</code>
                 gefunden werden konnte
             </li>
-            <li>und mit ihr ein Objekt des Typs <span class="code">DemoController</span> instanziiert werden konnte</li>
+            <li>und mit Dein ein Objekt des Typs <span class="code">DemoController</span> instanziiert werden konnte
+            </li>
             <li>und dieses Objekt die Funktion (Action) <span class="code">howto()</span> ausgeführt hat</li>
         </ol>
-        <p>Sie sehen: da muss einiges stimmen und vieles davon ist Konvention.</p>
+        <p>Du siehst: da muss einiges stimmen und vieles davon ist Konvention.</p>
         <h3>Querystrings und Pfadsegmente</h3>
         <p>Die Actions in den Controller-Klassen sollen per Konvention immer ein <span class="code">RequestData</span>
             Objekt
@@ -33,7 +34,7 @@
         <ul>
             <li>
                 <p>
-                    <strong>im Querystring</strong><br>Beispiel: rufen Sie diese mit
+                    <strong>im Querystring</strong><br>Beispiel: rufst du diese mit
                     <code class="language-http">{{strtolower(explode('/',$_SERVER["SERVER_PROTOCOL"])[0])}}
                         ://{{$_SERVER["HTTP_HOST"]}}/demo?<strong>bgcolor=fefbd8&name=Remmy</strong></code>
                     auf, werden <span class="language-php">bgcolor</span> und <code class="language-php">name</code>
@@ -43,7 +44,7 @@
             </li>
         </ul>
 
-        <p>Probieren Sie es aus ;)</p>
+        <p>Probier es aus ;)</p>
         @if(count($rd->args))
             <p><strong>Argumente dieses Aufrufs:</strong></p>
 
@@ -72,8 +73,8 @@
             Die Dateien müssen <code class="language-php">&lt;viewname&gt;.blade.php</code> heißen und im Ordner <code
                     class="language-php">views</code> liegen.
         </p>
-        <p>Sie können der View dann Daten mitgeben, indem Sie alle Daten in ein Array schreiben und dieses dann
-            übergeben.</p>
+        <p>Du kannst der View dann Daten mitgeben, indem du alle Daten in ein Array schreibst und dieses dann
+            übergibst.</p>
         <p>Beispiel:</p>
         <pre><code class="language-php">
  view("viewtest",

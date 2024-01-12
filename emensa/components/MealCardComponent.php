@@ -38,12 +38,7 @@ class MealCardComponent
                             <div class='food-properties'>
                                 <p><strong>Preis</strong>: " . number_format($this->meal->priceIntern, 2) . "€ (intern) / " . number_format($this->meal->priceExtern, 2) . "€ (extern)</p>
                                 <p><strong>Allergene</strong>: " . (implode(', ', $this->meal->allergens) ?: "Keine") . "</p>" . "
-                            </div>
-                            <div class='rating'>
-                                    " . implode(array_map(function ($i) {
-                return ("<a href='bewertung?meal_id={$this->meal->id}&rating={$i}'><img src='icons/star_" . ($this->meal->rating != null ? ($i <= round($this->meal->rating) ? 'filled' : 'outline') : 'dashed') . ".svg' alt='Bewertung'/></a>");
-            }, range(1, 4))) . "
-                                </div>
+                            </div>" . (!$this->ratingForm ? displayRating($this->meal->rating, "bewertung?meal_id={$this->meal->id}&rating=") : "") . "
                         </div>
                     </div>";
     }

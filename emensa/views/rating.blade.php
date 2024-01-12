@@ -22,7 +22,7 @@
             <div id="rating-div">
                 <label for="rating">Bewertung:</label>
                 <select name="rating" id="rating">
-                    <option value="1" @if($rating==1) selected @endif>Schlecht</option>
+                    <option value="1" @if($rating==1) selected @endif>Sehr Schlecht</option>
                     <option value="2" @if($rating==2) selected @endif>Schlecht</option>
                     <option value="3" @if($rating==3) selected @endif>Gut</option>
                     <option value="4" @if($rating==4) selected @endif>Sehr gut</option>

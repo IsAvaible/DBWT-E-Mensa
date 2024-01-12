@@ -18,22 +18,22 @@ $error = array(); // Initialize an array to store error messages
  */
 // Validate email format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $error[] = "Ihre E-Mail entspricht nicht den Vorgaben.";
+    $error[] = "Deine E-Mail entspricht nicht den Vorgaben.";
 }
 
 // Check if email is not from a disposable email service
 if (str_contains($email, 'rcpt.at') or str_contains($email, 'damnthespam.at') or str_contains($email, 'wegwerfmail.de') or str_contains($email, 'trashmail.')) {
-    $error[] = "Ihre E-Mail ist auf unsere Blogliste, bitte Wählen sie eine andere.";
+    $error[] = "Deine E-Mail ist auf unsere Blogliste, bitte wähle eine andere.";
 }
 
 // Validate language input
 if ($lang != "de" and $lang != "en") {
-    $error[] = "Der Sprache wurde falsch eingabe.";
+    $error[] = "Die Sprache wurde falsch eingegeben.";
 }
 
 // Check if privacy policy is accepted
 if ($privacyPolicy != "on") {
-    $error[] = "Sie müssen die Datenschutzbestimmungen akzeptieren";
+    $error[] = "Du musst die Datenschutzbestimmungen akzeptieren";
 }
 
 // If there are no errors, write the data to a CSV file

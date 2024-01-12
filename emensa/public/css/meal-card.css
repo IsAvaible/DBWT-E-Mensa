@@ -31,13 +31,6 @@
     flex-shrink: 0;
 }
 
-
-.meal-card .rating {
-    display: flex;
-    justify-content: center;
-    gap: 0.2rem;
-}
-
 .meal-card h3 {
     font-size: large;
     font-weight: bold;

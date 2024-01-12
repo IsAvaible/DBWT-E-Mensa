@@ -18,7 +18,7 @@ class Meal
     public float $priceIntern;
     public float $priceExtern;
     public array $allergens;
-    public int|null $rating;
+    public float|null $rating;
 
     public function __construct(array $mealData)
     {

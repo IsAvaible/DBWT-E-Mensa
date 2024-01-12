@@ -14,10 +14,10 @@
 
 @section("content")
     <div>
-        <h2>Haben Sie ein Wunschgericht? Teilen Sie es mit uns!</h2>
+        <h2>Hast du ein Wunschgericht? Teile es mit uns!</h2>
         <img id="mainImg" src="img/spaghetti.jpg" alt="Bild des Salatbuffets der Mensa">
         @if(($success ?? false))
-            <p class="success">Ihr Wunschgericht wurde erfolgreich hinzugefügt!</p>
+            <p class="success">Dein Wunschgericht wurde erfolgreich hinzugefügt!</p>
         @endif
         @if(($errors ?? []))
             <div class="errors">
@@ -29,14 +29,14 @@
                 </ul>
             </div>
         @endif
-        <form action="wunschgericht" method="post" class="full-bleed">
+        <form action="wunschgericht" method="post" class="full-bleed desired-meal-form">
             <div>
                 <div>
-                    <label for="name" class="error">Ihr Name:</label>
+                    <label for="name" class="error">Dein Name:</label>
                     <input type="text" id="name" name="name">
                 </div>
                 <div>
-                    <label for="mail">Ihre E-Mail*:</label>
+                    <label for="mail">Deine E-Mail*:</label>
                     <input type="email" id="mail" name="mail" required>
                 </div>
                 <div>

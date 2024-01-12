@@ -26,16 +26,16 @@
 </header>
 
 <body class="base-layout">
-<h2 id="contact">Haben Sie ein Wunschgericht? Teilen Sie es mit uns!</h2>
+<h2 id="contact">Hast du ein Wunschgericht? Teile es mit uns!</h2>
 <img id="mainImg" src="img/spaghetti.jpg" alt="Bild des Salatbuffets der Mensa">
 <form action="add_desired_meal" method="post" class="full-bleed">
     <div>
         <div>
-            <label for="name">Ihr Name:</label>
+            <label for="name">Dein Name:</label>
             <input type="text" id="name" name="name">
         </div>
         <div>
-            <label for="mail">Ihre E-Mail*:</label>
+            <label for="mail">Deine E-Mail*:</label>
             <input type="email" id="mail" name="mail" required>
         </div>
         <div>

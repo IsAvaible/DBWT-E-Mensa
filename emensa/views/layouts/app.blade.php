@@ -36,10 +36,13 @@
                 <span>{{$_SESSION['user']["name"]}}</span>
             </a>
         @else
-            <a class="user" href="anmeldung">
-                <img src="/icons/user.svg" alt="Benutzerbild">
-                <span>Anmelden &crarr;</span>
-            </a>
+            <form class="user" action="anmeldung" method="post">
+                <input type="hidden" value="{{$_SERVER["REQUEST_URI"]}}" name="login-redirect_url">
+                <button type="submit" class="text-submit user" href="anmeldung">
+                    <img src="/icons/user.svg" alt="Benutzerbild">
+                    <span>Anmelden &crarr;</span>
+                </button>
+            </form>
         @endif
         <div id="overlay">
             <div>
@@ -57,9 +60,13 @@
                             Profil: {{$_SESSION['user']["name"]}}
                         </a>
                     @else
-                        <a href="anmeldung">
-                            Anmelden
-                        </a>
+                        <form action="anmeldung" method="post">
+                            <input type="hidden" value="{{$_SERVER["REQUEST_URI"]}}" name="login-redirect_url">
+                            <button type="submit" class="text-submit user" href="anmeldung">
+                                <a>Anmelden</a>
+                            </button>
+                        </form>
+                </nav>
                     @endif
                 </nav>
             </div>

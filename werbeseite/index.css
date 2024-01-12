@@ -1,10 +1,17 @@
 :root {
-    --primary-color: #0069b4;
-    --secondary-color: #00B1AA;
-    --accent-color: #AF2BBF;
+    --primary-color-rgb: 0, 105, 180;
+    --secondary-color-rgb: 0, 177, 170;
+    --accent-color-rgb: 175, 43, 191;
 
-    --fg-color: #1B1B1E;
-    --bg-color: #faf9ff;
+    --primary-color: rgb(var(--primary-color-rgb));
+    --secondary-color: rgb(var(--secondary-color-rgb));
+    --accent-color: rgb(var(--accent-color-rgb));
+
+    --fg-color-rgb: 27, 27, 30;
+    --bg-color-rgb: 250, 249, 255;
+
+    --fg-color: rgb(var(--fg-color-rgb));
+    --bg-color: rgb(var(--bg-color-rgb));
 
     --box-shadow: 20px 20px 60px #d5d5d5,
     -20px -20px 60px #ebebeb

@@ -66,7 +66,7 @@ if (is_file("newsletter.csv")) { // Check if the file "newsletter.csv" exists
         necessitatibus nostrum obcaecati possimus quod quos ratione!
     </div>
 </div>
-<h2 id="menu">Köstlichkeiten die Sie erwarten</h2>
+<h2 id="menu">Köstlichkeiten die dich erwarten</h2>
 <div class="food-menu full-bleed">
     <?php
     $n = 6; // The number of meals to display
@@ -115,11 +115,11 @@ if (is_file("newsletter.csv")) { // Check if the file "newsletter.csv" exists
 <form class="newsletter" action="newsletterbackend.php" method="post">
     <div>
         <div>
-            <label for="name">Ihr Name:</label>
+            <label for="name">Dein Name:</label>
             <input type="text" id="name" name="name" required>
         </div>
         <div>
-            <label for="mail">Ihre E-Mail:</label>
+            <label for="mail">Deinee E-Mail:</label>
             <input type="email" id="mail" name="mail" required>
         </div>
         <div>
@@ -144,7 +144,7 @@ if (is_file("newsletter.csv")) { // Check if the file "newsletter.csv" exists
         </ul>
     </div>
 
-    <h2 style="text-align: center">Wir freuen uns auf ihren Besuch!</h2>
+    <h2 style="text-align: center">Wir freuen uns auf deinen Besuch!</h2>
 
     <footer class="full-bleed">
         <ul>

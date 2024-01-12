@@ -11,7 +11,7 @@ h2 {
     margin: 1rem 0;
 }
 
-form {
+.desired-meal-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,7 +20,7 @@ form {
     padding: 20px;
 }
 
-form > div:first-child {
+.desired-meal-form > div:first-child {
     display: flex;
     flex-direction: row;
     align-items: end;
@@ -30,7 +30,7 @@ form > div:first-child {
 
 }
 
-form textarea {
+.desired-meal-form textarea {
     width: 100%;
     aspect-ratio: 41/9;
     padding: 10px;
