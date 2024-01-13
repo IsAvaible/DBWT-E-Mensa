@@ -30,7 +30,7 @@
             Komm vorbei und überzeuge dich selbst von unserem Angebot. Wir freuen uns auf deinen Besuch!
         </div>
     </div>
-    <h2 id="food-menu-header">Köstlichkeiten die dich erwarten</h2>
+    <h2 id="food-menu">Köstlichkeiten die dich erwarten</h2>
     <div class="food-menu full-bleed">
         {!! $displayMeals !!}
     </div>
@@ -40,7 +40,7 @@
         {!! $displayTestimonials !!}
         <a href="/bewertungen">Mehr Erfahrungsberichte</a>
     </div>
-    <div class="mensa-stats">
+    <div id="stats" class="mensa-stats">
         <div><span>{{$queryVisitorCount}}</span>
             <p>Besuche</p></div>
         <div><span>{{$newsletterCount}}</span>
@@ -87,6 +87,7 @@
 
 @section("cssextra")
     <link rel="stylesheet" href="/css/meal-card.css">
+    <link rel="stylesheet" href="/css/home.css">
 @endsection
 
 @section("jsextra")
