@@ -468,6 +468,11 @@ class HomeController
      */
     public function ratings(RequestData $request)
     {
+        $filter_by_meal_id = $_GET['meal_id'] ?? NULL;
+        if ($filter_by_meal_id === '') { // If the meal id is an empty string, remove the get parameter from the URL
+            header('Location: /bewertungen', true, 303);
+        }
+
         $errors = $_SESSION['rating-errors'] ?? [];
         $success = $_SESSION['rating-success'] ?? null;
         unset($_SESSION['rating-errors']);
@@ -477,11 +482,20 @@ class HomeController
         $link = connectdb();
 
         // Prepare and execute the SQL statement to fetch the last 30 ratings
-        $result = mysqli_query($link, "SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id ORDER BY zeitpunkt DESC LIMIT 30;");
+        $stmt = $link->prepare("SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id" . ($filter_by_meal_id != NULL ? " WHERE gericht_id = ? " : " ") . "ORDER BY zeitpunkt DESC LIMIT 30;");
+        if ($filter_by_meal_id != NULL) { // If a meal id is provided, filter the ratings by the meal id
+            $stmt->bind_param("i", $filter_by_meal_id);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        $meals = queryMeals(-1, order_result: true);
+
         $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         // Return the ratings view along with the request data and the ratings
-        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => false, 'errors' => $errors, 'success' => $success]);
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'meals' => $meals, 'meal_id' => $filter_by_meal_id, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => false, 'errors' => $errors, 'success' => $success]);
     }
 
     /**
@@ -490,6 +504,11 @@ class HomeController
      */
     public function user_ratings(RequestData $request)
     {
+        $filter_by_meal_id = $_GET['meal_id'] ?? NULL;
+        if ($filter_by_meal_id === '') { // If the meal id is an empty string, remove the get parameter from the URL
+            header('Location: /deine_bewertungen', true, 303);
+        }
+
         $errors = $_SESSION['rating-errors'] ?? [];
         $success = $_SESSION['rating-success'] ?? null;
         unset($_SESSION['rating-errors']);
@@ -511,15 +530,21 @@ class HomeController
         }
 
         // Prepare and execute the SQL statement to fetch the user's ratings
-        $stmt = $link->prepare("SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id WHERE benutzer_id = ? ORDER BY zeitpunkt DESC;");
-        $stmt->bind_param("i", $benutzer_id);
+        $stmt = $link->prepare("SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id WHERE benutzer_id = ?" . ($filter_by_meal_id != NULL ? " AND gericht_id = ? " : " ") . "ORDER BY zeitpunkt DESC;");
+        if ($filter_by_meal_id != NULL) { // If a meal id is provided, filter the ratings by the meal id
+            $stmt->bind_param("ii", $benutzer_id, $filter_by_meal_id);
+        } else {
+            $stmt->bind_param("i", $benutzer_id);
+        }
         $stmt->execute();
         $result = $stmt->get_result();
         $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $stmt->close();
 
+        $meals = queryMeals(-1, order_result: true);
+
         // Return the ratings view along with the request data and the ratings
-        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => true, 'errors' => $errors, 'success' => $success]);
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'meals' => $meals, 'meal_id' => $filter_by_meal_id, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => true, 'errors' => $errors, 'success' => $success]);
     }
 
     /**

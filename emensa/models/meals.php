@@ -25,9 +25,10 @@ if (!$link) {
  * Fetches the specified number of meals randomly from the database and returns them as a PHP array.
  * @param int $n The number of meals to fetch, or -1 to fetch all meals
  * @param int|null $id The id of the meal to fetch, or null to fetch all meals
+ * @param bool $order_result Whether to order the result by the meal's name
  * @return Meal[] The fetched meals
  */
-function queryMeals(int $n = -1, int $id = null): array
+function queryMeals(int $n = -1, int $id = null, bool $order_result = false): array
 {
     $link = mysqli_connect("localhost", "root", "root", "emensawerbeseite");
 
@@ -51,12 +52,20 @@ function queryMeals(int $n = -1, int $id = null): array
     }
 
     // Fetch all the rows from the result set and transform each row
-    return array_map(function ($row) {
+    $meals = array_map(function ($row) {
         // Transform the 'allergens' field from JSON format into a PHP array
         $row['allergene'] = array_filter(json_decode($row['allergene'])) ?? [];
         // Return a new Meal object for each row
         return Meal::from_db($row);
     }, mysqli_fetch_all($result, MYSQLI_ASSOC));
+
+    if ($order_result) {
+        usort($meals, function ($a, $b) {
+            return strcmp($a->name, $b->name);
+        });
+    }
+
+    return $meals;
 }
 
 /**
