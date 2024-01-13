@@ -22,13 +22,11 @@
         <a class="logo" href="/" title="Startseite"><img src="/img/logo.png" alt="E-Mensa Logo"></a>
         <nav>
             <a href="/#announcements">Ankündigungen</a>
-            <a href='/#menu'>Speisen</a>
-            <a href='/#stats'>Zahlen</a>
-            <a href='/#contact'>Kontakt</a>
-            <a href='/#important'>Wichtig für uns</a>
-            <a href='wunschgericht'>
-                Wunschgericht
-            </a>
+            <a href='/#food-menu'>Speisen</a>
+            <a href='/#contact'>Newsletter</a>
+            <a href='/bewertungen'>Bewertungen</a>
+            <a href='/wunschgericht'>Wunschgericht</a>
+            <a href='/profil'>Profil</a>
         </nav>
         @if (isset($_SESSION['user']["name"]))
             <a class="user" href="profil">
@@ -48,13 +46,10 @@
             <div>
                 <nav>
                     <a href="/#announcements">Ankündigungen</a>
-                    <a href='/#menu'>Speisen</a>
-                    <a href='/#stats'>Zahlen</a>
-                    <a href='/#contact'>Kontakt</a>
-                    <a href='/#important'>Wichtig für uns</a>
-                    <a href='wunschgericht'>
-                        Wunschgericht
-                    </a>
+                    <a href='/#food-menu'>Speisen</a>
+                    <a href='/#contact'>Newsletter</a>
+                    <a href='/bewertungen'>Bewertungen</a>
+                    <a href='/wunschgericht'>Wunschgericht</a>
                     @if (isset($_SESSION['user']["name"]))
                         <a href="profil">
                             Profil: {{$_SESSION['user']["name"]}}

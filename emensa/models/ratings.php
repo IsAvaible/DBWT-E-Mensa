@@ -5,14 +5,21 @@
  * Henning, Schreiber, 3568055
  */
 
-function displayRating(float|null $stars, string|null $redirectTo = null): string
+/**
+ * Displays a star rating with the specified number of stars out of 4.
+ * @param float|null $stars The number of stars to display, or null to display no rating (dashed)
+ * @param string|null $redirectTo The URL to redirect to when clicking on a star, or null to disable the links
+ * @param bool $append_rating Whether to append the rating to the redirect URL
+ * @return string The HTML code for the rating
+ */
+function displayRating(float|null $stars, string|null $redirectTo = null, bool $append_rating = false): string
 {
     if ($stars < 0 || $stars > 4) {
         return "<div class='alert alert-danger'>Fehler: Ungültige Bewertung: {$stars}</div>";
     }
     return "<div class='star-rating' title='" . ($stars != null ? "{$stars} von 4 Sternen" : "Noch keine Bewertungen") . "'>
-    " . implode(array_map(function ($i) use ($stars, $redirectTo) {
-            return (($redirectTo ? "<a href='{$redirectTo}{$i}'>" : "") . "<img src='icons/star_" . ($stars != null ? ($i <= round($stars) ? 'filled' : 'outline') : 'dashed') . ".svg' alt='Bewertung'/>" . ($redirectTo ? "</a>" : ""));
+    " . implode(array_map(function ($i) use ($append_rating, $stars, $redirectTo) {
+            return (($redirectTo ? "<a href='{$redirectTo}" . ($append_rating ? $i : "") . "'>" : "") . "<img src='icons/star_" . ($stars != null ? ($i <= round($stars) ? 'filled' : 'outline') : 'dashed') . ".svg' alt='Bewertung'/>" . ($redirectTo ? "</a>" : ""));
         }, range(1, 4))) . "
                                 </div>";
 }
@@ -21,7 +28,7 @@ function displayHomepageRatings(): string
 {
     $link = connectdb();
 
-    $result = mysqli_query($link, "SELECT bemerkung, sterne+0 as sterne, bildname, gericht.name as gericht_name, benutzer.name as benutzer_name FROM bewertung
+    $result = mysqli_query($link, "SELECT bemerkung, sterne+0 as sterne, bildname, gericht.name as gericht_name, benutzer.name as benutzer_name, gericht_id FROM bewertung
     INNER JOIN gericht ON bewertung.gericht_id = gericht.id
     INNER JOIN benutzer ON bewertung.benutzer_id = benutzer.id
         WHERE hervorgehoben = 1 ORDER BY RAND() LIMIT 2");
@@ -42,7 +49,7 @@ function displayHomepageRatings(): string
         <div class='testimonial-card-content'>
             <p class='testimonial-card-comment'>\"{$row['bemerkung']}\"</p>
             <p class='testimonial-card-author'>- {$row['benutzer_name']}</p>
-            <div class='rating'>" . displayRating($row['sterne']) . "</div>
+            <div class='rating'>" . displayRating($row['sterne'], "/bewertungen?meal_id={$row['gericht_id']}") . "</div>
         </div>
       </div>";
     }

@@ -526,3 +526,9 @@ footer > ul > li:not(:first-child):before {
 .alert-info:before {
     content: 'ⓘ';
 }
+
+.alert > a {
+    margin-left: auto;
+    color: inherit;
+    font-weight: 600;
+}

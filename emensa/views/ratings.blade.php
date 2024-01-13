@@ -41,7 +41,7 @@
                     <option value="">Alle Gerichte</option>
                     @foreach($meals as $meal)
                         <option value="{{$meal->id}}"
-                                @if($meal->id == $meal_id) selected @endif>{{$meal->name}}</option>
+                                @if($meal->id == $meal_id_to_filter_by) selected @endif>{{$meal->name}}</option>
                     @endforeach
                 </select>
                 <button type="submit">Filtern</button>
@@ -55,7 +55,7 @@
                             <div class="highlight-background"></div>
                             <h4>{{$rating["gerichtname"]}}</h4>
                         </div>
-                        {!!displayRating($rating["sterne"])!!}
+                        {!!displayRating($rating["sterne"], "/bewertung?meal_id={$rating['gericht_id']}&rating=", true)!!}
                         <p class="comment">"{{$rating["bemerkung"]}}"</p>
                         <p class="author">- {{$rating["benutzername"]}}</p>
                         <div class="button-row">
@@ -64,6 +64,7 @@
                                       method='post'>
                                     <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
                                     <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
+                                    <input type='hidden' name='redirect_url' value='{{$_SERVER['REQUEST_URI']}}'/>
                                     <button type='submit'
                                             title="{{$rating['hervorgehoben'] ? 'Hervorhebung Entfernen' : 'Hervorheben'}}">
                                         <img src="/icons/{{$rating['hervorgehoben'] ? 'star_filled' : 'star_outline'}}.svg"
@@ -71,10 +72,18 @@
                                     </button>
                                 </form>
                             @endif
+                            @if ($personal_ratings)
+                                <a href="/bewertung?meal_id={{$rating['gericht_id']}}">
+                                    <button type="submit" class="edit-button" title="Bearbeiten">
+                                        <img src="icons/pen.svg" alt="edit_icon">
+                                    </button>
+                                </a>
+                            @endif
                             @if ($personal_ratings || $is_admin)
                                 <form action='bewertung_loeschen' method='post'>
                                     <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
                                     <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
+                                    <input type='hidden' name='redirect_url' value='{{$_SERVER['REQUEST_URI']}}'/>
                                     <button type='submit' class="delete-button" title="Löschen">
                                         <img src="icons/trash_can.svg" alt="trash_icon">
                                     </button>
@@ -90,6 +99,7 @@
             @if(count($ratings) == 0)
                 <div class="alert alert-info">
                     Keine Bewertungen vorhanden.
+                    <a href="/bewertung?meal_id={{$meal_id_to_filter_by}}&rating=4">Jetzt Bewerten</a>
                 </div>
             @endif
         </div>

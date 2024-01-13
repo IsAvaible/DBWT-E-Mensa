@@ -276,31 +276,31 @@ class HomeController
      */
     public function rating(RequestData $request): string
     {
-        $meal_id = $_GET['meal_id'];
-        $rating = $_GET['rating'];
+        $meal_id = $_GET['meal_id'] ?? NULL;
+        $rating = $_GET['rating'] ?? 4;
+
         $comment = $_SESSION['rating-comment'] ?? NULL;
         $errors = $_SESSION['rating-errors'] ?? [];
         // Clear the parameters from the session
         unset($_SESSION['rating-comment']);
         unset($_SESSION['rating-errors']);
 
-        // If the user is not logged in, redirect to the login page
-        if (!isset($_SESSION['user'])) {
-
-            // Set the parameters for the redirect URL
-            $_SESSION['login-redirect_reason'] = 'Du musst angemeldet sein, um eine Bewertung abzugeben.';
-            // current url
-            $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];
-            // Redirect to the login page
-            header('Location: /anmeldung', true, 303);
-        }
+        $editing = $_SESSION['rating-editing'] ?? false;
 
         // log access to rating page
         $log = logger();
         $log->info('Zugriff auf Bewertungsseite');
 
-        // Establish a new database connection to the MySQL database server
-        $link = connectdb();
+        // If the user is not logged in, redirect to the login page
+        if (!isset($_SESSION['user'])) {
+
+            // Set the parameters for the redirect URL
+            $_SESSION['login-redirect_reason'] = 'Du musst angemeldet sein, um eine Bewertung abzugeben.';
+            $_SESSION['login-redirect_url'] = $_SERVER['REQUEST_URI'];
+            // Redirect to the login page
+            header('Location: /anmeldung', true, 303);
+            return '';
+        }
 
         // If no meal id is provided, redirect to the index page
         if ($meal_id == NULL) {
@@ -308,19 +308,38 @@ class HomeController
             header('Location: /', true, 303);
         }
 
-        // Prepare and execute the SQL statement to fetch the meal details
+        // Fetch the meal details from the database
         $result = queryMeals(-1, $meal_id);
+
+        // If the user is not coming from the rating submission page
+        if (empty($errors)) {
+            // Prepare and execute the SQL statement to fetch any existing ratings for the meal
+            $link = connectdb();
+            $stmt = $link->prepare("SELECT sterne, bemerkung FROM bewertung WHERE gericht_id = ? AND benutzer_id = ?");
+            $stmt->bind_param("ii", $meal_id, $_SESSION['user']['id']);
+            $stmt->execute();
+            $stmt->bind_result($existing_rating, $existing_comment);
+            $stmt->fetch();
+            $stmt->close();
+            if ($existing_rating != NULL && $existing_comment != NULL) {
+                $rating = $existing_rating;
+                $comment = $existing_comment;
+
+                $editing = true;
+            }
+        }
 
         // If the meal does not exist, redirect to the index page
         if (count($result) <= 0) {
             $_SESSION['index-alerts'] = [['type' => "danger", 'message' => "Das Gericht wurde nicht gefunden."]];
             header('Location: /', true, 303);
+            return '';
         }
 
         $meal = $result[0];
 
         // Return the rating view along with the request data and the meal details
-        return view('rating', ['rd' => $request, 'meal' => $meal, 'rating' => $rating, 'comment' => $comment, 'meal_card' => new MealCardComponent($meal, true), 'errors' => $errors]);
+        return view('rating', ['rd' => $request, 'meal' => $meal, 'rating' => $rating, 'comment' => $comment, 'editing' => $editing, 'meal_card' => new MealCardComponent($meal, true), 'errors' => $errors]);
     }
 
     /**
@@ -333,6 +352,7 @@ class HomeController
         $comment = $_POST['comment'] ?? NULL;
         $rating = $_POST['rating'] ?? NULL;
         $meal_id = $_POST['meal_id'] ?? NULL;
+        $editing = $_POST['editing'] ?? false;
 
         $redirect_url = "/bewertung?meal_id=$meal_id&rating=$rating";
 
@@ -387,16 +407,19 @@ class HomeController
         $stmt = $link->prepare("SELECT COUNT(*) FROM bewertung WHERE gericht_id = ? AND benutzer_id = ?");
         $stmt->bind_param("ii", $meal_id, $benutzer_id);
         $stmt->execute();
-        $stmt->bind_result($result);
+        $stmt->bind_result($existing_ratings_count);
         $stmt->fetch();
-        if ($result > 0) {
-            $errors[] = "Du kannst nicht mehrere Bewertungen für ein Gericht abgeben.";
-        }
         $stmt->close();
 
-        // Saves rating in daterbase
+        // Saves rating in database
         if (empty($errors)) {
-            $stmt = $link->prepare("INSERT INTO bewertung (bemerkung, sterne, benutzer_id, gericht_id) VALUE (?, ?, ?, ?)");
+            if ($existing_ratings_count == 0) {
+                // Prepare and execute the SQL statement to insert the rating into the database
+                $stmt = $link->prepare("INSERT INTO bewertung (bemerkung, sterne, benutzer_id, gericht_id) VALUE (?, ?, ?, ?)");
+            } else {
+                // Prepare and execute the SQL statement to update the rating in the database
+                $stmt = $link->prepare("UPDATE bewertung SET bemerkung = ?, sterne = ?, hervorgehoben = FALSE WHERE benutzer_id = ? AND gericht_id = ?");
+            }
             $stmt->bind_param("ssss", $comment, $rating, $benutzer_id, $meal_id);
             $stmt->execute();
             mysqli_commit($link, 0, 'rating');
@@ -408,6 +431,7 @@ class HomeController
             // If there are errors, return to the rating page with the errors
             $_SESSION['rating-comment'] = $comment;
             $_SESSION['rating-errors'] = $errors;
+            $_SESSION['rating-editing'] = $editing;
             header("Location: $redirect_url", true, 303);
             return;
         }
@@ -429,6 +453,7 @@ class HomeController
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
         $user_id = $_POST['user_id'] ?? NULL;
+        $redirect_url = $_POST['redirect_url'] ?? '/deine_bewertungen';
 
         // Initialize an empty array to store any errors
         $errors = array();
@@ -459,7 +484,7 @@ class HomeController
         }
 
         // Redirect to the index page or the redirect URL
-        header('Location: /deine_bewertungen', true, 303);
+        header('Location: ' . $redirect_url, true, 303);
     }
 
     /**
@@ -468,8 +493,8 @@ class HomeController
      */
     public function ratings(RequestData $request)
     {
-        $filter_by_meal_id = $_GET['meal_id'] ?? NULL;
-        if ($filter_by_meal_id === '') { // If the meal id is an empty string, remove the get parameter from the URL
+        $meal_id_to_filter_by = $_GET['meal_id'] ?? NULL;
+        if ($meal_id_to_filter_by === '') { // If the meal id is an empty string, remove the get parameter from the URL
             header('Location: /bewertungen', true, 303);
         }
 
@@ -482,9 +507,9 @@ class HomeController
         $link = connectdb();
 
         // Prepare and execute the SQL statement to fetch the last 30 ratings
-        $stmt = $link->prepare("SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id" . ($filter_by_meal_id != NULL ? " WHERE gericht_id = ? " : " ") . "ORDER BY zeitpunkt DESC LIMIT 30;");
-        if ($filter_by_meal_id != NULL) { // If a meal id is provided, filter the ratings by the meal id
-            $stmt->bind_param("i", $filter_by_meal_id);
+        $stmt = $link->prepare("SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id" . ($meal_id_to_filter_by != NULL ? " WHERE gericht_id = ? ORDER BY (hervorgehoben) DESC, " : " ORDER BY ") . "zeitpunkt DESC LIMIT 30;");
+        if ($meal_id_to_filter_by != NULL) { // If a meal id is provided, filter the ratings by the meal id
+            $stmt->bind_param("i", $meal_id_to_filter_by);
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -495,7 +520,7 @@ class HomeController
         $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         // Return the ratings view along with the request data and the ratings
-        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'meals' => $meals, 'meal_id' => $filter_by_meal_id, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => false, 'errors' => $errors, 'success' => $success]);
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'meals' => $meals, 'meal_id_to_filter_by' => $meal_id_to_filter_by, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => false, 'errors' => $errors, 'success' => $success]);
     }
 
     /**
@@ -504,8 +529,8 @@ class HomeController
      */
     public function user_ratings(RequestData $request)
     {
-        $filter_by_meal_id = $_GET['meal_id'] ?? NULL;
-        if ($filter_by_meal_id === '') { // If the meal id is an empty string, remove the get parameter from the URL
+        $meal_id_to_filter_by = $_GET['meal_id'] ?? NULL;
+        if ($meal_id_to_filter_by === '') { // If the meal id is an empty string, remove the get parameter from the URL
             header('Location: /deine_bewertungen', true, 303);
         }
 
@@ -530,9 +555,9 @@ class HomeController
         }
 
         // Prepare and execute the SQL statement to fetch the user's ratings
-        $stmt = $link->prepare("SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id WHERE benutzer_id = ?" . ($filter_by_meal_id != NULL ? " AND gericht_id = ? " : " ") . "ORDER BY zeitpunkt DESC;");
-        if ($filter_by_meal_id != NULL) { // If a meal id is provided, filter the ratings by the meal id
-            $stmt->bind_param("ii", $benutzer_id, $filter_by_meal_id);
+        $stmt = $link->prepare("SELECT sterne+0 AS sterne, bemerkung, hervorgehoben, benutzer.name AS benutzername, gericht.name AS gerichtname, bildname, gericht_id, benutzer_id FROM bewertung INNER JOIN gericht ON bewertung.gericht_id = gericht.id INNER JOIN benutzer ON benutzer_id = benutzer.id WHERE benutzer_id = ?" . ($meal_id_to_filter_by != NULL ? " AND gericht_id = ? " : " ") . "ORDER BY zeitpunkt DESC;");
+        if ($meal_id_to_filter_by != NULL) { // If a meal id is provided, filter the ratings by the meal id
+            $stmt->bind_param("ii", $benutzer_id, $meal_id_to_filter_by);
         } else {
             $stmt->bind_param("i", $benutzer_id);
         }
@@ -544,7 +569,7 @@ class HomeController
         $meals = queryMeals(-1, order_result: true);
 
         // Return the ratings view along with the request data and the ratings
-        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'meals' => $meals, 'meal_id' => $filter_by_meal_id, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => true, 'errors' => $errors, 'success' => $success]);
+        return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'meals' => $meals, 'meal_id_to_filter_by' => $meal_id_to_filter_by, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => true, 'errors' => $errors, 'success' => $success]);
     }
 
     /**
@@ -559,6 +584,7 @@ class HomeController
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
         $user_id = $_POST['user_id'] ?? NULL;
+        $redirect_url = $_POST['redirect_url'] ?? '/bewertungen';
 
         // Initialize an empty array to store any errors
         $errors = array();
@@ -598,7 +624,7 @@ class HomeController
         }
 
         // Redirect to the ratings page
-        header("Location: /bewertungen", true, 303);
+        header("Location: " . $redirect_url, true, 303);
     }
 
     /**
@@ -613,6 +639,7 @@ class HomeController
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
         $user_id = $_POST['user_id'] ?? NULL;
+        $redirect_url = $_POST['redirect_url'] ?? '/bewertungen';
 
         // Initialize an empty array to store any errors
         $errors = array();
@@ -652,7 +679,7 @@ class HomeController
         }
 
         // Redirect to the index page or the redirect URL
-        header('Location: /bewertungen', true, 303);
+        header('Location: ' . $redirect_url, true, 303);
     }
 
     public function debug(RequestData $request)

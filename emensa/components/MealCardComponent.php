@@ -38,7 +38,7 @@ class MealCardComponent
                             <div class='food-properties'>
                                 <p><strong>Preis</strong>: " . number_format($this->meal->priceIntern, 2) . "€ (intern) / " . number_format($this->meal->priceExtern, 2) . "€ (extern)</p>
                                 <p><strong>Allergene</strong>: " . (implode(', ', $this->meal->allergens) ?: "Keine") . "</p>" . "
-                            </div>" . (!$this->ratingForm ? displayRating($this->meal->rating, "bewertung?meal_id={$this->meal->id}&rating=") : "") . "
+                            </div>" . (!$this->ratingForm ? displayRating($this->meal->rating, "bewertungen?meal_id={$this->meal->id}") : "") . "
                         </div>
                     </div>";
     }
