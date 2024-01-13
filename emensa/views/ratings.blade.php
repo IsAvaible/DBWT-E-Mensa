@@ -35,6 +35,17 @@
         <h1>@if($personal_ratings)
                 Deine
             @endif Bewertungen</h1>
+            <form class="filter-form" action="{{ $personal_ratings ? 'deine_bewertungen' : 'bewertungen' }}"
+                  method="get">
+                <select name="meal_id" id="meal_id" title="Gericht">
+                    <option value="">Alle Gerichte</option>
+                    @foreach($meals as $meal)
+                        <option value="{{$meal->id}}"
+                                @if($meal->id == $meal_id) selected @endif>{{$meal->name}}</option>
+                    @endforeach
+                </select>
+                <button type="submit">Filtern</button>
+            </form>
         <div class="ratings">
             @foreach($ratings as $rating)
                 <div class="rating{{$rating['hervorgehoben'] ? ' highlighted' : ''}}">
@@ -76,6 +87,11 @@
                     <hr/>
                 @endif
             @endforeach
+            @if(count($ratings) == 0)
+                <div class="alert alert-info">
+                    Keine Bewertungen vorhanden.
+                </div>
+            @endif
         </div>
     </div>
 @endsection

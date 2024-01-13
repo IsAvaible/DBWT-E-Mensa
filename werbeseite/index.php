@@ -119,7 +119,7 @@ if (is_file("newsletter.csv")) { // Check if the file "newsletter.csv" exists
             <input type="text" id="name" name="name" required>
         </div>
         <div>
-            <label for="mail">Deinee E-Mail:</label>
+            <label for="mail">Deine E-Mail:</label>
             <input type="email" id="mail" name="mail" required>
         </div>
         <div>

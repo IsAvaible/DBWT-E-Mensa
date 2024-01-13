@@ -56,7 +56,7 @@
                 <input type="text" id="name" name="name" required>
             </div>
             <div>
-                <label for="email">Deinee E-Mail:</label>
+                <label for="email">Deine E-Mail:</label>
                 <input type="email" id="email" name="email" required>
             </div>
             <div>
