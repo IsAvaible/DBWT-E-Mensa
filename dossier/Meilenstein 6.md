@@ -87,7 +87,7 @@ END;
 ### Aufgabe 3
 
 |         | Geschätzte Zeit | Benötigte Zeit |
-|:--------|:---------------:|:--------------:|
-| Henning |      x min      |     x min      |
+|:------- |:---------------:|:--------------:|
+| Henning |     30 min      |     50 min      |
 | Simon   |      x min      |     x min      |
 

@@ -28,6 +28,8 @@ try {
     echo "<code>DOCUMENT_ROOT</code><br><pre>{$_SERVER['DOCUMENT_ROOT']}</pre><code>Error</code><br><pre>" . $ex->getMessage() . "</pre>";
 }
 
+require_once('../config/orm.php');
+
 session_start();
 
 function get_salt(): string
