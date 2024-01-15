@@ -26,7 +26,7 @@
             @else
                 Speise Bewerten
             @endif</h1>
-        <form action="/bewertung_abschicken" method="post">
+        <form action="bewertung_abschicken" method="post">
             @csrf
             {!! $meal_card->render() !!}
             <div id="rating-div">

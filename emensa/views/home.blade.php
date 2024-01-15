@@ -50,6 +50,7 @@
     </div>
     <h2 id="contact">Interesse geweckt? Wir informieren dich!</h2>
     <form class="newsletter" action="newsletter" method="post">
+        @csrf
         <div>
             <div>
                 <label for="name">Dein Name:</label>
@@ -82,7 +83,7 @@
         </ul>
     </div>
 
-    <h2 style="text-align: center">Wir freuen uns auf deinen Besuch!</h2>
+    <h2>Wir freuen uns auf deinen Besuch!</h2>
 @endsection
 
 @section("cssextra")

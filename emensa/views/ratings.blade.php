@@ -62,6 +62,7 @@
                             @if ($is_admin)
                                 <form action='bewertung_{{$rating['hervorgehoben'] ? 'entvorheben' : 'hervorheben'}}'
                                       method='post'>
+                                    @csrf
                                     <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
                                     <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
                                     <input type='hidden' name='redirect_url' value='{{$_SERVER['REQUEST_URI']}}'/>
@@ -81,6 +82,7 @@
                             @endif
                             @if ($personal_ratings || $is_admin)
                                 <form action='bewertung_loeschen' method='post'>
+                                    @csrf
                                     <input type='hidden' name='meal_id' value='{{$rating["gericht_id"]}}'/>
                                     <input type='hidden' name='user_id' value='{{$rating["benutzer_id"]}}'/>
                                     <input type='hidden' name='redirect_url' value='{{$_SERVER['REQUEST_URI']}}'/>

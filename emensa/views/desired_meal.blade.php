@@ -34,6 +34,7 @@
             @endforeach
         @endif
         <form action="wunschgericht" method="post" class="full-bleed desired-meal-form">
+            @csrf
             <div>
                 <div>
                     <label for="name" class="error">Dein Name:</label>

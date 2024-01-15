@@ -40,6 +40,7 @@
             @endif
         </div>
         <form action="anmeldung_verifizieren" method="post">
+            @csrf
             <div>
                 <label for="email">E-Mail:</label>
                 <input type="email" id="email" name="email" required>
