@@ -25,19 +25,19 @@
             <p id="email">{{ $user['email'] }}</p>
             <a href="deine_bewertungen">Deine Bewertungen</a>
             <div>
-                <label for="anzahlfehler">Anzahl Fehlversuche:</label>
+                <p>Anzahl Fehlversuche:</p>
                 <span id="anzahlfehler">{{ $user['anzahlfehler'] }}</span>
             </div>
             <div>
-                <label for="anzahlanmeldungen">Anzahl Anmeldungen:</label>
+                <p>Anzahl Anmeldungen:</p>
                 <span id="anzahlanmeldungen">{{ $user['anzahlanmeldungen'] }}</span>
             </div>
             <div>
-                <label for="letzteanmeldung">Letzte Anmeldung:</label>
+                <p>Letzte Anmeldung:</p>
                 <span id="letzteanmeldung">{{ $user['letzteanmeldung'] }}</span>
             </div>
             <div>
-                <label for="letzterfehler">Letzter Fehler:</label>
+                <p>Letzter Fehler:</p>
                 <span id="letzterfehler">{{ $user['letzterfehler'] }}</span>
             </div>
             <a href="/abmeldung">

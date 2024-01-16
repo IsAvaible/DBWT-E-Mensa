@@ -15,7 +15,9 @@
 
 .stars > .circle {
     mask-image: url("/icons/star_filled.svg");
+    -webkit-mask-image: url("/icons/star_filled.svg");
     mask-size: contain;
+    -webkit-mask-size: contain;
 }
 
 .circle {

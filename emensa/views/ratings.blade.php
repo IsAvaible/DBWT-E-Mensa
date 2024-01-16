@@ -51,7 +51,8 @@
                 <div class="rating{{$rating['hervorgehoben'] ? ' highlighted' : ''}}">
                     <img src="img/meals/{{$rating['bildname']}}" alt="{{$rating["gerichtname"]}}">
                     <div>
-                        <div class="title">
+                        <div class="title"
+                             title="{{$rating['hervorgehoben'] ? 'Diese Bewertung wurde hervorgehoben' : ''}}">
                             <div class="highlight-background"></div>
                             <h4>{{$rating["gerichtname"]}}</h4>
                         </div>

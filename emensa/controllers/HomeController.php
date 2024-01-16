@@ -281,11 +281,11 @@ class HomeController
 
         $comment = $_SESSION['rating-comment'] ?? NULL;
         $errors = $_SESSION['rating-errors'] ?? [];
+        $editing = $_SESSION['rating-editing'] ?? false;
         // Clear the parameters from the session
         unset($_SESSION['rating-comment']);
         unset($_SESSION['rating-errors']);
-
-        $editing = $_SESSION['rating-editing'] ?? false;
+        unset($_SESSION['rating-editing']);
 
         // log access to rating page
         $log = logger();

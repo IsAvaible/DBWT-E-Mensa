@@ -54,11 +54,11 @@
         <div>
             <div>
                 <label for="name">Dein Name:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" autocomplete="name" required>
             </div>
             <div>
                 <label for="email">Deine E-Mail:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" autocomplete="email" required>
             </div>
             <div>
                 <label for="lang">Sprache:</label>

@@ -12,10 +12,12 @@
 
 .circle {
     mask-image: url("/icons/vegetarian.svg");
+    -webkit-mask-image: url("/icons/vegetarian.svg");
     mask-size: contain;
+    -webkit-mask-size: contain;
 }
 
-.circle:nth-child(1) {
+.circle:nth-child(1), .circle:nth-child(3) {
     transform: scaleX(-1);
 }
 

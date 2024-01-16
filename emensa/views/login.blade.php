@@ -43,11 +43,11 @@
             @csrf
             <div>
                 <label for="email">E-Mail:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" autocomplete="email" required>
             </div>
             <div>
                 <label for="password">Passwort:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
             </div>
             <input type="hidden" name="redirect_reason" value="{{ $redirect_reason }}">
             <input type="hidden" name="redirect_url" value="{{ $redirect_url }}">

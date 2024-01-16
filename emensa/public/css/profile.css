@@ -10,7 +10,9 @@
 
 .circle {
     mask-image: url("/icons/user.svg");
+    -webkit-mask-image: url("/icons/user.svg");
     mask-size: contain;
+    -webkit-mask-size: contain;
 }
 
 .profile-card {
