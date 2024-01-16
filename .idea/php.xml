@@ -36,6 +36,7 @@
       <path value="$PROJECT_DIR$/emensa/vendor/psr/clock" />
       <path value="$PROJECT_DIR$/emensa/vendor/voku/portable-ascii" />
       <path value="$PROJECT_DIR$/emensa/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/emensa/vendor/thiagoprz/eloquent-composite-key" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

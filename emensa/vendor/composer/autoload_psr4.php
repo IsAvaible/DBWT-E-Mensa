@@ -10,6 +10,7 @@ return array(
     'emensa\\models\\' => array($baseDir . '/models'),
     'emensa\\components\\' => array($baseDir . '/components'),
     'eftec\\bladeone\\' => array($vendorDir . '/eftec/bladeone/lib'),
+    'Thiagoprz\\CompositeKey\\' => array($vendorDir . '/thiagoprz/eloquent-composite-key/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Contracts\\Translation\\' => array($vendorDir . '/symfony/translation-contracts'),

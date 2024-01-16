@@ -35,21 +35,22 @@
         <h1>@if($personal_ratings)
                 Deine
             @endif Bewertungen</h1>
-            <form class="filter-form" action="{{ $personal_ratings ? 'deine_bewertungen' : 'bewertungen' }}"
-                  method="get">
-                <select name="meal_id" id="meal_id" title="Gericht">
-                    <option value="">Alle Gerichte</option>
-                    @foreach($meals as $meal)
-                        <option value="{{$meal->id}}"
-                                @if($meal->id == $meal_id_to_filter_by) selected @endif>{{$meal->name}}</option>
-                    @endforeach
-                </select>
-                <button type="submit">Filtern</button>
-            </form>
+        <form class="filter-form" action="{{ $personal_ratings ? 'deine_bewertungen' : 'bewertungen' }}"
+              method="get">
+            <select name="meal_id" id="meal_id" title="Gericht">
+                <option value="">Alle Gerichte</option>
+                @foreach($meals as $meal)
+                    <option value="{{$meal->id}}"
+                            @if($meal->id == $meal_id_to_filter_by) selected @endif>{{$meal->name}}</option>
+                @endforeach
+            </select>
+            <button type="submit">Filtern</button>
+        </form>
         <div class="ratings">
             @foreach($ratings as $rating)
                 <div class="rating{{$rating['hervorgehoben'] ? ' highlighted' : ''}}">
-                    <img src="img/meals/{{$rating['bildname']}}" alt="{{$rating["gerichtname"]}}">
+                    <img src="img/meals/{{($rating['bildname'] ?? '00_image_missing.jpeg')}}"
+                         alt="{{$rating["gerichtname"]}}">
                     <div>
                         <div class="title">
                             <div class="highlight-background"></div>
