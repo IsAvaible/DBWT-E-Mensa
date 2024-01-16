@@ -3,7 +3,7 @@
         'name' => 'emensa/mvc',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6a865e8598bb3679bdb4084d6e2d0acc4be1f6c0',
+        'reference' => '622e85800beb928bece6a00368ac614dc8f48e0d',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'emensa/mvc' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6a865e8598bb3679bdb4084d6e2d0acc4be1f6c0',
+            'reference' => '622e85800beb928bece6a00368ac614dc8f48e0d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -240,6 +240,15 @@
             'provided' => array(
                 0 => '2.3|3.0',
             ),
+        ),
+        'thiagoprz/eloquent-composite-key' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => '43012fa195db8517a5344355aa83cd39aaa466aa',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../thiagoprz/eloquent-composite-key',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'voku/portable-ascii' => array(
             'pretty_version' => '2.0.1',

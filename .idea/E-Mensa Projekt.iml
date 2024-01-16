@@ -26,6 +26,7 @@
       <excludeFolder url="file://$MODULE_DIR$/emensa/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/emensa/vendor/symfony/translation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/emensa/vendor/voku/portable-ascii" />
+      <excludeFolder url="file://$MODULE_DIR$/emensa/vendor/thiagoprz/eloquent-composite-key" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

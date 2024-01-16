@@ -26,6 +26,10 @@ class ComposerStaticInit0a19be8f09bdc5d4e2b07ba9e95a5801
             'emensa\\components\\' => 18,
             'eftec\\bladeone\\' => 15,
         ),
+        'T' => 
+        array (
+            'Thiagoprz\\CompositeKey\\' => 23,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -82,6 +86,10 @@ class ComposerStaticInit0a19be8f09bdc5d4e2b07ba9e95a5801
         'eftec\\bladeone\\' => 
         array (
             0 => __DIR__ . '/..' . '/eftec/bladeone/lib',
+        ),
+        'Thiagoprz\\CompositeKey\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/thiagoprz/eloquent-composite-key/src',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -161,6 +169,7 @@ class ComposerStaticInit0a19be8f09bdc5d4e2b07ba9e95a5801
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Thiagoprz\\CompositeKey\\HasCompositeKey' => __DIR__ . '/..' . '/thiagoprz/eloquent-composite-key/src/HasCompositeKey.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );

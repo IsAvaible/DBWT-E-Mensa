@@ -1,6 +1,8 @@
 <?php
 
 use emensa\components\MealCardComponent;
+use emensa\models\BewertungAR;
+use emensa\models\GerichteAR;
 
 include("../models/besucher.php");
 include("../models/meals.php");
@@ -447,9 +449,6 @@ class HomeController
      */
     public function delete_rating(RequestData $request): void
     {
-        // Establish a new database connection to the MySQL database server
-        $link = connectdb();
-
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
         $user_id = $_POST['user_id'] ?? NULL;
@@ -467,16 +466,16 @@ class HomeController
             $errors[] = "Du kannst nur deine eigenen Bewertungen löschen.";
         }
 
-        // deletes rating
+        $bewertung = BewertungAR::find([$user_id, $meal_id]);
+        if ($bewertung == null) {
+            $errors[] = "Die Bewertung existiert nicht.";
+        }
+
+        // highlight rating
         if (empty($errors)) {
-            $stmt = $link->prepare("DELETE FROM bewertung WHERE benutzer_id = ? AND gericht_id = ?;");
-            $stmt->bind_param("ii", $user_id, $meal_id);
-            $stmt->execute();
-            mysqli_commit($link, 0, 'delete_rating');
-            $stmt->close();
+            $bewertung->delete();
             $_SESSION['rating-success'] = "Die Bewertung wurde erfolgreich gelöscht.";
         }
-        $link->close();
 
         if (count($errors) > 0) {
             // If there are errors, return to the rating page with the errors
@@ -515,7 +514,10 @@ class HomeController
         $result = $stmt->get_result();
         $stmt->close();
 
-        $meals = queryMeals(-1, order_result: true);
+        $meals = GerichteAR::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
 
         $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -566,7 +568,10 @@ class HomeController
         $ratings = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $stmt->close();
 
-        $meals = queryMeals(-1, order_result: true);
+        $meals = GerichteAR::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
 
         // Return the ratings view along with the request data and the ratings
         return view('ratings', ['rd' => $request, 'ratings' => $ratings, 'meals' => $meals, 'meal_id_to_filter_by' => $meal_id_to_filter_by, 'is_admin' => $_SESSION['user']['admin'] ?? false, 'personal_ratings' => true, 'errors' => $errors, 'success' => $success]);
@@ -578,9 +583,6 @@ class HomeController
      */
     public function highlight_rating(RequestData $request): void
     {
-        // Establish a new database connection to the MySQL database server
-        $link = connectdb();
-
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
         $user_id = $_POST['user_id'] ?? NULL;
@@ -595,28 +597,21 @@ class HomeController
             $errors[] = "Du musst Administrator sein, um Bewertung hervorheben zu können.";
         } else if ($meal_id == null) { // Check if meal_id is not provided
             $errors[] = "Das Gericht fehlt in der Eingabe.";
-        } else { // Check if rating is already highlighted
-            $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = TRUE;");
-            $stmt->bind_param("ii", $user_id, $meal_id);
-            $stmt->execute();
-            $stmt->bind_result($result);
-            $stmt->fetch();
-            $stmt->close();
-            if ($result == 1) {
-                $errors[] = "Diese Bewertung ist bereits hervorgehoben.";
-            }
+        }
+        // Check if rating is already highlighted
+        $bewertung = BewertungAR::find([$user_id, $meal_id]);
+        if ($bewertung == null) {
+            $errors[] = "Die Bewertung existiert nicht.";
+        } else if ($bewertung->hervorgehoben) {
+            $errors[] = "Diese Bewertung ist bereits hervorgehoben.";
         }
 
         // highlight rating
         if (empty($errors)) {
-            $stmt = $link->prepare("UPDATE bewertung SET hervorgehoben = TRUE WHERE benutzer_id = ? AND gericht_id = ?;");
-            $stmt->bind_param("ii", $user_id, $meal_id);
-            $stmt->execute();
-            mysqli_commit($link, 0, 'highlight_rating');
-            $stmt->close();
+            $bewertung->hervorgehoben = true;
+            $bewertung->save();
             $_SESSION['rating-success'] = "Die Hervorhebung wurde erfolgreich gesetzt.";
         }
-        $link->close();
 
         if (count($errors) > 0) {
             // If there are errors, set the errors in the session and return to the rating page
@@ -633,9 +628,6 @@ class HomeController
      */
     public function unhighlight_rating(RequestData $request): void
     {
-        // Establish a new database connection to the MySQL database server
-        $link = connectdb();
-
         // Retrieve meal_id from POST data
         $meal_id = $_POST['meal_id'] ?? NULL;
         $user_id = $_POST['user_id'] ?? NULL;
@@ -650,28 +642,21 @@ class HomeController
             $errors[] = "Du musst Administrator sein, um Bewertung hervorheben zu können.";
         } else if ($meal_id == null) { // Check if meal_id is not provided
             $errors[] = "Das Gericht fehlt in der Eingabe.";
-        } else { // Check if rating is highlighted
-            $stmt = $link->prepare("SELECT count(*) FROM bewertung WHERE benutzer_id = ? AND gericht_id = ? AND hervorgehoben = TRUE;");
-            $stmt->bind_param("ii", $user_id, $meal_id);
-            $stmt->execute();
-            $stmt->bind_result($result);
-            $stmt->fetch();
-            $stmt->close();
-            if ($result != 1) {
-                $errors[] = "Diese Bewertung ist nicht hervorgehoben.";
-            }
         }
 
-        // dehighlight rating
+        $bewertung = BewertungAR::find([$user_id, $meal_id]);
+        if ($bewertung == null) {
+            $errors[] = "Die Bewertung existiert nicht.";
+        } else if (!$bewertung->hervorgehoben) {
+            $errors[] = "Diese Bewertung ist nicht hervorgehoben.";
+        }
+
+        // de-highlight rating
         if (empty($errors)) {
-            $stmt = $link->prepare("UPDATE bewertung SET hervorgehoben = FALSE WHERE benutzer_id = ? AND gericht_id = ?;");
-            $stmt->bind_param("ss", $user_id, $meal_id);
-            $stmt->execute();
-            mysqli_commit($link, 0, 'highlight_rating');
-            $stmt->close();
+            $bewertung->hervorgehoben = true;
+            $bewertung->save();
             $_SESSION['rating-success'] = "Die Hervorhebung wurde erfolgreich entfernt.";
         }
-        $link->close();
 
         if (count($errors) > 0) {
             // If there are errors, return to the rating page with the errors

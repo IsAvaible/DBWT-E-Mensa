@@ -43,7 +43,7 @@ function displayHomepageRatings(): string
     while ($row = mysqli_fetch_assoc($result)) {
         $output .= "<div class='testimonial-card'>
         <div class='card-img-div'>
-            <img src='img/meals/{$row['bildname']}' class='card-img' alt='{$row['gericht_name']}'>
+            <img src='img/meals/" . ($row['bildname'] ?? '00_image_missing.jpeg') . "' class='card-img' alt='{$row['gericht_name']}'>
             <div><p>{$row['gericht_name']}</p></div>
         </div>
         <div class='testimonial-card-content'>
