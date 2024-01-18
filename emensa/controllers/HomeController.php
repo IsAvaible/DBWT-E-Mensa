@@ -61,7 +61,7 @@ class HomeController
         /*
          * Speicher der Daten
          */
-        if (count($errors) == 0) {
+        if (empty($errors)) {
             $myfile = fopen("newsletter.csv", "a+") or die("Unable to open file!");
             fwrite($myfile, $name . ";");
             fwrite($myfile, $email . ";");
@@ -98,7 +98,7 @@ class HomeController
             $errors[] = "Deine E-Mail entspricht nicht den Vorgaben.";
         }
 
-        if (count($errors) == 0) {
+        if (empty($errors)) {
             // If the creator is not in the database, insert it
             if (mysqli_num_rows(mysqli_query($link, "SELECT * FROM ersteller_in WHERE email like '$email';")) < 1) {
                 $result = mysqli_query($link, "INSERT INTO ersteller_in(name, email) VALUES ('$creator','$email');"); // If the
@@ -313,7 +313,7 @@ class HomeController
         // Fetch the meal details from the database
         $result = queryMeals(-1, $meal_id);
 
-        // If the user is not coming from the rating submission page
+        // If there are no errors, check if the user already made a rating for that meal
         if (empty($errors)) {
             // Prepare and execute the SQL statement to fetch any existing ratings for the meal
             $link = connectdb();
@@ -323,10 +323,11 @@ class HomeController
             $stmt->bind_result($existing_rating, $existing_comment);
             $stmt->fetch();
             $stmt->close();
+            // If the user already made a rating for that meal, set the rating and comment to the existing values
             if ($existing_rating != NULL && $existing_comment != NULL) {
                 $rating = $existing_rating;
                 $comment = $existing_comment;
-
+                // Set the editing flag to true
                 $editing = true;
             }
         }
@@ -413,7 +414,7 @@ class HomeController
         $stmt->fetch();
         $stmt->close();
 
-        // Saves rating in database
+        // If there are no errors, save the rating in the database
         if (empty($errors)) {
             if ($existing_ratings_count == 0) {
                 // Prepare and execute the SQL statement to insert the rating into the database
@@ -471,7 +472,7 @@ class HomeController
             $errors[] = "Die Bewertung existiert nicht.";
         }
 
-        // highlight rating
+        // If there are no errors, delete the rating
         if (empty($errors)) {
             $bewertung->delete();
             $_SESSION['rating-success'] = "Die Bewertung wurde erfolgreich gelöscht.";
@@ -606,7 +607,7 @@ class HomeController
             $errors[] = "Diese Bewertung ist bereits hervorgehoben.";
         }
 
-        // highlight rating
+        // If there are no errors, highlight the rating
         if (empty($errors)) {
             $bewertung->hervorgehoben = true;
             $bewertung->save();
@@ -651,9 +652,9 @@ class HomeController
             $errors[] = "Diese Bewertung ist nicht hervorgehoben.";
         }
 
-        // de-highlight rating
+        // If there are no errors, de-highlight rating
         if (empty($errors)) {
-            $bewertung->hervorgehoben = true;
+            $bewertung->hervorgehoben = false;
             $bewertung->save();
             $_SESSION['rating-success'] = "Die Hervorhebung wurde erfolgreich entfernt.";
         }

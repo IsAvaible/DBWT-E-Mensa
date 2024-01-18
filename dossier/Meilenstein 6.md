@@ -2,8 +2,8 @@
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      20 min      |     110 min      |
-| Simon   |     25 min      |     40 min     | 
+| Henning |     20 min      |    110 min     |
+| Simon   |     25 min      |    260 min     | 
 
 #### a)
 
@@ -81,13 +81,21 @@ END;
 
 |         | Geschätzte Zeit | Benötigte Zeit |
 |:--------|:---------------:|:--------------:|
-| Henning |      30 min      |     60 min      |
-| Simon   |      x min      |     x min      | 
+| Henning |     30 min      |     60 min     |
+| Simon   |      x min      |     60 min     | 
 
 ### Aufgabe 3
 
 |         | Geschätzte Zeit | Benötigte Zeit |
-|:------- |:---------------:|:--------------:|
-| Henning |     30 min      |     50 min      |
-| Simon   |      x min      |     x min      |
+|:--------|:---------------:|:--------------:|
+| Henning |     30 min      |     50 min     |
+| Simon   |      x min      |     50 min     |
 
+### Gesamt Aufwand
+
+|         |  Benötigte Zeit   |
+|:-------:|:-----------------:|
+| Henning |      220 min      |
+|  Simon  |      370 min      |
+|         |                   |
+| Gesamt  | 590 min = 9.83std |

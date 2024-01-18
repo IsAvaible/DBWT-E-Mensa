@@ -100,7 +100,7 @@
                     <hr/>
                 @endif
             @endforeach
-            @if(count($ratings) == 0)
+            @if(empty($ratings))
                 <div class="alert alert-info">
                     Keine Bewertungen vorhanden.
                     <a href="/bewertung?meal_id={{$meal_id_to_filter_by}}&rating=4">Jetzt Bewerten</a>

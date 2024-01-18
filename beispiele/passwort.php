@@ -21,4 +21,4 @@ function generateSHA1Hash(string $passwort): string
 
 //Admin Passwort: i9L05?QBZGD_
 
-echo generateSHA1Hash('i9L05?QBZGD_') . PHP_EOL;
+echo generateSHA1Hash('1234') . PHP_EOL;

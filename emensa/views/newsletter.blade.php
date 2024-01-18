@@ -12,7 +12,7 @@
 
 @section("content")
     <div>
-        @if(count($errors) == 0)
+        @if(empty($errors))
             <h3>Erfolgreiche Anmeldung!</h3>
             <p>{{ $name }}</p>
             <p>{{ $email }}</p>

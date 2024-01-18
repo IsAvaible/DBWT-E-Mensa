@@ -50,7 +50,7 @@ if ($datenschutz != "on") {
 /*
  * Speicher der Daten
  */
-if (count($fehler) == 0) {
+if (empty($fehler)) {
     $myfile = fopen("newsletter.csv", "a+") or die("Unable to open file!");
     fwrite($myfile, $anrede . ";");
     fwrite($myfile, $vorname . ";");
@@ -71,7 +71,7 @@ if (count($fehler) == 0) {
 <body style="font-family: 'Comic Sans MS'">
 <?php
 
-if (count($fehler) == 0) {
+if (empty($fehler)) {
     echo "<h3>Erfolgreiche Anmeldung. </h3>";
     echo $anrede . " " . $vorname . " " . $nachname . "<br>";
     echo $email . "<br>";

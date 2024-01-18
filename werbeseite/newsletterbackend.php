@@ -37,7 +37,7 @@ if ($privacyPolicy != "on") {
 }
 
 // If there are no errors, write the data to a CSV file
-if (count($error) == 0) {
+if (empty(($error))) {
     $myfile = fopen("newsletter.csv", "a+") or die("Unable to open file!"); // Open the file or exit if it can't be opened
     fwrite($myfile, $name . ";");                                           // Write the name to the file
     fwrite($myfile, $email . ";");                                          // Write the email to the file
@@ -57,7 +57,7 @@ if (count($error) == 0) {
 <?php
 
 // If there are no errors, display a success message
-if (count($error) == 0) {
+if (empty($error)) {
     echo "<h3>Erfolgreiche Anmeldung. </h3>";
     echo htmlspecialchars($name) . "<br>";
     echo htmlspecialchars($email) . "<br>";

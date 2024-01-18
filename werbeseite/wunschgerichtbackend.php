@@ -46,7 +46,7 @@ if ($beschreibung == NULL) {
 }
 
 // If there are no errors, write the data to a CSV file
-if (count($error) == 0) {
+if (empty($error)) {
     //INSERT ersteller_in
     $sql_ersteller_in = mysqli_real_escape_string($link, $ersteller_in); //Parsing for SQL
     $sql_email = mysqli_real_escape_string($link, $email); //Parsing for SQL
@@ -97,7 +97,7 @@ if (count($error) == 0) {
 <?php
 
 // If there are no errors, display a success message
-if (count($error) == 0) {
+if (empty($error)) {
     echo "<h3>Erfolgreiche Anmeldung. </h3>";
     echo htmlspecialchars($ersteller_in) . "<br>";
     echo htmlspecialchars($email) . "<br>";
