@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/emensa/components" isTestSource="false" packagePrefix="emensa\components\" />
       <sourceFolder url="file://$MODULE_DIR$/emensa/models" isTestSource="false" packagePrefix="emensa\models\" />
+      <sourceFolder url="file://$MODULE_DIR$/emensa/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/emensa/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/emensa/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/emensa/vendor/carbonphp/carbon-doctrine-types" />
       <excludeFolder url="file://$MODULE_DIR$/emensa/vendor/doctrine/inflector" />
